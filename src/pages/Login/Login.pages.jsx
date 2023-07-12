@@ -1,7 +1,9 @@
+import { LoginComponent } from "../../components/Login.component"
+
 export const LoginPage = () => {
     return(
         <>
-        <p>Login Page is Render</p>
+        <LoginComponent/>
         </>
     )
 }
