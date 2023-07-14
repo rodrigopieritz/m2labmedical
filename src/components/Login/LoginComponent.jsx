@@ -8,8 +8,6 @@ export const LoginComponent = () => {
     password: "",
   });
 
-  const [showModal, setShowModal] = useState(false);
-
   const navigate = useNavigate();
   const { setShowModal: setShowModalContext } = useContext(ModalContext);
 
