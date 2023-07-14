@@ -1,5 +1,6 @@
-import { useState } from "react";
+import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { ModalContext } from "../../context/ModalContext";
 
 export const LoginComponent = () => {
   const [data, setData] = useState({
@@ -7,7 +8,10 @@ export const LoginComponent = () => {
     password: "",
   });
 
+  const [showModal, setShowModal] = useState(false);
+
   const navigate = useNavigate();
+  const { setShowModal: setShowModalContext } = useContext(ModalContext);
 
   const handleInput = (event) => {
     event.preventDefault();
@@ -23,6 +27,12 @@ export const LoginComponent = () => {
     event.preventDefault();
     const promptMessage = "Página em construção";
     alert(promptMessage);
+  };
+
+  const handleShowModal = (e) => {
+    e.preventDefault();
+
+    setShowModalContext(true);
   };
 
   return (
@@ -55,7 +65,9 @@ export const LoginComponent = () => {
         <a href="#" onClick={handleForgotPassword}>
           Esqueci minha senha
         </a>
-        <button>Criar Conta</button>
+        <button type="button" onClick={handleShowModal}>
+          Criar Conta
+        </button>
       </div>
     </>
   );
