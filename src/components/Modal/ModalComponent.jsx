@@ -5,28 +5,46 @@ import { InputComponent } from "../Input/inputComponent";
 
 export const ModalComponent = () => {
   const { setShowModal: setShowModalContext } = useContext(ModalContext);
-  
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [confirmPasswordError, setConfirmPasswordError] = useState("");
 
-  // Fechar o Modal (tela de cadastro)
-  const handleShowModal = () => {
+  const handleInput = (event) => {
+    event.preventDefault();
+    const { value, id } = event.target;
+    if (id === "email") {
+      setEmail(value);
+      setEmailError("");
+    }
+    if (id === "password") {
+      setPassword(value);
+      setPasswordError("");
+    } else if (id === "confirmPassword") {
+      setConfirmPassword(value);
+      setConfirmPasswordError("");
+    }
+  };
+
+   const handleShowModal = () => {
     setShowModalContext(false);
   };
 
-  // Verificar a validação de formulários e dados
-  const handleFormSubmition = (e) => {
+    const handleFormSubmition = (e) => {
     e.preventDefault();
 
-    // Verificar se os campos são válidos
-    const validationSchema = yup.object().shape({
-      email: yup.string().email("Digite um e-mail válido").required("Campo obrigatório"),
-      password: yup.string().min(8, "A senha deve ter pelo menos 8 caracteres").required("Campo obrigatório"),
+       const validationSchema = yup.object().shape({
+      email: yup
+        .string()
+        .email("Digite um e-mail válido")
+        .required("Campo obrigatório"),
+      password: yup
+        .string()
+        .min(8, "A senha deve ter pelo menos 8 caracteres")
+        .required("Campo obrigatório"),
       confirmPassword: yup
         .string()
         .oneOf([yup.ref("password")], "As senhas não são iguais")
@@ -40,7 +58,6 @@ export const ModalComponent = () => {
         confirmPassword: confirmPassword,
       });
 
-      
       handleShowModal();
     } catch (error) {
       if (error.path === "email") {
@@ -53,21 +70,6 @@ export const ModalComponent = () => {
     }
   };
 
-  const handleEmailChange = (event) => {
-    setEmail(event.target.value);
-    setEmailError(""); 
-  };
-
-  const handlePasswordChange = (event) => {
-    setPassword(event.target.value);
-    setPasswordError(""); 
-  };
-
-  const handleConfirmPasswordChange = (event) => {
-    setConfirmPassword(event.target.value);
-    setConfirmPasswordError(""); 
-  };
-
   return (
     <>
       <legend>Cadastro de novo usuário</legend>
@@ -78,7 +80,7 @@ export const ModalComponent = () => {
           placeholder="Digite seu email"
           label="E-mail"
           value={email}
-          onChange={handleEmailChange}
+          onInput={handleInput}
           error={emailError}
         />
         {emailError && <div>{emailError}</div>}
@@ -88,7 +90,7 @@ export const ModalComponent = () => {
           placeholder="Digite sua senha"
           label="Senha"
           value={password}
-          onChange={handlePasswordChange}
+          onInput={handleInput}
           error={passwordError}
         />
         {passwordError && <div>{passwordError}</div>}
@@ -98,15 +100,15 @@ export const ModalComponent = () => {
           placeholder="Confirme sua senha"
           label="Confirmar senha"
           value={confirmPassword}
-          onChange={handleConfirmPasswordChange}
+          onInput={handleInput}
           error={confirmPasswordError}
         />
         {confirmPasswordError && <div>{confirmPasswordError}</div>}
-        
+
         <button type="button" onClick={handleShowModal}>
           Cancelar
         </button>
-        
+
         <button type="submit">Cadastrar Usuário</button>
       </form>
     </>

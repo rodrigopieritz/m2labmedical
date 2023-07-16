@@ -1,71 +1,98 @@
 import React, { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ModalContext } from "../../context/ModalContext";
+import * as yup from "yup";
+import { InputComponent } from "../Input/inputComponent";
 
 export const LoginComponent = () => {
-
-  //Exibir Modal ao clicar no campo criar conta
   const { setShowModal: setShowModalContext } = useContext(ModalContext);
-  
-  // Navegação de rotas
+
   const navigate = useNavigate();
+
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [passwordError, setPasswordError] = useState("");
+
   const redirectToHome = () => {
     navigate("/home");
   };
 
-  // handle dos inputs
-  const [data, setData] = useState({
-    email: "",
-    password: "",
-  });
-
   const handleInput = (event) => {
     event.preventDefault();
     const { value, id } = event.target;
-    setData({ ...data, [id]: value });
+    if (id === "email") {
+      setEmail(value);
+      setEmailError("");
+    } else if (id === "password") {
+      setPassword(value);
+      setPasswordError("");
+    }
   };
-
-
-  // Alert para página de recuperção de senha em construção
 
   const handleForgotPassword = (event) => {
     event.preventDefault();
-    const promptMessage = "Página em construção";
-    alert(promptMessage);
-    console.log(data)
+    alert("Página em construção");
   };
 
-  //Abrir modal para cadastro de novo usuário
-  const handleShowModal = (e) => {
-    e.preventDefault();
+  const handleShowModal = (event) => {
+    event.preventDefault();
     setShowModalContext(true);
+  };
+
+  const handleFormSubmit = (event) => {
+    event.preventDefault();
+
+    const validationSchema = yup.object().shape({
+      email: yup
+        .string()
+        .email("Digite um e-mail válido")
+        .required("Campo obrigatório"),
+      password: yup
+        .string()
+        .min(8, "A senha deve ter pelo menos 8 caracteres")
+        .required("Campo obrigatório"),
+    });
+
+    validationSchema
+      .validate({ email, password })
+      .then(() => {
+        redirectToHome();
+      })
+      .catch((error) => {
+        if (error.path === "email") {
+          setEmailError(error.message);
+        } else if (error.path === "password") {
+          setPasswordError(error.message);
+        }
+      });
   };
 
   return (
     <>
-      <form onSubmit={redirectToHome}>
+      <form onSubmit={handleFormSubmit} noValidate>
         <legend>Login</legend>
-        <div>
-          <label htmlFor="input-group">E-mail</label>
-          <input
-            type="text"
-            id="email"
-            onInput={handleInput}
-            placeholder="Digite seu e-mail aqui"
-          />
-        </div>
-        <div>
-          <label htmlFor="input-group">Senha</label>
-          <input
-            type="password"
-            id="password"
-            onInput={handleInput}
-            placeholder="Digite sua senha aqui"
-          />
-        </div>
-        <button type="submit">
-          Logar
-        </button>
+        <InputComponent
+          id="email"
+          type="email"
+          placeholder="Digite seu email"
+          label="E-mail"
+          value={email}
+          onInput={handleInput}
+          error={emailError}
+        />
+        {emailError && <div>{emailError}</div>}
+        <InputComponent
+          id="password"
+          type="password"
+          placeholder="Digite sua senha"
+          label="Senha"
+          value={password}
+          onInput={handleInput}
+          error={passwordError}
+        />
+        {passwordError && <div>{passwordError}</div>}
+        <button type="submit">Logar</button>
       </form>
       <div>
         <a href="#" onClick={handleForgotPassword}>
