@@ -3,13 +3,21 @@ import { useNavigate } from "react-router-dom";
 import { ModalContext } from "../../context/ModalContext";
 
 export const LoginComponent = () => {
+
+  //Exibir Modal ao clicar no campo criar conta
+  const { setShowModal: setShowModalContext } = useContext(ModalContext);
+  
+  // Navegação de rotas
+  const navigate = useNavigate();
+  const redirectToHome = () => {
+    navigate("/home");
+  };
+
+  // handle dos inputs
   const [data, setData] = useState({
     email: "",
     password: "",
   });
-
-  const navigate = useNavigate();
-  const { setShowModal: setShowModalContext } = useContext(ModalContext);
 
   const handleInput = (event) => {
     event.preventDefault();
@@ -17,19 +25,19 @@ export const LoginComponent = () => {
     setData({ ...data, [id]: value });
   };
 
-  const redirectToHome = () => {
-    navigate("/home");
-  };
+
+  // Alert para página de recuperção de senha em construção
 
   const handleForgotPassword = (event) => {
     event.preventDefault();
     const promptMessage = "Página em construção";
     alert(promptMessage);
+    console.log(data)
   };
 
+  //Abrir modal para cadastro de novo usuário
   const handleShowModal = (e) => {
     e.preventDefault();
-
     setShowModalContext(true);
   };
 
@@ -55,7 +63,7 @@ export const LoginComponent = () => {
             placeholder="Digite sua senha aqui"
           />
         </div>
-        <button type="submit" disabled={!data.email || !data.password}>
+        <button type="submit">
           Logar
         </button>
       </form>
