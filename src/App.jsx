@@ -11,8 +11,9 @@ const App = () => {
     <ModalProvider>
     <Router>
       <Routes>
-        <Route path="/" element={<LoginPage />} />
-        <Route path="/home" element={<HomePage />} />
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="*" element={<><p>Página não encontrada</p></>}/>
       </Routes>
           </Router>
     </ModalProvider>

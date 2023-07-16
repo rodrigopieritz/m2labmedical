@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { ModalContext } from "../../context/ModalContext";
 import * as yup from "yup";
 import { InputComponent } from "../Input/inputComponent";
+import { AuthContext } from "../../context/auth/auth.context";
 
 export const LoginComponent = () => {
   const { setShowModal: setShowModalContext } = useContext(ModalContext);
@@ -14,8 +15,13 @@ export const LoginComponent = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
+  const {setAuth} = useContext (AuthContext);
+  const {auth} = useContext (AuthContext);
+
   const redirectToHome = () => {
-    navigate("/home");
+    setAuth({auth:{email},isLogged:true});
+    console.log(auth)
+    navigate("/");
   };
 
   const handleInput = (event) => {
