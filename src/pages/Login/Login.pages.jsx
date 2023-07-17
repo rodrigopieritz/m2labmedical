@@ -1,11 +1,12 @@
 import { LoginComponent } from "../../components/Login/LoginComponent"
-import SidebarMenu from "../../components/SidebarMenu/SidebarMenu"
+import Toolbar from "../../components/Toolbar/ToolbarComponent"
+
 
 export const LoginPage = () => {
     return(
         <>
-        <SidebarMenu/>
         <LoginComponent/>
+       
         </>
     )
 }

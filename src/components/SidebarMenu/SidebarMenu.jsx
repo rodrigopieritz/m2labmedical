@@ -20,50 +20,54 @@ const SidebarMenu = () => {
   };
 
   const expandCollapse = () => {
-    alert ('esta etapa será desenvolvida na estilização')
-  }
+    alert(
+      "esta etapa será desenvolvida na estilização - usestate para o hiden e para o show"
+    );
+  };
 
   return (
     <div>
       <div>
         <img src="lab-medical-logo-white.png" alt="Logo" />
       </div>
-       
-      <ButtonComponent
-      id="homeButton"
-      onClick = {() => handleRedirect("/")}
-      label="Home"/>
 
       <ButtonComponent
-      id="patientRegisterButton"
-      onClick = {() => handleRedirect("/patient-register")}
-      label="Cadastrar Paciente"/>
+        id="homeButton"
+        onClick={() => handleRedirect("/")}
+        label="Home"
+      />
 
       <ButtonComponent
-      id="medicalRecordButton"
-      onClick = {() => handleRedirect("/medical-record")}
-      label="Listar Prontuários"/>
+        id="patientRegisterButton"
+        onClick={() => handleRedirect("/patient-register")}
+        label="Cadastrar Paciente"
+      />
 
       <ButtonComponent
-      id="medicalRegisterButton"
-      onClick = {() => handleRedirect("/medical-register")}
-      label="Cadastrar Consulta"/>
+        id="medicalRecordButton"
+        onClick={() => handleRedirect("/medical-record")}
+        label="Listar Prontuários"
+      />
 
       <ButtonComponent
-      id="examRegisterButton"
-      onClick = {() => handleRedirect("/exam-register")}
-      label="Cadastrar Exame"/>
-      
-      <ButtonComponent
-      id="expandCollapseButton"
-      onClick = {() => expandCollapse()}
-      label="Exibir/ Recolher"/>
+        id="medicalRegisterButton"
+        onClick={() => handleRedirect("/medical-register")}
+        label="Cadastrar Consulta"
+      />
 
-      
       <ButtonComponent
-      id="logouButton"
-      onClick = {handleLogout}
-      label="Logout"/>
+        id="examRegisterButton"
+        onClick={() => handleRedirect("/exam-register")}
+        label="Cadastrar Exame"
+      />
+
+      <ButtonComponent
+        id="expandCollapseButton"
+        onClick={() => expandCollapse()}
+        label="Exibir/ Recolher"
+      />
+
+      <ButtonComponent id="logouButton" onClick={handleLogout} label="Logout" />
     </div>
   );
 };
