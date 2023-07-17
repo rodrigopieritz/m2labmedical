@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { ModalContext } from "../../context/ModalContext";
 import * as yup from "yup";
@@ -15,12 +15,13 @@ export const LoginComponent = () => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
 
-  const {setAuth} = useContext (AuthContext);
-  const {auth} = useContext (AuthContext);
+  const { setAuth } = useContext(AuthContext);
 
   const redirectToHome = () => {
-    setAuth({auth:{email},isLogged:true});
-    console.log(auth)
+    setAuth({
+      user: { email },
+      isLogged: true,
+    });
     navigate("/");
   };
 
@@ -48,7 +49,7 @@ export const LoginComponent = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-
+  
     const validationSchema = yup.object().shape({
       email: yup
         .string()
@@ -59,11 +60,27 @@ export const LoginComponent = () => {
         .min(8, "A senha deve ter pelo menos 8 caracteres")
         .required("Campo obrigatório"),
     });
-
+  
     validationSchema
       .validate({ email, password })
       .then(() => {
-        redirectToHome();
+        const allowedUsers = JSON.parse(localStorage.getItem("allowedUsers"));
+        const user = allowedUsers.find(
+          (allowedUser) =>
+            allowedUser.email === email && allowedUser.password === password
+        );
+  
+        if (user) {
+          setAuth({
+            user: { email },
+            isLogged: true,
+          });
+          navigate("/");
+        } else {
+          // Usuário não autorizado
+          setEmailError("Usuário ou senha incorretos");
+          setPasswordError("");
+        }
       })
       .catch((error) => {
         if (error.path === "email") {
@@ -73,6 +90,21 @@ export const LoginComponent = () => {
         }
       });
   };
+  
+
+  const addAllowedUsersToLocalStorage = () => {
+    const allowedUsers = [
+      {
+        email: "usuariopermitido@email.com",
+        password: "usuariopermitido",
+      },
+    ];
+    localStorage.setItem("allowedUsers", JSON.stringify(allowedUsers));
+  };
+
+  useEffect(() => {
+    addAllowedUsersToLocalStorage();
+  }, []);
 
   return (
     <>
@@ -111,3 +143,4 @@ export const LoginComponent = () => {
     </>
   );
 };
+
