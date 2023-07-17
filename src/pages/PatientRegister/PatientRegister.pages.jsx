@@ -4,7 +4,7 @@ import { Navigate } from "react-router"
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu"
 
 
-export const HomePage = () => {
+export const PatientRegister = () => {
     const {auth} = useContext( AuthContext)
 
     const render =() =>{
@@ -12,7 +12,7 @@ export const HomePage = () => {
         return(
             <>
             <SidebarMenu/>
-            <p> HomePage is render </p>
+            <p> PatientRegister is render </p>
             </>
         )
 

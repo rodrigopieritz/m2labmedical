@@ -4,6 +4,7 @@ import { ModalContext } from "../../context/ModalContext";
 import * as yup from "yup";
 import { InputComponent } from "../Input/inputComponent";
 import { AuthContext } from "../../context/auth/auth.context";
+import { ButtonComponent } from "../Button/buttonComponent";
 
 export const LoginComponent = () => {
   const { setShowModal: setShowModalContext } = useContext(ModalContext);
@@ -128,15 +129,26 @@ export const LoginComponent = () => {
         />
         {emailError && <div>{emailError}</div>}
         {passwordError && <div>{passwordError}</div>}
-        <button type="submit">Logar</button>
+        
+        <ButtonComponent
+        id="loginButton"
+        type="submit"
+        label="Logar"
+        />
       </form>
       <div>
         <a href="#" onClick={handleForgotPassword}>
           Esqueci minha senha
         </a>
-        <button type="button" onClick={handleShowModal}>
-          Criar Conta
-        </button>
+        <ButtonComponent
+        id="openModalButton"
+        type="button"
+        label="Criar Conta"
+        onClick={handleShowModal}/>
+        
+        <p>Usuário e senha expostos para facilitar os testes</p>
+        <p> usuário: usuariopermitido@email.com </p>
+        <p> senha: usuariopermitido </p>
       </div>
     </>
   );
