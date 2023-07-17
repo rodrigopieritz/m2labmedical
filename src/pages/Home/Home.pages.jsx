@@ -7,10 +7,10 @@ import Toolbar from "../../components/Toolbar/ToolbarComponent";
 
 export const HomePage = () => {
   const { auth } = useContext(AuthContext);
-  const userEmail = auth.user.email;
-  const userName = userEmail.split("@")[0];
-
+  
   const render = () => {
+    const userEmail = auth.user.email;
+    const userName = userEmail.split("@")[0];
         return (
       <>
         <SidebarMenu />
