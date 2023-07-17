@@ -137,6 +137,8 @@ export const LoginComponent = () => {
         <button type="button" onClick={handleShowModal}>
           Criar Conta
         </button>
+        <p> usuário: usuariopermitido@email.com </p>
+         <p> senha: usuariopermitido </p>
       </div>
     </>
   );

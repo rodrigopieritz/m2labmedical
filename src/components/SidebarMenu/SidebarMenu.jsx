@@ -1,15 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../../context/auth/auth.context";
 
 const SidebarMenu = () => {
   const navigate = useNavigate();
+  const { setAuth } = useContext(AuthContext);
 
   const handleRedirect = (path) => {
     navigate(path);
   };
 
   const handleLogout = () => {
-    // Lógica para fazer logout
+    setAuth({
+      user: {},
+      isLogged: false,
+    });
     navigate("/login");
   };
 
