@@ -28,15 +28,26 @@ export const ModalComponent = () => {
       setConfirmPasswordError("");
     }
   };
+  const addAllowedUsersToLocalStorage = (email, password) => {
+    const allowedUsers = JSON.parse(localStorage.getItem("allowedUsers")) || [];
 
-   const handleShowModal = () => {
+    const newUser = {
+      email,
+      password,
+    };
+
+    allowedUsers.push(newUser);
+    localStorage.setItem("allowedUsers", JSON.stringify(allowedUsers));
+  };
+
+  const handleShowModal = () => {
     setShowModalContext(false);
   };
 
-    const handleFormSubmition = (e) => {
+  const handleFormSubmition = (e) => {
     e.preventDefault();
 
-       const validationSchema = yup.object().shape({
+    const validationSchema = yup.object().shape({
       email: yup
         .string()
         .email("Digite um e-mail válido")
@@ -57,7 +68,8 @@ export const ModalComponent = () => {
         password: password,
         confirmPassword: confirmPassword,
       });
-
+      addAllowedUsersToLocalStorage(email, password);
+      alert("novo usuário cadastrado com sucesso");
       handleShowModal();
     } catch (error) {
       if (error.path === "email") {

@@ -49,7 +49,7 @@ export const LoginComponent = () => {
 
   const handleFormSubmit = (event) => {
     event.preventDefault();
-  
+
     const validationSchema = yup.object().shape({
       email: yup
         .string()
@@ -60,7 +60,7 @@ export const LoginComponent = () => {
         .min(8, "A senha deve ter pelo menos 8 caracteres")
         .required("Campo obrigatório"),
     });
-  
+
     validationSchema
       .validate({ email, password })
       .then(() => {
@@ -69,7 +69,7 @@ export const LoginComponent = () => {
           (allowedUser) =>
             allowedUser.email === email && allowedUser.password === password
         );
-  
+
         if (user) {
           setAuth({
             user: { email },
@@ -77,8 +77,7 @@ export const LoginComponent = () => {
           });
           navigate("/");
         } else {
-          // Usuário não autorizado
-          setEmailError("Usuário ou senha incorretos");
+          setEmailError("Usuário e/ou senha incorretos");
           setPasswordError("");
         }
       })
@@ -90,7 +89,6 @@ export const LoginComponent = () => {
         }
       });
   };
-  
 
   const addAllowedUsersToLocalStorage = () => {
     const allowedUsers = [
@@ -119,7 +117,6 @@ export const LoginComponent = () => {
           onInput={handleInput}
           error={emailError}
         />
-        {emailError && <div>{emailError}</div>}
         <InputComponent
           id="password"
           type="password"
@@ -129,6 +126,7 @@ export const LoginComponent = () => {
           onInput={handleInput}
           error={passwordError}
         />
+        {emailError && <div>{emailError}</div>}
         {passwordError && <div>{passwordError}</div>}
         <button type="submit">Logar</button>
       </form>
@@ -143,4 +141,3 @@ export const LoginComponent = () => {
     </>
   );
 };
-
