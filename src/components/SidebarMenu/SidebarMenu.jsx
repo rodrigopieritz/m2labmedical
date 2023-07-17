@@ -1,6 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth/auth.context";
+import { ButtonComponent } from "../Button/buttonComponent";
 
 const SidebarMenu = () => {
   const navigate = useNavigate();
@@ -18,39 +19,51 @@ const SidebarMenu = () => {
     navigate("/login");
   };
 
+  const expandCollapse = () => {
+    alert ('esta etapa será desenvolvida na estilização')
+  }
+
   return (
-    <div className="sidebar-menu">
-      <div className="logo">
+    <div>
+      <div>
         <img src="lab-medical-logo-white.png" alt="Logo" />
       </div>
-      <button onClick={() => handleRedirect("/")}>
-        <span className="icon">Ícone</span>
-        Início
-      </button>
-      <button onClick={() => handleRedirect("/patient-register")}>
-        <span className="icon">Ícone</span>
-        Cadastrar Pacientes
-      </button>
-      <button onClick={() => handleRedirect("/medical-record")}>
-        <span className="icon">Ícone</span>
-        Listar Prontuários
-      </button>
-      <button onClick={() => handleRedirect("/medical-register")}>
-        <span className="icon">Ícone</span>
-        Cadastrar Consultas
-      </button>
-      <button onClick={() => handleRedirect("/exam-register")}>
-        <span className="icon">Ícone</span>
-        Cadastrar Exames
-      </button>
-      <div className="expand-button">
-        <input type="radio" name="expand" id="expand" />
-        <label htmlFor="expand">Expandir</label>
-      </div>
-      <button className="logout-button" onClick={handleLogout}>
-        <span className="icon">Ícone</span>
-        Sair
-      </button>
+       
+      <ButtonComponent
+      id="homeButton"
+      onClick = {() => handleRedirect("/")}
+      label="Home"/>
+
+      <ButtonComponent
+      id="patientRegisterButton"
+      onClick = {() => handleRedirect("/patient-register")}
+      label="Cadastrar Paciente"/>
+
+      <ButtonComponent
+      id="medicalRecordButton"
+      onClick = {() => handleRedirect("/medical-record")}
+      label="Listar Prontuários"/>
+
+      <ButtonComponent
+      id="medicalRegisterButton"
+      onClick = {() => handleRedirect("/medical-register")}
+      label="Cadastrar Consulta"/>
+
+      <ButtonComponent
+      id="examRegisterButton"
+      onClick = {() => handleRedirect("/exam-register")}
+      label="Cadastrar Exame"/>
+      
+      <ButtonComponent
+      id="expandCollapseButton"
+      onClick = {() => expandCollapse()}
+      label="Exibir/ Recolher"/>
+
+      
+      <ButtonComponent
+      id="logouButton"
+      onClick = {handleLogout}
+      label="Logout"/>
     </div>
   );
 };
