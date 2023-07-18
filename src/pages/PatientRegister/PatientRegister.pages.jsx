@@ -4,10 +4,11 @@ import { Navigate } from "react-router";
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 import Toolbar from "../../components/Toolbar/ToolbarComponent";
 import * as Styled from "../../global.style";
+import { PatientRegister } from "../../components/PatientRegister/PatientRegister";
 
-export const PatientRegister = () => {
+export const PatientRegisterPage = () => {
   const { auth } = useContext(AuthContext);
-  
+
   const render = () => {
     const userEmail = auth.user.email;
     const userName = userEmail.split("@")[0];
@@ -20,13 +21,11 @@ export const PatientRegister = () => {
             userName={userName}
             userPhoto="userPhoto.png"
           />
-          <Styled.SpecificPageContent>
-            <p> Patient Register is render </p>
-          </Styled.SpecificPageContent>
+          <PatientRegister />
         </Styled.MainContent>
       </Styled.PageContainer>
     );
   };
-  //return auth.isLogged ? render() : <Navigate to={"/login"}/>
-  return render();
+  return auth.isLogged ? render() : render()
+  //<Navigate to={"/login"}/>
 };
