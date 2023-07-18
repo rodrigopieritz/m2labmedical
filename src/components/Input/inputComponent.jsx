@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 
-export const InputComponent = ({ label, type, id, placeholder, value, onInput, error }) => {
+export const InputComponent = ({ label, type, id, placeholder, value, onInput,}) => {
   return (
     <div>
       <label htmlFor={id}>{label}</label>
