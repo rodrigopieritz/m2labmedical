@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth/auth.context";
 import { ButtonComponent } from "../Button/buttonComponent";
+import * as Styled from '../SidebarMenu/Sidebar.style'
 
 const SidebarMenu = () => {
   const navigate = useNavigate();
@@ -26,9 +27,9 @@ const SidebarMenu = () => {
   };
 
   return (
-    <div>
+    <Styled.Sidebar>
       <div>
-        <img src="lab-medical-logo-white.png" alt="Logo" />
+        <img src="lab-medical-logo-white.png" alt="Logo" width="100" height="100"/>
       </div>
 
       <ButtonComponent
@@ -68,7 +69,7 @@ const SidebarMenu = () => {
       />
 
       <ButtonComponent id="logouButton" onClick={handleLogout} label="Logout" />
-    </div>
+    </Styled.Sidebar>
   );
 };
 

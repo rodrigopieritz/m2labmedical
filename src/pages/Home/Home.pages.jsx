@@ -3,24 +3,28 @@ import { AuthContext } from "../../context/auth/auth.context";
 import { Navigate } from "react-router";
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 import Toolbar from "../../components/Toolbar/ToolbarComponent";
-
+import * as Styled from "../../global.style";
 
 export const HomePage = () => {
   const { auth } = useContext(AuthContext);
-  
+
   const render = () => {
     const userEmail = auth.user.email;
     const userName = userEmail.split("@")[0];
-        return (
-      <>
+    return (
+      <Styled.PageContainer>
         <SidebarMenu />
-        <Toolbar
-          pageTitle="Home"
-          userName= {userName}
-          userPhoto="userPhoto.png"
-        />
-        <p> HomePage is render </p>
-      </>
+        <Styled.MainContent>
+          <Toolbar
+            pageTitle="Home"
+            userName={userName}
+            userPhoto="userPhoto.png"
+          />
+          <Styled.SpecificPageContent>
+            <p> HomePage is render </p>
+          </Styled.SpecificPageContent>
+        </Styled.MainContent>
+      </Styled.PageContainer>
     );
   };
   return auth.isLogged ? render() : <Navigate to={"/login"} />;
