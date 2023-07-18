@@ -1,74 +1,3 @@
-// import React, {useState } from "react";
-// import * as Styled from "./PatientRegister.style";
-// import { ButtonComponent } from "../Button/buttonComponent";
-// import { InputComponent } from "../Input/inputComponent";
-// import * as yup from "yup";
-
-// export const PatientRegister = () => {
-
-//   const [name, setName] = useState("");
-//   const [nameError, setNameError] = useState("");
-
-//   const handleInput = (event) => {
-//     event.preventDefault();
-//     const { value, id } = event.target;
-//     if (id === "name") {
-//       setName(value);
-//       setNameError("");
-//     }
-
-//   };
-//   const addPatientToLocalStorage = () => {
-//     console.log("aqui será desenvolvida a lógica para adicionar o paciente no localStorage")
-//   };
-
-//   const handleFormSubmition = (e) => {
-//     e.preventDefault();
-
-//     const validationSchema = yup.object().shape({
-//       name: yup
-//         .string()
-//         .min(5, "Este campo deve ter pelo menos 5 caracteres")
-//         .max(50, "Este campo deve ter no máximo 50 caracteres"),
-//         });
-
-//     try {
-//       validationSchema.validateSync({
-//         name: name,
-
-//       });
-//       addPatientToLocalStorage();
-//       alert("novo usuário cadastrado com sucesso");
-
-//     } catch (error) {
-//       if (error.path === "name") {
-//         setNameError(error.message);
-//        }
-//     }
-//   };
-
-//   return (
-//     <>
-//       <Styled.PatientRegister>
-//         <form onSubmit={handleFormSubmition} noValidate>
-//           <ButtonComponent id="save" type="submit" label="Salvar" />
-
-//           <InputComponent
-//             id="name"
-//             type="text"
-//             placeholder="Digite seu nome completo"
-//             label="Nome Completo"
-//             value={name}
-//             onInput={handleInput}
-//             error={nameError}
-//           />
-//           {nameError && <div>{nameError}</div>}
-//         </form>
-//       </Styled.PatientRegister>
-//     </>
-//   );
-// };
-
 import React, { useState } from "react";
 import * as Styled from "./PatientRegister.style";
 import { ButtonComponent } from "../Button/buttonComponent";
@@ -165,16 +94,20 @@ export const PatientRegister = () => {
   };
   const handleFormSubmission = (e) => {
     e.preventDefault();
-  
+
     const validationSchema = yup.object().shape({
-          name: yup
+      name: yup
         .string()
         .min(5, "Este campo deve ter pelo menos 5 caracteres")
         .max(50, "Este campo deve ter no máximo 50 caracteres"),
       gender: yup
         .string()
         .oneOf(["Masculino", "Feminino"], "Selecione uma opção válida"),
-      birthdate: yup.date().required("Este campo é obrigatório").nullable(),
+      birthdate: yup
+      .date("Este campo é obrigatório")
+      .required("Este campo é obrigatório")
+      .nullable("Este campo é obrigatório")
+      .typeError("Data de nascimento inválida"),
       cpf: yup
         .string()
         .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Digite um CPF válido")
@@ -225,8 +158,7 @@ export const PatientRegister = () => {
       insuranceNumber: yup.string(),
       insuranceValidity: yup.string(),
     });
-    
-  
+
     validationSchema
       .validate(
         {
@@ -246,7 +178,7 @@ export const PatientRegister = () => {
           insuranceNumber,
           insuranceValidity,
         },
-        { abortEarly: false } // Permite exibir todas as mensagens de erro de uma vez
+        { abortEarly: false }
       )
       .then(() => {
         addPatientToLocalStorage();
@@ -281,128 +213,13 @@ export const PatientRegister = () => {
         }
       });
   };
-  
-  // const handleFormSubmission = (e) => {
-  //   e.preventDefault();
-
-  //   const validationSchema = yup.object().shape({
-  //     name: yup
-  //       .string()
-  //       .min(5, "Este campo deve ter pelo menos 5 caracteres")
-  //       .max(50, "Este campo deve ter no máximo 50 caracteres"),
-  //     gender: yup
-  //       .string()
-  //       .oneOf(["Masculino", "Feminino"], "Selecione uma opção válida"),
-  //     birthdate: yup.date().required("Este campo é obrigatório").nullable(),
-  //     cpf: yup
-  //       .string()
-  //       .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Digite um CPF válido")
-  //       .required("Este campo é obrigatório"),
-  //     rg: yup
-  //       .string()
-  //       .max(20, "Este campo deve ter no máximo 20 caracteres")
-  //       .required("Este campo é obrigatório"),
-  //     maritalStatus: yup
-  //       .string()
-  //       .oneOf(
-  //         [
-  //           "Solteiro(a)",
-  //           "Casado(a)/ União Estável",
-  //           "Viúvo(a)",
-  //           "Separado(a)",
-  //           "Divorciado(a)",
-  //         ],
-  //         "Selecione uma opção válida"
-  //       ),
-  //     phone: yup
-  //       .string()
-  //       .matches(
-  //         /^\(\d{2}\) \d \d{4}-\d{5}$/,
-  //         "Digite um número de telefone válido"
-  //       )
-  //       .required("Este campo é obrigatório"),
-  //     email: yup.string().email("Digite um e-mail válido"),
-  //     naturalness: yup
-  //       .string()
-  //       .min(5, "Este campo deve ter pelo menos 5 caracteres")
-  //       .max(50, "Este campo deve ter no máximo 50 caracteres")
-  //       .required("Este campo é obrigatório"),
-  //     emergencyContact: yup
-  //       .string()
-  //       .matches(
-  //         /^\(\d{2}\) \d \d{4}-\d{5}$/,
-  //         "Digite um número de telefone válido"
-  //       )
-  //       .required("Este campo é obrigatório"),
-  //     allergies: yup
-  //       .string()
-  //       .max(200, "Este campo deve ter no máximo 200 caracteres"),
-  //     specialCare: yup
-  //       .string()
-  //       .max(200, "Este campo deve ter no máximo 200 caracteres"),
-  //     insurance: yup.string(),
-  //     insuranceNumber: yup.string(),
-  //     insuranceValidity: yup.string(),
-  //   });
-
-  //   validationSchema
-  //     .validate(
-  //       {
-  //         name,
-  //         gender,
-  //         birthdate,
-  //         cpf,
-  //         rg,
-  //         maritalStatus,
-  //         phone,
-  //         email,
-  //         naturalness,
-  //         emergencyContact,
-  //         allergies,
-  //         specialCare,
-  //         insurance,
-  //         insuranceNumber,
-  //         insuranceValidity,
-  //       }
-  //     )
-  //     .then(() => {
-  //       addPatientToLocalStorage();
-  //       alert("Novo paciente cadastrado com sucesso");
-  //     })
-  //     .catch((error) => {
-  //       if (error.inner) {
-  //         error.inner.forEach((err) => {
-  //           const { path, message } = err;
-  //           if (path === "name") {
-  //             setNameError(message);
-  //           } else if (path === "gender") {
-  //             setGenderError(message);
-  //           } else if (path === "birthdate") {
-  //             setBirthdateError(message);
-  //           } else if (path === "cpf") {
-  //             setCpfError(message);
-  //           } else if (path === "rg") {
-  //             setRgError(message);
-  //           } else if (path === "maritalStatus") {
-  //             setMaritalStatusError(message);
-  //           } else if (path === "phone") {
-  //             setPhoneError(message);
-  //           } else if (path === "email") {
-  //             setEmailError(message);
-  //           } else if (path === "naturalness") {
-  //             setNaturalnessError(message);
-  //           } else if (path === "emergencyContact") {
-  //             setEmergencyContactError(message);
-  //           }
-  //         });
-  //       }
-  //     });
-  // };
 
   return (
     <>
       <Styled.PatientRegister>
         <form onSubmit={handleFormSubmission} noValidate>
+        <ButtonComponent id="editButton" type="button" label="Editar" onClick = {()=>{alert("função ainda não desenvolvida") }}/>
+        <ButtonComponent id="deletButton" type="button" label="Apagar" onClick = {()=>{alert("função ainda não desenvolvida") }}/>
           <ButtonComponent id="save" type="submit" label="Salvar" />
 
           <InputComponent
@@ -416,21 +233,30 @@ export const PatientRegister = () => {
           />
           {nameError && <div>{nameError}</div>}
 
-          <InputComponent
-            id="gender"
-            type="text"
-            placeholder="Digite o gênero"
-            label="Gênero"
-            value={gender}
-            onInput={handleInput}
-            error={genderError}
-          />
+          <div>
+            <label htmlFor="gender">Gênero</label>
+            <div>
+              <select
+                id="gender"
+                value={gender}
+                onChange={handleInput}
+                onBlur={handleInput}
+                className={genderError ? "error" : ""}
+              >
+                <option value="" disabled hidden>
+                  Selecione o gênero
+                </option>
+                <option value="Masculino">Masculino</option>
+                <option value="Feminino">Feminino</option>
+              </select>
+            </div>
+          </div>
           {genderError && <div>{genderError}</div>}
 
           <InputComponent
             id="birthdate"
             type="date"
-            placeholder="Selecione a data de nascimento"
+            placeholder="01/01/2001"
             label="Data de Nascimento"
             value={birthdate}
             onInput={handleInput}
@@ -441,7 +267,7 @@ export const PatientRegister = () => {
           <InputComponent
             id="cpf"
             type="text"
-            placeholder="Digite o CPF"
+            placeholder="Digite o CPF no formato 99.999.999-99"
             label="CPF"
             value={cpf}
             onInput={handleInput}
@@ -459,22 +285,35 @@ export const PatientRegister = () => {
             error={rgError}
           />
           {rgError && <div>{rgError}</div>}
-
-          <InputComponent
-            id="maritalStatus"
-            type="text"
-            placeholder="Digite o estado civil"
-            label="Estado Civil"
-            value={maritalStatus}
-            onInput={handleInput}
-            error={maritalStatusError}
-          />
+          <div>
+            <label htmlFor="Estado Civil">Estado Civil</label>
+            <div>
+              <select
+                id="maritalStatus"
+                value={maritalStatus}
+                onChange={handleInput}
+                onBlur={handleInput}
+                className={maritalStatusError ? "error" : ""}
+              >
+                <option disabled hidden>
+                  Selecione o estado civil
+                </option>
+                <option value="Solteiro(a)">Solteiro(a)</option>
+                <option value="Casado(a)/ União Estável">
+                  Casado(a)/ União Estável
+                </option>
+                <option value="Viúvo(a)">Viúvo(a)</option>
+                <option value="Separado(a)">Separado(a)</option>
+                <option value="Divorciado(a)">Divorciado(a)</option>
+              </select>
+            </div>
+          </div>
           {maritalStatusError && <div>{maritalStatusError}</div>}
 
           <InputComponent
             id="phone"
             type="text"
-            placeholder="Digite o telefone"
+            placeholder="Digite o telefone no formato (99) 9999-99999"
             label="Telefone"
             value={phone}
             onInput={handleInput}
@@ -507,7 +346,7 @@ export const PatientRegister = () => {
           <InputComponent
             id="emergencyContact"
             type="text"
-            placeholder="Digite o contato de emergência"
+            placeholder="Digite o contato de emergência no formato (99) 9999-99999"
             label="Contato de Emergência"
             value={emergencyContact}
             onInput={handleInput}
@@ -559,7 +398,6 @@ export const PatientRegister = () => {
             value={insuranceValidity}
             onInput={handleInput}
           />
-
         </form>
       </Styled.PatientRegister>
     </>
