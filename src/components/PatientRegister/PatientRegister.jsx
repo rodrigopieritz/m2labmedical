@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import * as Styled from "./PatientRegister.style";
 import { ButtonComponent } from "../Button/buttonComponent";
 import { InputComponent } from "../Input/inputComponent";
@@ -40,6 +40,8 @@ export const PatientRegister = () => {
   const [insurance, setInsurance] = useState("");
   const [insuranceNumber, setInsuranceNumber] = useState("");
   const [insuranceValidity, setInsuranceValidity] = useState("");
+
+  const [cep, setCep] = useState("");
 
   const handleInput = (event) => {
     event.preventDefault();
@@ -87,6 +89,34 @@ export const PatientRegister = () => {
     }
   };
 
+  // const handleCep = (event) => {
+  //   event.preventDefault();
+  //   const { value } = event.target;
+  //   if (value.length === 8) {
+  //     setCep(value);
+  //     handleInput(event);
+  //   }
+  // };
+  
+  // useEffect(
+  //   () => {
+  //     const API_IVACEP = "https://viacep.com.br/ws/CEP/json/";
+  //     async function request() {
+  //       const response = await fetch(API_VIACEP.replace("CEP", cep));
+  //       const data = await response.json();
+  //       console.log(data);
+
+  //       setFormData({
+  //         ...formData,
+  //         endereco: data.logradouto,
+  //         estado: data.uf,
+  //       });
+  //     }
+  //     request();
+  //   },
+  //   { cep }
+  // );
+
   const addPatientToLocalStorage = () => {
     console.log(
       "Aqui será desenvolvida a lógica para adicionar o paciente no localStorage"
@@ -104,10 +134,10 @@ export const PatientRegister = () => {
         .string()
         .oneOf(["Masculino", "Feminino"], "Selecione uma opção válida"),
       birthdate: yup
-      .date("Este campo é obrigatório")
-      .required("Este campo é obrigatório")
-      .nullable("Este campo é obrigatório")
-      .typeError("Data de nascimento inválida"),
+        .date("Este campo é obrigatório")
+        .required("Este campo é obrigatório")
+        .nullable("Este campo é obrigatório")
+        .typeError("Data de nascimento inválida"),
       cpf: yup
         .string()
         .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Digite um CPF válido")
@@ -218,8 +248,22 @@ export const PatientRegister = () => {
     <>
       <Styled.PatientRegister>
         <form onSubmit={handleFormSubmission} noValidate>
-        <ButtonComponent id="editButton" type="button" label="Editar" onClick = {()=>{alert("função ainda não desenvolvida") }}/>
-        <ButtonComponent id="deletButton" type="button" label="Apagar" onClick = {()=>{alert("função ainda não desenvolvida") }}/>
+          <ButtonComponent
+            id="editButton"
+            type="button"
+            label="Editar"
+            onClick={() => {
+              alert("função ainda não desenvolvida");
+            }}
+          />
+          <ButtonComponent
+            id="deletButton"
+            type="button"
+            label="Apagar"
+            onClick={() => {
+              alert("função ainda não desenvolvida");
+            }}
+          />
           <ButtonComponent id="save" type="submit" label="Salvar" />
 
           <InputComponent
@@ -398,6 +442,13 @@ export const PatientRegister = () => {
             value={insuranceValidity}
             onInput={handleInput}
           />
+          {/*<label htmlFor="cep">CEP</label>
+           <input
+            type="text"
+            id="cep"
+            placeholder="CEP"
+            onInput={handleCep}
+          ></input> */}
         </form>
       </Styled.PatientRegister>
     </>
