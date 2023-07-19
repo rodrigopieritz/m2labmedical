@@ -26,6 +26,5 @@ export const PatientRegisterPage = () => {
       </Styled.PageContainer>
     );
   };
-  return auth.isLogged ? render() : render()
-  //<Navigate to={"/login"}/>
+  return auth.isLogged ? render() : <Navigate to={"/login"}/>
 };

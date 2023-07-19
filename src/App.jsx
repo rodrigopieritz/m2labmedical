@@ -6,11 +6,39 @@ import { PatientRegisterPage } from "./pages/PatientRegister/PatientRegister.pag
 import { MedicalRegister } from "./pages/MedicalRegister/MedicalRegister.pages";
 import { MedicalRecord } from "./pages/MedicalRecord/MedicalRecord.pages";
 import { ExamRegister } from "./pages/ExamRegister/ExamRegister.pages";
+import { LocalStorageService } from "./service/LocalStorage.service";
 
 
 
 const App = () => {
+
+  const addAllowedUsersToLocalStorage = () => {
+    const allowedUsers = [
+      {
+        email: "usuariopermitido@email.com",
+        password: "usuariopermitido",
+      },
+    ];
+    LocalStorageService.set("allowedUsers", allowedUsers);
+  };
+
+  const addPatientsToLocalStorage = () => {
+    const patients = [
+      {
+        id: 1,
+        name: "Paciente Exemplo Um",
+      },
+    ];
+    LocalStorageService.set("patients", patients)
+    };
+
+  if( !LocalStorageService.get("allowedUsers")) {
+    addAllowedUsersToLocalStorage();
+  } if( !LocalStorageService.get("patients")) {
+    addPatientsToLocalStorage();
+  }
   
+   
   return (
     <ModalProvider>
     <Router>
