@@ -35,6 +35,7 @@ export const PatientRegister = () => {
   const [cep, setCep] = useState("");
   const [cepError, setCepError] = useState("");
   const [city, setCity] = useState("");
+  const [cityError, setCityError] = useState("");
   const [uf, setUf] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
   const [street, setStreet] = useState("");
@@ -43,6 +44,7 @@ export const PatientRegister = () => {
   const [complement, setComplement] = useState("");
   const [nextTo, setNextTo] = useState("");
   // Valida se é um input válid, se sim daum set, se não retorna um erro
+  
   const handleInput = (event) => {
     event.preventDefault();
     const { value, id } = event.target;
@@ -89,6 +91,9 @@ export const PatientRegister = () => {
     } else if (id === "cep") {
       setCep(value);
       setCepError("");
+    } else if (id === "city") {
+      setCity(value);
+      setCityError("");
     } else if (id === "houseNumber") {
       setHouseNumber(value);
       setHouseNumberError("");
@@ -103,16 +108,19 @@ export const PatientRegister = () => {
     event.preventDefault();
     const { value } = event.target;
     setCepError("");
+    setCep("");
     setCity("");
     setUf("");
     setNeighborhood("");
     setStreet("");
+    setCityError("");
 
     if (value.length === 8) {
       try {
         console.log("Iniciar consulta à API de CEP");
         await requestCep(value);
         console.log("Consulta concluída");
+        handleInput(event);
       } catch (error) {
         console.error("Ocorreu um erro na consulta do CEP:", error);
       }
@@ -162,6 +170,8 @@ export const PatientRegister = () => {
       "insurance": insurance,
       "insuranceNumber": insuranceNumber,
       "insuranceVality": insuranceValidity,
+      "cep":cep,
+      "city": city,
     }
     console.log(newPatientRegister)
   };
@@ -171,89 +181,97 @@ export const PatientRegister = () => {
 
 
     const validationSchema = yup.object().shape({
-      name: yup
-        .string()
-        .min(5, "Este campo deve ter pelo menos 5 caracteres")
-        .max(50, "Este campo deve ter no máximo 50 caracteres"),
-      gender: yup
-        .string()
-        .oneOf(["Masculino", "Feminino"], "Selecione uma opção válida"),
-      birthdate: yup
-        .date("Este campo é obrigatório")
-        .required("Este campo é obrigatório")
-        .nullable("Este campo é obrigatório")
-        .typeError("Data de nascimento inválida"),
-      cpf: yup
-        .string()
-        .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Digite um CPF válido, no formato 999.999.999-99")
-        .required("Este campo é obrigatório"),
-      rg: yup
-        .string()
-        .max(20, "Este campo deve ter no máximo 20 caracteres")
-        .required("Este campo é obrigatório"),
-      maritalStatus: yup
-        .string()
-        .oneOf(
-          [
-            "Solteiro(a)",
-            "Casado(a)/ União Estável",
-            "Viúvo(a)",
-            "Separado(a)",
-            "Divorciado(a)",
-          ],
-          "Selecione uma opção válida"
-        ),
-      phone: yup
-        .string()
-        .matches(
-          /^\(\d{2}\) \d \d{4}-\d{5}$/,
-          "Digite um número de telefone no formato (99) 9 9999-99999"
-        )
-        .required("Este campo é obrigatório"),
-      email: yup.string().email("Digite um e-mail válido"),
-      naturalness: yup
-        .string()
-        .min(5, "Este campo deve ter pelo menos 5 caracteres")
-        .max(50, "Este campo deve ter no máximo 50 caracteres")
-        .required("Este campo é obrigatório"),
-      emergencyContact: yup
-        .string()
-        .matches(
-          /^\(\d{2}\) \d \d{4}-\d{5}$/,
-          "Digite um número de telefone no formato (99) 9 9999-99999"
-        )
-        .required("Este campo é obrigatório"),
-      allergies: yup
-        .string()
-        .max(200, "Este campo deve ter no máximo 200 caracteres"),
-      specialCare: yup
-        .string()
-        .max(200, "Este campo deve ter no máximo 200 caracteres"),
-      insurance: yup.string(),
-      insuranceNumber: yup.string(),
-      insuranceValidity: yup.string(),
-    //   cep: yup.string().required("Este campo é obrigatório"),
+      // name: yup
+      //   .string()
+      //   .min(5, "Este campo deve ter pelo menos 5 caracteres")
+      //   .max(50, "Este campo deve ter no máximo 50 caracteres"),
+      // gender: yup
+      //   .string()
+      //   .oneOf(["Masculino", "Feminino"], "Selecione uma opção válida"),
+      // birthdate: yup
+      //   .date("Este campo é obrigatório")
+      //   .required("Este campo é obrigatório")
+      //   .nullable("Este campo é obrigatório")
+      //   .typeError("Data de nascimento inválida"),
+      // cpf: yup
+      //   .string()
+      //   .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Digite um CPF válido, no formato 999.999.999-99")
+      //   .required("Este campo é obrigatório"),
+      // rg: yup
+      //   .string()
+      //   .max(20, "Este campo deve ter no máximo 20 caracteres")
+      //   .required("Este campo é obrigatório"),
+      // maritalStatus: yup
+      //   .string()
+      //   .oneOf(
+      //     [
+      //       "Solteiro(a)",
+      //       "Casado(a)/ União Estável",
+      //       "Viúvo(a)",
+      //       "Separado(a)",
+      //       "Divorciado(a)",
+      //     ],
+      //     "Selecione uma opção válida"
+      //   ),
+      // phone: yup
+      //   .string()
+      //   .matches(
+      //     /^\(\d{2}\) \d \d{4}-\d{5}$/,
+      //     "Digite um número de telefone no formato (99) 9 9999-99999"
+      //   )
+      //   .required("Este campo é obrigatório"),
+      // email: yup.string().email("Digite um e-mail válido"),
+      // naturalness: yup
+      //   .string()
+      //   .min(5, "Este campo deve ter pelo menos 5 caracteres")
+      //   .max(50, "Este campo deve ter no máximo 50 caracteres")
+      //   .required("Este campo é obrigatório"),
+      // emergencyContact: yup
+      //   .string()
+      //   .matches(
+      //     /^\(\d{2}\) \d \d{4}-\d{5}$/,
+      //     "Digite um número de telefone no formato (99) 9 9999-99999"
+      //   )
+      //   .required("Este campo é obrigatório"),
+      // allergies: yup
+      //   .string()
+      //   .max(200, "Este campo deve ter no máximo 200 caracteres"),
+      // specialCare: yup
+      //   .string()
+      //   .max(200, "Este campo deve ter no máximo 200 caracteres"),
+      // insurance: yup.string(),
+      // insuranceNumber: yup.string(),
+      // insuranceValidity: yup.string(),
+      cep: yup
+      .string()
+      .length(8, "CEP Inválido")
+      .required("Este campo é obrigatório"),
+      city: yup
+      .string()
+      .required("Este campo é obrigatório")
     //   houseNumber: yup.number().required("Esta campo é obrigatório"),
     });
 
     validationSchema
       .validate(
         {
-          name,
-          gender,
-          birthdate,
-          cpf,
-          rg,
-          maritalStatus,
-          phone,
-          email,
-          naturalness,
-          emergencyContact,
-          allergies,
-          specialCare,
-          insurance,
-          insuranceNumber,
-          insuranceValidity,
+          // name,
+          // gender,
+          // birthdate,
+          // cpf,
+          // rg,
+          // maritalStatus,
+          // phone,
+          // email,
+          // naturalness,
+          // emergencyContact,
+          // allergies,
+          // specialCare,
+          // insurance,
+          // insuranceNumber,
+          // insuranceValidity,
+          cep,
+          city,
     //       houseNumber,
         },
         { abortEarly: false }
@@ -266,31 +284,33 @@ export const PatientRegister = () => {
         if (error.inner) {
           error.inner.forEach((err) => {
             const { path, message } = err;
-            if (path === "name") {
-              setNameError(message);}
-             else if (path === "gender") {
-              setGenderError(message);
-            } else if (path === "birthdate") {
-              setBirthdateError(message);
-            } else if (path === "cpf") {
-              setCpfError(message);
-            } else if (path === "rg") {
-              setRgError(message);
-            } else if (path === "maritalStatus") {
-              setMaritalStatusError(message);
-            } else if (path === "phone") {
-              setPhoneError(message);
-            } else if (path === "email") {
-              setEmailError(message);
-            } else if (path === "naturalness") {
-              setNaturalnessError(message);
-            } else if (path === "emergencyContact") {
-              setEmergencyContactError(message);}
-      //        else if (path === "cep") {
-      //         setCepError(message);
+            // if (path === "name") {
+            //   setNameError(message);}
+            //  else if (path === "gender") {
+            //   setGenderError(message);
+            // } else if (path === "birthdate") {
+            //   setBirthdateError(message);
+            // } else if (path === "cpf") {
+            //   setCpfError(message);
+            // } else if (path === "rg") {
+            //   setRgError(message);
+            // } else if (path === "maritalStatus") {
+            //   setMaritalStatusError(message);
+            // } else if (path === "phone") {
+            //   setPhoneError(message);
+            // } else if (path === "email") {
+            //   setEmailError(message);
+            // } else if (path === "naturalness") {
+            //   setNaturalnessError(message);
+            // } else if (path === "emergencyContact") {
+            //   setEmergencyContactError(message);}else
+             if (path === "cep") {
+              setCepError(message);}
+              if (path === "city") {
+                setCityError(message);
       //       } else if (path === "houseNumber") {
       //         setHouseNumberError(message);
-      //       }
+             }
           });
         }
       })
@@ -510,6 +530,7 @@ export const PatientRegister = () => {
             placeholder="Digite seu CEP"
             label="CEP"
             onChange={handleCep}
+            error={cepError}
           />
           {cepError && <div>{cepError}</div>}
           <InputComponent
@@ -517,9 +538,11 @@ export const PatientRegister = () => {
             type="text"
             placeholder="Cidade"
             label="Cidade"
+            onInput={handleInput}
             value={city}
             readOnly={true}
           />
+          {cityError && <div>{cityError}</div>}
           <InputComponent
             id="city"
             type="text"
