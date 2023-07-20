@@ -5,44 +5,44 @@ import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
 
 export const PatientRegister = () => {
+  
+  //UseState dos campos do Form
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
-
   const [gender, setGender] = useState("");
   const [genderError, setGenderError] = useState("");
-
   const [birthdate, setBirthdate] = useState("");
   const [birthdateError, setBirthdateError] = useState("");
-
   const [cpf, setCpf] = useState("");
   const [cpfError, setCpfError] = useState("");
-
   const [rg, setRg] = useState("");
   const [rgError, setRgError] = useState("");
-
   const [maritalStatus, setMaritalStatus] = useState("");
   const [maritalStatusError, setMaritalStatusError] = useState("");
-
   const [phone, setPhone] = useState("");
   const [phoneError, setPhoneError] = useState("");
-
   const [email, setEmail] = useState("");
   const [emailError, setEmailError] = useState("");
-
   const [naturalness, setNaturalness] = useState("");
   const [naturalnessError, setNaturalnessError] = useState("");
-
   const [emergencyContact, setEmergencyContact] = useState("");
   const [emergencyContactError, setEmergencyContactError] = useState("");
-
   const [allergies, setAllergies] = useState("");
   const [specialCare, setSpecialCare] = useState("");
   const [insurance, setInsurance] = useState("");
   const [insuranceNumber, setInsuranceNumber] = useState("");
   const [insuranceValidity, setInsuranceValidity] = useState("");
-
   const [cep, setCep] = useState("");
-
+  const [cepError, setCepError] = useState("");
+  const [city, setCity] = useState("");
+  const [uf, setUf] = useState("");
+  const [neighborhood, setNeighborhood] = useState("");
+  const [street, setStreet] = useState("");
+  const [houseNumber, setHouseNumber] = useState("");
+  const [houseNumberError, setHouseNumberError] = useState("");
+  const [complement, setComplement] = useState("");
+  const [nextTo, setNextTo] = useState("");
+  // Valida se é um input válid, se sim daum set, se não retorna um erro
   const handleInput = (event) => {
     event.preventDefault();
     const { value, id } = event.target;
@@ -86,44 +86,89 @@ export const PatientRegister = () => {
       setInsuranceNumber(value);
     } else if (id === "insuranceValidity") {
       setInsuranceValidity(value);
+    } else if (id === "cep") {
+      setCep(value);
+      setCepError("");
+    } else if (id === "houseNumber") {
+      setHouseNumber(value);
+      setHouseNumberError("");
+    } else if (id === "complement") {
+      setComplement(value);
+    } else if (id === "nextTo") {
+      setNextTo(value);
     }
   };
 
-  // const handleCep = (event) => {
-  //   event.preventDefault();
-  //   const { value } = event.target;
-  //   if (value.length === 8) {
-  //     setCep(value);
-  //     handleInput(event);
-  //   }
-  // };
-  
-  // useEffect(
-  //   () => {
-  //     const API_IVACEP = "https://viacep.com.br/ws/CEP/json/";
-  //     async function request() {
-  //       const response = await fetch(API_VIACEP.replace("CEP", cep));
-  //       const data = await response.json();
-  //       console.log(data);
+  const handleCep = async (event) => {
+    event.preventDefault();
+    const { value } = event.target;
+    setCepError("");
+    setCity("");
+    setUf("");
+    setNeighborhood("");
+    setStreet("");
 
-  //       setFormData({
-  //         ...formData,
-  //         endereco: data.logradouto,
-  //         estado: data.uf,
-  //       });
-  //     }
-  //     request();
-  //   },
-  //   { cep }
-  // );
+    if (value.length === 8) {
+      try {
+        console.log("Iniciar consulta à API de CEP");
+        await requestCep(value);
+        console.log("Consulta concluída");
+      } catch (error) {
+        console.error("Ocorreu um erro na consulta do CEP:", error);
+      }
+    }
+  };
+
+  useEffect(() => {
+    if (cep.length === 8) {
+      console.log("API request for CEP:", cep);
+      requestCep(cep);
+    }
+  }, [cep]);
+
+  const API_VIACEP = "https://viacep.com.br/ws/CEP/json/";
+
+  async function requestCep(cep) {
+    const response = await fetch(API_VIACEP.replace("CEP", cep));
+    const data = await response.json();
+    if (data.erro) {
+      setCepError("CEP inválido");
+    } else {
+      console.log(data);
+      setCity(data.localidade);
+      setUf(data.uf);
+      setNeighborhood(data.bairro);
+      setStreet(data.logradouro);
+    }
+  }
 
   const addPatientToLocalStorage = () => {
     console.log(
       "Aqui será desenvolvida a lógica para adicionar o paciente no localStorage"
     );
+    const newPatientRegister ={
+      "name": name,
+      "gender": gender,
+      "bithdate": birthdate,
+      "cpf":cpf,
+      "rg":rg,
+      "maritalStatus":maritalStatus,
+      "phone":phone,
+      "email": email,
+      "naturalness": naturalness,
+      "emergencyContact": emergencyContact,
+      "allergies": allergies,
+      "specialCare": specialCare,
+      "insurance": insurance,
+      "insuranceNumber": insuranceNumber,
+      "insuranceVality": insuranceValidity,
+    }
+    console.log(newPatientRegister)
   };
+
   const handleFormSubmission = (e) => {
     e.preventDefault();
+
 
     const validationSchema = yup.object().shape({
       name: yup
@@ -140,7 +185,7 @@ export const PatientRegister = () => {
         .typeError("Data de nascimento inválida"),
       cpf: yup
         .string()
-        .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Digite um CPF válido")
+        .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Digite um CPF válido, no formato 999.999.999-99")
         .required("Este campo é obrigatório"),
       rg: yup
         .string()
@@ -162,7 +207,7 @@ export const PatientRegister = () => {
         .string()
         .matches(
           /^\(\d{2}\) \d \d{4}-\d{5}$/,
-          "Digite um número de telefone válido"
+          "Digite um número de telefone no formato (99) 9 9999-99999"
         )
         .required("Este campo é obrigatório"),
       email: yup.string().email("Digite um e-mail válido"),
@@ -175,7 +220,7 @@ export const PatientRegister = () => {
         .string()
         .matches(
           /^\(\d{2}\) \d \d{4}-\d{5}$/,
-          "Digite um número de telefone válido"
+          "Digite um número de telefone no formato (99) 9 9999-99999"
         )
         .required("Este campo é obrigatório"),
       allergies: yup
@@ -187,6 +232,8 @@ export const PatientRegister = () => {
       insurance: yup.string(),
       insuranceNumber: yup.string(),
       insuranceValidity: yup.string(),
+    //   cep: yup.string().required("Este campo é obrigatório"),
+    //   houseNumber: yup.number().required("Esta campo é obrigatório"),
     });
 
     validationSchema
@@ -207,6 +254,7 @@ export const PatientRegister = () => {
           insurance,
           insuranceNumber,
           insuranceValidity,
+    //       houseNumber,
         },
         { abortEarly: false }
       )
@@ -219,8 +267,8 @@ export const PatientRegister = () => {
           error.inner.forEach((err) => {
             const { path, message } = err;
             if (path === "name") {
-              setNameError(message);
-            } else if (path === "gender") {
+              setNameError(message);}
+             else if (path === "gender") {
               setGenderError(message);
             } else if (path === "birthdate") {
               setBirthdateError(message);
@@ -237,11 +285,16 @@ export const PatientRegister = () => {
             } else if (path === "naturalness") {
               setNaturalnessError(message);
             } else if (path === "emergencyContact") {
-              setEmergencyContactError(message);
-            }
+              setEmergencyContactError(message);}
+      //        else if (path === "cep") {
+      //         setCepError(message);
+      //       } else if (path === "houseNumber") {
+      //         setHouseNumberError(message);
+      //       }
           });
         }
-      });
+      })
+      
   };
 
   return (
@@ -264,7 +317,13 @@ export const PatientRegister = () => {
               alert("função ainda não desenvolvida");
             }}
           />
-          <ButtonComponent id="save" type="submit" label="Salvar" />
+          <ButtonComponent 
+          id="save" 
+          type="submit" 
+          label="Salvar" 
+          onClick ={handleFormSubmission}/>
+
+          <h3>Informações do Paciente</h3>
 
           <InputComponent
             id="name"
@@ -355,28 +414,6 @@ export const PatientRegister = () => {
           {maritalStatusError && <div>{maritalStatusError}</div>}
 
           <InputComponent
-            id="phone"
-            type="text"
-            placeholder="Digite o telefone no formato (99) 9999-99999"
-            label="Telefone"
-            value={phone}
-            onInput={handleInput}
-            error={phoneError}
-          />
-          {phoneError && <div>{phoneError}</div>}
-
-          <InputComponent
-            id="email"
-            type="email"
-            placeholder="Digite o email"
-            label="E-mail"
-            value={email}
-            onInput={handleInput}
-            error={emailError}
-          />
-          {emailError && <div>{emailError}</div>}
-
-          <InputComponent
             id="naturalness"
             type="text"
             placeholder="Digite a naturalidade"
@@ -386,17 +423,6 @@ export const PatientRegister = () => {
             error={naturalnessError}
           />
           {naturalnessError && <div>{naturalnessError}</div>}
-
-          <InputComponent
-            id="emergencyContact"
-            type="text"
-            placeholder="Digite o contato de emergência no formato (99) 9999-99999"
-            label="Contato de Emergência"
-            value={emergencyContact}
-            onInput={handleInput}
-            error={emergencyContactError}
-          />
-          {emergencyContactError && <div>{emergencyContactError}</div>}
 
           <InputComponent
             id="allergies"
@@ -442,13 +468,118 @@ export const PatientRegister = () => {
             value={insuranceValidity}
             onInput={handleInput}
           />
-          {/*<label htmlFor="cep">CEP</label>
-           <input
+          <h3>Contato</h3>
+
+          <InputComponent
+            id="phone"
             type="text"
+            placeholder="Digite o telefone no formato (99) 9 9999-99999"
+            label="Telefone"
+            value={phone}
+            onInput={handleInput}
+            error={phoneError}
+          />
+          {phoneError && <div>{phoneError}</div>}
+
+          <InputComponent
+            id="email"
+            type="email"
+            placeholder="Digite o email"
+            label="E-mail"
+            value={email}
+            onInput={handleInput}
+            error={emailError}
+          />
+          {emailError && <div>{emailError}</div>}
+
+          <InputComponent
+            id="emergencyContact"
+            type="text"
+            placeholder="Digite o contato de emergência no formato (99) 9 9999-99999"
+            label="Contato de Emergência"
+            value={emergencyContact}
+            onInput={handleInput}
+            error={emergencyContactError}
+          />
+          {emergencyContactError && <div>{emergencyContactError}</div>}
+
+          <p>Endereço</p>
+          <InputComponent
             id="cep"
-            placeholder="CEP"
-            onInput={handleCep}
-          ></input> */}
+            type="text"
+            placeholder="Digite seu CEP"
+            label="CEP"
+            onChange={handleCep}
+          />
+          {cepError && <div>{cepError}</div>}
+          <InputComponent
+            id="city"
+            type="text"
+            placeholder="Cidade"
+            label="Cidade"
+            value={city}
+            readOnly={true}
+          />
+          <InputComponent
+            id="city"
+            type="text"
+            placeholder="Cidade"
+            label="Cidade"
+            value={city}
+            readOnly={true}
+          />
+          <InputComponent
+            id="uf"
+            type="text"
+            placeholder="Digite o estado (UF)"
+            label="Estado (UF)"
+            value={uf}
+            readOnly={true}
+          />
+          <InputComponent
+            id="neighborhood"
+            type="text"
+            placeholder="Digite o bairro"
+            label="Bairro"
+            value={neighborhood}
+            readOnly={true}
+          />
+          <InputComponent
+            id="street"
+            type="text"
+            placeholder="Digite o logradouro"
+            label="Logradouro"
+            value={street}
+            readOnly={true}
+          />
+
+          <InputComponent
+            id="houseNumber"
+            type="text"
+            placeholder="Digite o número da casa"
+            label="Número"
+            value={houseNumber}
+            onInput={handleInput}
+            error={houseNumberError}
+          />
+          {houseNumberError && <div>{houseNumberError}</div>}
+
+          <InputComponent
+            id="complement"
+            type="text"
+            placeholder="Digite o complemento (apartamento, casa, etc.)"
+            label="Complemento"
+            value={complement}
+            onInput={handleInput}
+          />
+          <InputComponent
+            id="nextTo"
+            type="text"
+            placeholder="Informe um local próximo"
+            label="Próximo à:"
+            value={nextTo}
+            onInput={handleInput}
+          />
         </form>
       </Styled.PatientRegister>
     </>

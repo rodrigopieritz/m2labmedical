@@ -8,10 +8,7 @@ import { MedicalRecord } from "./pages/MedicalRecord/MedicalRecord.pages";
 import { ExamRegister } from "./pages/ExamRegister/ExamRegister.pages";
 import { LocalStorageService } from "./service/LocalStorage.service";
 
-
-
 const App = () => {
-
   const addAllowedUsersToLocalStorage = () => {
     const allowedUsers = [
       {
@@ -26,32 +23,53 @@ const App = () => {
     const patients = [
       {
         id: 1,
+        allergies: "Nenhuma",
+        bithdate: "2000-01-01",
+        cpf: "999.999.999-99",
+        email: "paciente.um@email.com",
+        emergencyContact: "(99) 9 9999-99999",
+        gender: "Masculino",
+        insurance: "Sim, BradescoSaúde.",
+        insuranceNumber: "999.999.999",
+        insuranceVality: "01/01/2030",
+        maritalStatus: "Solteiro(a)",
         name: "Paciente Exemplo Um",
+        naturalness: "Brasileiro",
+        phone: "(99) 9 9999-99999",
+        rg: "99.999.999-9",
+        specialCare: "Nenhum",
       },
     ];
-    LocalStorageService.set("patients", patients)
-    };
+    LocalStorageService.set("patients", patients);
+  };
 
-  if( !LocalStorageService.get("allowedUsers")) {
+  if (!LocalStorageService.get("allowedUsers")) {
     addAllowedUsersToLocalStorage();
-  } if( !LocalStorageService.get("patients")) {
+  }
+  if (!LocalStorageService.get("patients")) {
     addPatientsToLocalStorage();
   }
-  
-   
+
   return (
     <ModalProvider>
-    <Router>
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        <Route path="/" element={<HomePage />} />
-        <Route path="/patient-register" element={<PatientRegisterPage/>} />
-        <Route path="/medical-register" element={<MedicalRegister/>} />
-        <Route path="/medical-record" element={<MedicalRecord/>} />
-        <Route path="/exam-register" element={<ExamRegister/>} />    
-        <Route path="*" element={<><p>Página não encontrada</p></>}/>
-      </Routes>
-          </Router>
+      <Router>
+        <Routes>
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/patient-register" element={<PatientRegisterPage />} />
+          <Route path="/medical-register" element={<MedicalRegister />} />
+          <Route path="/medical-record" element={<MedicalRecord />} />
+          <Route path="/exam-register" element={<ExamRegister />} />
+          <Route
+            path="*"
+            element={
+              <>
+                <p>Página não encontrada</p>
+              </>
+            }
+          />
+        </Routes>
+      </Router>
     </ModalProvider>
   );
 };
