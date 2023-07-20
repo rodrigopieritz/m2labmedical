@@ -10,3 +10,4 @@ react-icons
 validaçãod e campos e form->
 yup
 formik
+react-bootstrap

@@ -1,44 +1,21 @@
-import { LocalStorageService } from "./LocalStorage.service";
+const PATIENTS_KEY = "patients";
 
-const Get = () => {
-  return LocalStorageService.get('patients');
-}
+export const getPatients = () => {
+  const patients = JSON.parse(localStorage.getItem(PATIENTS_KEY)) || [];
+  return patients;
+};
 
-const Create = (data) => {
-  const patients = Get();
+export const addPatient = (patient) => {
+  const patients = getPatients();
+  
+  patient.id = patients.length > 0 ? Math.max(...patients.map((patient) => patient.id)) + 1 : 1;
+  patients.push(patient);
 
-  data = {
-    id: patients.length + 1,
-    ...data,
-  }
+  localStorage.setItem(PATIENTS_KEY, JSON.stringify(patients));
+};
 
-  LocalStorageService.set('patients', [...patients, data]);
-}
-
-const Show = (id) => {
-  return Get().find(patient => user.id === id);
-}
-
-
-
-const Delete = (id) => {
-  LocalStorageService.set('users', Get().filter(user => user.id !== id));
-}
-
-const Update = (id, data) => {
-  const users = Get();
-
-  users[users.find(user => user.id === id).indexOf] = data;
-
-  LocalStorageService.set('users', users)
-}
-
-
-export const UserService = {
-  Get,
-  Create,
-  Show,
-  ShowByEmail,
-  Delete,
-  Update
-}
+export const removePatient = (patientId) => {
+  let patients = getPatients();
+  patients = patients.filter((patient) => patient.id !== patientId);
+  localStorage.setItem(PATIENTS_KEY, JSON.stringify(patients));
+};

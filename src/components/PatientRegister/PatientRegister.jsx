@@ -3,9 +3,11 @@ import * as Styled from "./PatientRegister.style";
 import { ButtonComponent } from "../Button/buttonComponent";
 import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
+import { addPatient } from "../../service/patients.service";
+import { Spinner } from 'react-bootstrap';
+import { Navigate } from "react-router";
 
 export const PatientRegister = () => {
-  //UseState dos campos do Form
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [gender, setGender] = useState("");
@@ -35,7 +37,6 @@ export const PatientRegister = () => {
   const [cepError, setCepError] = useState("");
   const [city, setCity] = useState("");
   const [cityError, setCityError] = useState("");
-  //
   const [uf, setUf] = useState("");
   const [ufError, setUfError] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
@@ -46,6 +47,8 @@ export const PatientRegister = () => {
   const [houseNumberError, setHouseNumberError] = useState("");
   const [complement, setComplement] = useState("");
   const [nextTo, setNextTo] = useState("");
+  const [submitButtonState, setSubmitButtonState] = useState("");
+  
 
   const handleInput = (event) => {
     event.preventDefault();
@@ -118,6 +121,7 @@ export const PatientRegister = () => {
   const handleCep = async (event) => {
     event.preventDefault();
     const { value } = event.target;
+
     setCepError("");
     setCep("");
     setCity("");
@@ -131,7 +135,7 @@ export const PatientRegister = () => {
 
     if (value.length === 8) {
       try {
-        console.log("Iniciar consulta à API de CEP");
+        console.log("Iniciar consulta à API de CEP", value);
         await requestCep(value);
         console.log("Consulta concluída");
         handleInput(event);
@@ -143,7 +147,6 @@ export const PatientRegister = () => {
 
   useEffect(() => {
     if (cep.length === 8) {
-      console.log("API request for CEP:", cep);
       requestCep(cep);
     }
   }, [cep]);
@@ -165,9 +168,6 @@ export const PatientRegister = () => {
   }
 
   const addPatientToLocalStorage = () => {
-    console.log(
-      "Aqui será desenvolvida a lógica para adicionar o paciente no localStorage"
-    );
     const newPatientRegister = {
       name: name,
       gender: gender,
@@ -193,17 +193,18 @@ export const PatientRegister = () => {
       complement: complement,
       nextTo: nextTo,
     };
-    console.log(newPatientRegister);
+    addPatient(newPatientRegister);
+    setSubmitButtonState("");
   };
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
 
     const validationSchema = yup.object().shape({
-      // name: yup
-      //   .string()
-      //   .min(5, "Este campo deve ter pelo menos 5 caracteres")
-      //   .max(50, "Este campo deve ter no máximo 50 caracteres"),
+      name: yup
+        .string()
+        .min(5, "Este campo deve ter pelo menos 5 caracteres")
+        .max(50, "Este campo deve ter no máximo 50 caracteres"),
       // gender: yup
       //   .string()
       //   .oneOf(["Masculino", "Feminino"], "Selecione uma opção válida"),
@@ -214,7 +215,10 @@ export const PatientRegister = () => {
       //   .typeError("Data de nascimento inválida"),
       // cpf: yup
       //   .string()
-      //   .matches(/^\d{3}\.\d{3}\.\d{3}-\d{2}$/, "Digite um CPF válido, no formato 999.999.999-99")
+      //   .matches(
+      //     /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+      //     "Digite um CPF válido, no formato 999.999.999-99"
+      //   )
       //   .required("Este campo é obrigatório"),
       // rg: yup
       //   .string()
@@ -261,21 +265,21 @@ export const PatientRegister = () => {
       // insurance: yup.string(),
       // insuranceNumber: yup.string(),
       // insuranceValidity: yup.string(),
-      cep: yup
-        .string()
-        .length(8, "CEP Inválido")
-        .required("Este campo é obrigatório"),
-      city: yup.string().required("Este campo é obrigatório"),
-      uf: yup.string().required("Este campo é obrigatório"),
-      neighborhood: yup.string().required("Este campo é obrigatório"),
-      street: yup.string().required("Este campo é obrigatório"),
-      houseNumber: yup.string().required("Este campo é obrigatório"),
+      // cep: yup
+      //   .string()
+      //   .length(8, "CEP Inválido")
+      //   .required("Este campo é obrigatório"),
+      // city: yup.string().required("Este campo é obrigatório"),
+      // uf: yup.string().required("Este campo é obrigatório"),
+      // neighborhood: yup.string().required("Este campo é obrigatório"),
+      // street: yup.string().required("Este campo é obrigatório"),
+      // houseNumber: yup.string().required("Este campo é obrigatório"),
     });
 
     validationSchema
       .validate(
         {
-          // name,
+          name,
           // gender,
           // birthdate,
           // cpf,
@@ -290,44 +294,48 @@ export const PatientRegister = () => {
           // insurance,
           // insuranceNumber,
           // insuranceValidity,
-          cep,
-          city,
-          uf,
-          neighborhood,
-          street,
-          houseNumber,
+          // cep,
+          // city,
+          // uf,
+          // neighborhood,
+          // street,
+          // houseNumber,
         },
         { abortEarly: false }
       )
       .then(() => {
-        addPatientToLocalStorage();
-        alert("Novo paciente cadastrado com sucesso");
+        setSubmitButtonState("Carregando...");
+        setTimeout(() => {
+          addPatientToLocalStorage();
+          alert("Novo paciente cadastrado com sucesso");
+        }, 2000);
+        navigate("patient-register")
       })
       .catch((error) => {
         if (error.inner) {
           error.inner.forEach((err) => {
             const { path, message } = err;
-            // if (path === "name") {
-            //   setNameError(message);}
-            //  else if (path === "gender") {
-            //   setGenderError(message);
-            // } else if (path === "birthdate") {
-            //   setBirthdateError(message);
-            // } else if (path === "cpf") {
-            //   setCpfError(message);
-            // } else if (path === "rg") {
-            //   setRgError(message);
-            // } else if (path === "maritalStatus") {
-            //   setMaritalStatusError(message);
-            // } else if (path === "phone") {
-            //   setPhoneError(message);
-            // } else if (path === "email") {
-            //   setEmailError(message);
-            // } else if (path === "naturalness") {
-            //   setNaturalnessError(message);
-            // } else if (path === "emergencyContact") {
-            //   setEmergencyContactError(message);}else
-            if (path === "cep") {
+            if (path === "name") {
+              setNameError(message);
+            } else if (path === "gender") {
+              setGenderError(message);
+            } else if (path === "birthdate") {
+              setBirthdateError(message);
+            } else if (path === "cpf") {
+              setCpfError(message);
+            } else if (path === "rg") {
+              setRgError(message);
+            } else if (path === "maritalStatus") {
+              setMaritalStatusError(message);
+            } else if (path === "phone") {
+              setPhoneError(message);
+            } else if (path === "email") {
+              setEmailError(message);
+            } else if (path === "naturalness") {
+              setNaturalnessError(message);
+            } else if (path === "emergencyContact") {
+              setEmergencyContactError(message);
+            } else if (path === "cep") {
               setCepError(message);
             }
             if (path === "city") {
@@ -344,8 +352,8 @@ export const PatientRegister = () => {
             }
             if (path === "houseNumber") {
               setHouseNumberError(message);
-              //       } else if (path === "houseNumber") {
-              //         setHouseNumberError(message);
+            } else if (path === "houseNumber") {
+              setHouseNumberError(message);
             }
           });
         }
@@ -355,13 +363,16 @@ export const PatientRegister = () => {
   return (
     <>
       <Styled.PatientRegister>
+      
         <form onSubmit={handleFormSubmission} noValidate>
           <ButtonComponent
             id="editButton"
             type="button"
             label="Editar"
             onClick={() => {
-              alert("função ainda não desenvolvida");
+              alert(
+                "funcionalidade não desenvolvida - fora do escopo do projeto"
+              );
             }}
           />
           <ButtonComponent
@@ -369,7 +380,9 @@ export const PatientRegister = () => {
             type="button"
             label="Apagar"
             onClick={() => {
-              alert("função ainda não desenvolvida");
+              alert(
+                "funcionalidade não desenvolvida- fora do escopo do projeto"
+              );
             }}
           />
           <ButtonComponent
@@ -378,8 +391,15 @@ export const PatientRegister = () => {
             label="Salvar"
             onClick={handleFormSubmission}
           />
+          {submitButtonState && <div><Spinner animation="border" role="status">
+      <span className="visually-hidden">Carregando...</span>
+    </Spinner>
+    </div>}
+         
 
           <h3>Informações do Paciente</h3>
+
+         
 
           <InputComponent
             id="name"
@@ -402,7 +422,7 @@ export const PatientRegister = () => {
                 onBlur={handleInput}
                 className={genderError ? "error" : ""}
               >
-                <option value="" disabled hidden>
+                <option disabled hidden value="">
                   Selecione o gênero
                 </option>
                 <option value="Masculino">Masculino</option>
@@ -454,7 +474,7 @@ export const PatientRegister = () => {
                 onBlur={handleInput}
                 className={maritalStatusError ? "error" : ""}
               >
-                <option disabled hidden>
+                <option disabled hidden value="">
                   Selecione o estado civil
                 </option>
                 <option value="Solteiro(a)">Solteiro(a)</option>
@@ -579,7 +599,7 @@ export const PatientRegister = () => {
             readOnly={true}
           />
           {cityError && <div>{cityError}</div>}
-         
+
           <InputComponent
             id="uf"
             type="text"
@@ -597,7 +617,7 @@ export const PatientRegister = () => {
             label="Bairro"
             onInput={handleInput}
             value={neighborhood}
-            readOnly={true}
+            readOnly={false}
           />
           {neighborhoodError && <div>{neighborhoodError}</div>}
           <InputComponent
@@ -607,8 +627,7 @@ export const PatientRegister = () => {
             label="Logradouro"
             onInput={handleInput}
             value={street}
-            readOnly={true}
-          
+            readOnly={false}
           />
           {streetError && <div>{streetError}</div>}
 
