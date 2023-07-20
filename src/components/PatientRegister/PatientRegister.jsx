@@ -5,7 +5,6 @@ import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
 
 export const PatientRegister = () => {
-  
   //UseState dos campos do Form
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
@@ -36,15 +35,18 @@ export const PatientRegister = () => {
   const [cepError, setCepError] = useState("");
   const [city, setCity] = useState("");
   const [cityError, setCityError] = useState("");
+  //
   const [uf, setUf] = useState("");
+  const [ufError, setUfError] = useState("");
   const [neighborhood, setNeighborhood] = useState("");
+  const [neighborhoodError, setNeighborhoodError] = useState("");
   const [street, setStreet] = useState("");
+  const [streetError, setStreetError] = useState("");
   const [houseNumber, setHouseNumber] = useState("");
   const [houseNumberError, setHouseNumberError] = useState("");
   const [complement, setComplement] = useState("");
   const [nextTo, setNextTo] = useState("");
-  // Valida se é um input válid, se sim daum set, se não retorna um erro
-  
+
   const handleInput = (event) => {
     event.preventDefault();
     const { value, id } = event.target;
@@ -94,6 +96,15 @@ export const PatientRegister = () => {
     } else if (id === "city") {
       setCity(value);
       setCityError("");
+    } else if (id === "uf") {
+      setUf(value);
+      setUfError("");
+    } else if (id === "neighborhood") {
+      setNeighborhood(value);
+      setNeighborhoodError("");
+    } else if (id === "street") {
+      setStreet(value);
+      setStreetError("");
     } else if (id === "houseNumber") {
       setHouseNumber(value);
       setHouseNumberError("");
@@ -114,6 +125,9 @@ export const PatientRegister = () => {
     setNeighborhood("");
     setStreet("");
     setCityError("");
+    setUfError("");
+    setNeighborhoodError("");
+    setStreetError("");
 
     if (value.length === 8) {
       try {
@@ -154,31 +168,36 @@ export const PatientRegister = () => {
     console.log(
       "Aqui será desenvolvida a lógica para adicionar o paciente no localStorage"
     );
-    const newPatientRegister ={
-      "name": name,
-      "gender": gender,
-      "bithdate": birthdate,
-      "cpf":cpf,
-      "rg":rg,
-      "maritalStatus":maritalStatus,
-      "phone":phone,
-      "email": email,
-      "naturalness": naturalness,
-      "emergencyContact": emergencyContact,
-      "allergies": allergies,
-      "specialCare": specialCare,
-      "insurance": insurance,
-      "insuranceNumber": insuranceNumber,
-      "insuranceVality": insuranceValidity,
-      "cep":cep,
-      "city": city,
-    }
-    console.log(newPatientRegister)
+    const newPatientRegister = {
+      name: name,
+      gender: gender,
+      bithdate: birthdate,
+      cpf: cpf,
+      rg: rg,
+      maritalStatus: maritalStatus,
+      phone: phone,
+      email: email,
+      naturalness: naturalness,
+      emergencyContact: emergencyContact,
+      allergies: allergies,
+      specialCare: specialCare,
+      insurance: insurance,
+      insuranceNumber: insuranceNumber,
+      insuranceVality: insuranceValidity,
+      cep: cep,
+      city: city,
+      uf: uf,
+      neighborhood: neighborhood,
+      street: street,
+      houseNumber: houseNumber,
+      complement: complement,
+      nextTo: nextTo,
+    };
+    console.log(newPatientRegister);
   };
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
-
 
     const validationSchema = yup.object().shape({
       // name: yup
@@ -243,13 +262,14 @@ export const PatientRegister = () => {
       // insuranceNumber: yup.string(),
       // insuranceValidity: yup.string(),
       cep: yup
-      .string()
-      .length(8, "CEP Inválido")
-      .required("Este campo é obrigatório"),
-      city: yup
-      .string()
-      .required("Este campo é obrigatório")
-    //   houseNumber: yup.number().required("Esta campo é obrigatório"),
+        .string()
+        .length(8, "CEP Inválido")
+        .required("Este campo é obrigatório"),
+      city: yup.string().required("Este campo é obrigatório"),
+      uf: yup.string().required("Este campo é obrigatório"),
+      neighborhood: yup.string().required("Este campo é obrigatório"),
+      street: yup.string().required("Este campo é obrigatório"),
+      houseNumber: yup.string().required("Este campo é obrigatório"),
     });
 
     validationSchema
@@ -272,7 +292,10 @@ export const PatientRegister = () => {
           // insuranceValidity,
           cep,
           city,
-    //       houseNumber,
+          uf,
+          neighborhood,
+          street,
+          houseNumber,
         },
         { abortEarly: false }
       )
@@ -304,17 +327,29 @@ export const PatientRegister = () => {
             //   setNaturalnessError(message);
             // } else if (path === "emergencyContact") {
             //   setEmergencyContactError(message);}else
-             if (path === "cep") {
-              setCepError(message);}
-              if (path === "city") {
-                setCityError(message);
-      //       } else if (path === "houseNumber") {
-      //         setHouseNumberError(message);
-             }
+            if (path === "cep") {
+              setCepError(message);
+            }
+            if (path === "city") {
+              setCityError(message);
+            }
+            if (path === "uf") {
+              setUfError(message);
+            }
+            if (path === "neighborhood") {
+              setNeighborhoodError(message);
+            }
+            if (path === "street") {
+              setStreetError(message);
+            }
+            if (path === "houseNumber") {
+              setHouseNumberError(message);
+              //       } else if (path === "houseNumber") {
+              //         setHouseNumberError(message);
+            }
           });
         }
-      })
-      
+      });
   };
 
   return (
@@ -337,11 +372,12 @@ export const PatientRegister = () => {
               alert("função ainda não desenvolvida");
             }}
           />
-          <ButtonComponent 
-          id="save" 
-          type="submit" 
-          label="Salvar" 
-          onClick ={handleFormSubmission}/>
+          <ButtonComponent
+            id="save"
+            type="submit"
+            label="Salvar"
+            onClick={handleFormSubmission}
+          />
 
           <h3>Informações do Paciente</h3>
 
@@ -543,38 +579,38 @@ export const PatientRegister = () => {
             readOnly={true}
           />
           {cityError && <div>{cityError}</div>}
-          <InputComponent
-            id="city"
-            type="text"
-            placeholder="Cidade"
-            label="Cidade"
-            value={city}
-            readOnly={true}
-          />
+         
           <InputComponent
             id="uf"
             type="text"
             placeholder="Digite o estado (UF)"
             label="Estado (UF)"
+            onInput={handleInput}
             value={uf}
             readOnly={true}
           />
+          {ufError && <div>{ufError}</div>}
           <InputComponent
             id="neighborhood"
             type="text"
             placeholder="Digite o bairro"
             label="Bairro"
+            onInput={handleInput}
             value={neighborhood}
             readOnly={true}
           />
+          {neighborhoodError && <div>{neighborhoodError}</div>}
           <InputComponent
             id="street"
             type="text"
             placeholder="Digite o logradouro"
             label="Logradouro"
+            onInput={handleInput}
             value={street}
             readOnly={true}
+          
           />
+          {streetError && <div>{streetError}</div>}
 
           <InputComponent
             id="houseNumber"
@@ -583,7 +619,7 @@ export const PatientRegister = () => {
             label="Número"
             value={houseNumber}
             onInput={handleInput}
-            error={houseNumberError}
+            readOnly={false}
           />
           {houseNumberError && <div>{houseNumberError}</div>}
 
@@ -594,6 +630,7 @@ export const PatientRegister = () => {
             label="Complemento"
             value={complement}
             onInput={handleInput}
+            readOnly={false}
           />
           <InputComponent
             id="nextTo"
@@ -602,6 +639,7 @@ export const PatientRegister = () => {
             label="Próximo à:"
             value={nextTo}
             onInput={handleInput}
+            readOnly={false}
           />
         </form>
       </Styled.PatientRegister>

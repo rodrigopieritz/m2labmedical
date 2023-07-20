@@ -38,6 +38,14 @@ const App = () => {
         phone: "(99) 9 9999-99999",
         rg: "99.999.999-9",
         specialCare: "Nenhum",
+        cep: "88034040",
+        city: "Florianópolis",
+        complement: "Nenhum",
+        houseNumber: "1000",
+        neighborhood: "Itacorubi",
+        nextTo: "Nenhum",
+        street: "Rua Acelon Pacheco da Costa",
+        uf: "SC",
       },
     ];
     LocalStorageService.set("patients", patients);
