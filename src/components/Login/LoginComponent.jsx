@@ -91,20 +91,6 @@ export const LoginComponent = () => {
       });
   };
 
-  const addAllowedUsersToLocalStorage = () => {
-    const allowedUsers = [
-      {
-        email: "usuariopermitido@email.com",
-        password: "usuariopermitido",
-      },
-    ];
-    localStorage.setItem("allowedUsers", JSON.stringify(allowedUsers));
-  };
-
-  useEffect(() => {
-    addAllowedUsersToLocalStorage();
-  }, []);
-
   return (
     <>
       <form onSubmit={handleFormSubmit} noValidate>
