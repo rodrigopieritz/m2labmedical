@@ -37,7 +37,7 @@
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu"
 import Toolbar from "../../components/Toolbar/ToolbarComponent"
 import * as Styled from "../../global.style";
-import { MedicalRegisterComponent } from "../../components/MedicalRegister/MedicalRegister";
+import { MedicalRegisterComponent } from "../../components/MedicalRegister/MedicalRegisterComponent";
 
 export const MedicalRegister = () => {
     
