@@ -5,7 +5,7 @@ import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
 import { addPatient } from "../../service/patients.service";
 import { Spinner } from 'react-bootstrap';
-import { Navigate } from "react-router";
+
 
 export const PatientRegister = () => {
   const [name, setName] = useState("");
@@ -48,10 +48,14 @@ export const PatientRegister = () => {
   const [complement, setComplement] = useState("");
   const [nextTo, setNextTo] = useState("");
   const [submitButtonState, setSubmitButtonState] = useState("");
-  
+  const [editButtonState, setEditButtonState] = useState("");
+  const [deleteButtonState, setDeleteButtonState] = useState("");
 
   const handleInput = (event) => {
     event.preventDefault();
+  setDeleteButtonState("true");
+  setEditButtonState("true");
+
     const { value, id } = event.target;
     if (id === "name") {
       setName(value);
@@ -205,101 +209,101 @@ export const PatientRegister = () => {
         .string()
         .min(5, "Este campo deve ter pelo menos 5 caracteres")
         .max(50, "Este campo deve ter no máximo 50 caracteres"),
-      // gender: yup
-      //   .string()
-      //   .oneOf(["Masculino", "Feminino"], "Selecione uma opção válida"),
-      // birthdate: yup
-      //   .date("Este campo é obrigatório")
-      //   .required("Este campo é obrigatório")
-      //   .nullable("Este campo é obrigatório")
-      //   .typeError("Data de nascimento inválida"),
-      // cpf: yup
-      //   .string()
-      //   .matches(
-      //     /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
-      //     "Digite um CPF válido, no formato 999.999.999-99"
-      //   )
-      //   .required("Este campo é obrigatório"),
-      // rg: yup
-      //   .string()
-      //   .max(20, "Este campo deve ter no máximo 20 caracteres")
-      //   .required("Este campo é obrigatório"),
-      // maritalStatus: yup
-      //   .string()
-      //   .oneOf(
-      //     [
-      //       "Solteiro(a)",
-      //       "Casado(a)/ União Estável",
-      //       "Viúvo(a)",
-      //       "Separado(a)",
-      //       "Divorciado(a)",
-      //     ],
-      //     "Selecione uma opção válida"
-      //   ),
-      // phone: yup
-      //   .string()
-      //   .matches(
-      //     /^\(\d{2}\) \d \d{4}-\d{5}$/,
-      //     "Digite um número de telefone no formato (99) 9 9999-99999"
-      //   )
-      //   .required("Este campo é obrigatório"),
-      // email: yup.string().email("Digite um e-mail válido"),
-      // naturalness: yup
-      //   .string()
-      //   .min(5, "Este campo deve ter pelo menos 5 caracteres")
-      //   .max(50, "Este campo deve ter no máximo 50 caracteres")
-      //   .required("Este campo é obrigatório"),
-      // emergencyContact: yup
-      //   .string()
-      //   .matches(
-      //     /^\(\d{2}\) \d \d{4}-\d{5}$/,
-      //     "Digite um número de telefone no formato (99) 9 9999-99999"
-      //   )
-      //   .required("Este campo é obrigatório"),
-      // allergies: yup
-      //   .string()
-      //   .max(200, "Este campo deve ter no máximo 200 caracteres"),
-      // specialCare: yup
-      //   .string()
-      //   .max(200, "Este campo deve ter no máximo 200 caracteres"),
-      // insurance: yup.string(),
-      // insuranceNumber: yup.string(),
-      // insuranceValidity: yup.string(),
-      // cep: yup
-      //   .string()
-      //   .length(8, "CEP Inválido")
-      //   .required("Este campo é obrigatório"),
-      // city: yup.string().required("Este campo é obrigatório"),
-      // uf: yup.string().required("Este campo é obrigatório"),
-      // neighborhood: yup.string().required("Este campo é obrigatório"),
-      // street: yup.string().required("Este campo é obrigatório"),
-      // houseNumber: yup.string().required("Este campo é obrigatório"),
+      gender: yup
+        .string()
+        .oneOf(["Masculino", "Feminino"], "Selecione uma opção válida"),
+      birthdate: yup
+        .date("Este campo é obrigatório")
+        .required("Este campo é obrigatório")
+        .nullable("Este campo é obrigatório")
+        .typeError("Data de nascimento inválida"),
+      cpf: yup
+        .string()
+        .matches(
+          /^\d{3}\.\d{3}\.\d{3}-\d{2}$/,
+          "Digite um CPF válido, no formato 999.999.999-99"
+        )
+        .required("Este campo é obrigatório"),
+      rg: yup
+        .string()
+        .max(20, "Este campo deve ter no máximo 20 caracteres")
+        .required("Este campo é obrigatório"),
+      maritalStatus: yup
+        .string()
+        .oneOf(
+          [
+            "Solteiro(a)",
+            "Casado(a)/ União Estável",
+            "Viúvo(a)",
+            "Separado(a)",
+            "Divorciado(a)",
+          ],
+          "Selecione uma opção válida"
+        ),
+      phone: yup
+        .string()
+        .matches(
+          /^\(\d{2}\) \d \d{4}-\d{5}$/,
+          "Digite um número de telefone no formato (99) 9 9999-99999"
+        )
+        .required("Este campo é obrigatório"),
+      email: yup.string().email("Digite um e-mail válido"),
+      naturalness: yup
+        .string()
+        .min(5, "Este campo deve ter pelo menos 5 caracteres")
+        .max(50, "Este campo deve ter no máximo 50 caracteres")
+        .required("Este campo é obrigatório"),
+      emergencyContact: yup
+        .string()
+        .matches(
+          /^\(\d{2}\) \d \d{4}-\d{5}$/,
+          "Digite um número de telefone no formato (99) 9 9999-99999"
+        )
+        .required("Este campo é obrigatório"),
+      allergies: yup
+        .string()
+        .max(200, "Este campo deve ter no máximo 200 caracteres"),
+      specialCare: yup
+        .string()
+        .max(200, "Este campo deve ter no máximo 200 caracteres"),
+      insurance: yup.string(),
+      insuranceNumber: yup.string(),
+      insuranceValidity: yup.string(),
+      cep: yup
+        .string()
+        .length(8, "CEP Inválido")
+        .required("Este campo é obrigatório"),
+      city: yup.string().required("Este campo é obrigatório"),
+      uf: yup.string().required("Este campo é obrigatório"),
+      neighborhood: yup.string().required("Este campo é obrigatório"),
+      street: yup.string().required("Este campo é obrigatório"),
+      houseNumber: yup.string().required("Este campo é obrigatório"),
     });
 
     validationSchema
       .validate(
         {
           name,
-          // gender,
-          // birthdate,
-          // cpf,
-          // rg,
-          // maritalStatus,
-          // phone,
-          // email,
-          // naturalness,
-          // emergencyContact,
-          // allergies,
-          // specialCare,
-          // insurance,
-          // insuranceNumber,
-          // insuranceValidity,
-          // cep,
-          // city,
-          // uf,
-          // neighborhood,
-          // street,
-          // houseNumber,
+          gender,
+          birthdate,
+          cpf,
+          rg,
+          maritalStatus,
+          phone,
+          email,
+          naturalness,
+          emergencyContact,
+          allergies,
+          specialCare,
+          insurance,
+          insuranceNumber,
+          insuranceValidity,
+          cep,
+          city,
+          uf,
+          neighborhood,
+          street,
+          houseNumber,
         },
         { abortEarly: false }
       )
@@ -309,7 +313,7 @@ export const PatientRegister = () => {
           addPatientToLocalStorage();
           alert("Novo paciente cadastrado com sucesso");
         }, 2000);
-        navigate("patient-register")
+       
       })
       .catch((error) => {
         if (error.inner) {
@@ -369,6 +373,7 @@ export const PatientRegister = () => {
             id="editButton"
             type="button"
             label="Editar"
+            disabled={editButtonState}
             onClick={() => {
               alert(
                 "funcionalidade não desenvolvida - fora do escopo do projeto"
@@ -379,6 +384,7 @@ export const PatientRegister = () => {
             id="deletButton"
             type="button"
             label="Apagar"
+            disabled={deleteButtonState}
             onClick={() => {
               alert(
                 "funcionalidade não desenvolvida- fora do escopo do projeto"
