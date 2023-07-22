@@ -117,6 +117,7 @@ export const MedicalRegisterComponent = () => {
     const validationSchema = yup.object().shape({
         foundPatient: yup
         .mixed()
+        .nullable("Este campo é obrigatório")
         .test(
           "is-patient-selected",
           "Por favor, selecione um paciente.",

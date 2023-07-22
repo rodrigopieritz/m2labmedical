@@ -47,15 +47,69 @@ const App = () => {
         street: "Rua Acelon Pacheco da Costa",
         uf: "SC",
       },
+      {
+        id: 2,
+        allergies: "Lactose",
+        bithdate: "2002-01-05",
+        cpf: "888.888.888-88",
+        email: "paciente.dois@email.com",
+        emergencyContact: "(88) 8 8888-8888",
+        gender: "Feminino",
+        insurance: "",
+        insuranceNumber: "888.888.888",
+        insuranceVality: "01/01/2032",
+        maritalStatus: "Solteiro(a)",
+        name: "Paciente Exemplo Dois",
+        naturalness: "Brasileiro",
+        phone: "(99) 9 9999-99999",
+        rg: "99.999.999-9",
+        specialCare: "Nenhum",
+        cep: "88034040",
+        city: "Florianópolis",
+        complement: "Nenhum",
+        houseNumber: "1000",
+        neighborhood: "Itacorubi",
+        nextTo: "Nenhum",
+        street: "Rua Acelon Pacheco da Costa",
+        uf: "SC",
+      },
     ];
     LocalStorageService.set("patients", patients);
   };
+
+  const addMedicalAppointmentsToLocalStorage = () => {
+  const medicalAppointments = [
+    {
+      appointDate: "2023-07-22",
+      appointReason: "Dores de Cabeça",
+      appointTime: "16:39",
+      dosageAndPrecautions: "Tomar por 1 semana  3x ao dia de 8 em 8h",
+      id: 1,
+      medicationPrescribed: "Paracetamol",
+      patient: 1,
+      problemDescription: "O paciente relatou fortes dores de cabeça.",
+    },
+    {
+      appointDate: "2023-07-18",
+      appointReason: "Diarréia",
+      appointTime: "12:45",
+      dosageAndPrecautions: "",
+      id: 2,
+      medicationPrescribed: "Ingestão de líquido e repouso",
+      patient: 2,
+      problemDescription: "O paciente relatou estar com diarréia há 3 dias.",
+    },
+  ];
+  LocalStorageService.set("medicalAppointments", medicalAppointments);}
 
   if (!LocalStorageService.get("allowedUsers")) {
     addAllowedUsersToLocalStorage();
   }
   if (!LocalStorageService.get("patients")) {
     addPatientsToLocalStorage();
+  }
+  if (!LocalStorageService.get("medicalAppointments")) {
+    addMedicalAppointmentsToLocalStorage();
   }
 
   return (
