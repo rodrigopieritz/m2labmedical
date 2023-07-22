@@ -1,33 +1,60 @@
-import { useContext } from "react"
-import { AuthContext } from "../../context/auth/auth.context"
-import { Navigate } from "react-router"
+// import { useContext } from "react"
+// import { AuthContext } from "../../context/auth/auth.context"
+// import { Navigate } from "react-router"
+// import SidebarMenu from "../../components/SidebarMenu/SidebarMenu"
+// import Toolbar from "../../components/Toolbar/ToolbarComponent"
+// import * as Styled from "../../global.style";
+
+// export const MedicalRegister = () => {
+//     const { auth } = useContext(AuthContext);
+//     const userEmail = auth.user.email;
+//     const userName = userEmail.split("@")[0];
+  
+//     const render = () => {
+//       const userEmail = auth.user.email;
+//       const userName = userEmail.split("@")[0];
+//       return (
+//         <Styled.PageContainer>
+//           <SidebarMenu />
+//           <Styled.MainContent>
+//             <Toolbar
+//               pageTitle="Cadastrar Consulta"
+//               userName={userName}
+//               userPhoto="userPhoto.png"
+//             />
+//             <Styled.SpecificPageContent>
+//              <MedicalRegister/>
+//             </Styled.SpecificPageContent>
+//           </Styled.MainContent>
+//         </Styled.PageContainer>
+//       );
+//     };
+//    return auth.isLogged ? render () : <Navigate to ={ '/login' }/>
+// }
+
+// Código sem autenticação de usuário para manutenção ->
+
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu"
 import Toolbar from "../../components/Toolbar/ToolbarComponent"
 import * as Styled from "../../global.style";
+import { MedicalRegisterComponent } from "../../components/MedicalRegister/MedicalRegisterComponent";
 
 export const MedicalRegister = () => {
-    const { auth } = useContext(AuthContext);
-    const userEmail = auth.user.email;
-    const userName = userEmail.split("@")[0];
-  
-    const render = () => {
-      const userEmail = auth.user.email;
-      const userName = userEmail.split("@")[0];
+    
       return (
         <Styled.PageContainer>
           <SidebarMenu />
           <Styled.MainContent>
             <Toolbar
               pageTitle="Cadastrar Consulta"
-              userName={userName}
+              userName="Cadastro de consulta"
               userPhoto="userPhoto.png"
             />
             <Styled.SpecificPageContent>
-              <p> Medical Register </p>
+              <MedicalRegisterComponent/>
+              
             </Styled.SpecificPageContent>
           </Styled.MainContent>
         </Styled.PageContainer>
-      );
-    };
-   return auth.isLogged ? render () : <Navigate to ={ '/login' }/>
-}
+      )
+    }
