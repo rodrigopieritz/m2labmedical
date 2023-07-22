@@ -9,12 +9,11 @@ import { Spinner } from "react-bootstrap";
 export const MedicalRegisterComponent = () => {
   const [appointReason, setAppointReason] = useState("");
   const [appointReasonError, setAppointReasonError] = useState("");
-
   const [appointDate, setAppointDate] = useState("");
   const [appointDatError, setAppointDateError] = useState("");
   const [submitButtonState, setSubmitButtonState] = useState("");
-  const [editButtonState, setEditButtonState] = useState("");
-  const [deleteButtonState, setDeleteButtonState] = useState("");
+  const [editButtonState, setEditButtonState] = useState(false);
+  const [deleteButtonState, setDeleteButtonState] = useState(false);
   const [appointTime, setAppointTime] = useState("");
   const [appointTimeError, setAppointTimeError] = useState("");
   const [problemDescription, setProblemDescription] = useState("");
@@ -23,13 +22,57 @@ export const MedicalRegisterComponent = () => {
   const [dosageAndPrecautions, setDosageAndPrecautions] = useState("");
   const [dosageAndPrecautionsError, setDosageAndPrecautionsError] =
     useState("");
+  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
+  const [searchQuery, setSearchQuery] = useState("");
+  const [foundPatient, setFoundPatient] = useState(null);
+  const [foundPatientError, setFoundPatientError] = useState(null);
 
+  useEffect(() => {
+    const getCurrentDate = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
 
-    
+    const getCurrentTime = () => {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      return `${hours}:${minutes}`;
+    };
+
+    setAppointDate(getCurrentDate());
+    setCurrentDate(getCurrentDate());
+    setAppointTime(getCurrentTime());
+    setCurrentTime(getCurrentTime());
+  }, []);
+
+  const handleSearchPatient = () => {
+    if (searchQuery.trim() === "") {
+         setFoundPatient(null);
+        return;
+      }
+    const patientsList = JSON.parse(localStorage.getItem("patients")) || [];
+
+    const patient = patientsList.find((patient) =>
+      patient.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    if (patient) {
+      setFoundPatient(patient);
+    } else {
+      setFoundPatient(null);
+      alert("Paciente não encontrado.");
+    }
+  };
+
   const handleInput = (event) => {
     event.preventDefault();
-    setDeleteButtonState("true");
-    setEditButtonState("true");
+    setDeleteButtonState(true);
+    setEditButtonState(true);
     const { value, id } = event.target;
     if (id === "appointReason") {
       setAppointReason(value);
@@ -48,12 +91,15 @@ export const MedicalRegisterComponent = () => {
     } else if (id === "dosageAndPrecautions") {
       setDosageAndPrecautions(value);
       setDosageAndPrecautionsError("");
+    } else if (id === "foundPatient") {
+      setFoundPatient(value);
+      setFoundPatientError("");
     }
   };
 
   const addMedicalAppointmentToLocalStorage = () => {
     const newMedicalAppointment = {
-      patient: 1,
+      patient: foundPatient.id,
       appointReason: appointReason,
       appointDate: appointDate,
       appointTime: appointTime,
@@ -69,6 +115,15 @@ export const MedicalRegisterComponent = () => {
     e.preventDefault();
 
     const validationSchema = yup.object().shape({
+        foundPatient: yup
+        .mixed()
+        .test(
+          "is-patient-selected",
+          "Por favor, selecione um paciente.",
+          (value) => {
+            return value !== null;
+          }
+        ),
       appointReason: yup
         .string()
         .min(6, "Este campo deve ter pelo menos 6 caracteres")
@@ -94,6 +149,7 @@ export const MedicalRegisterComponent = () => {
     validationSchema
       .validate(
         {
+          foundPatient,
           appointReason,
           appointDate,
           appointTime,
@@ -118,13 +174,15 @@ export const MedicalRegisterComponent = () => {
             } else if (path === "appointDate") {
               setAppointDateError(message);
             } else if (path === "appointTime") {
-              setAppointTime(message);
+              setAppointTimeError(message);
             } else if (path === "problemDescription") {
-              setProblemDescription(message);
+              setProblemDescriptionError(message);
             } else if (path === "medicationPrescribed") {
-              setMedicationPrescribed(message);
+              setMedicationPrescribedError(message);
             } else if (path === "dosageAndPrecautions") {
-              setDosageAndPrecautions(message);
+              setDosageAndPrecautionsError(message);
+            } else if (path === "foundPatient") {
+              setFoundPatientError(message);
             }
           });
         }
@@ -133,7 +191,23 @@ export const MedicalRegisterComponent = () => {
 
   return (
     <>
-      <h3>Barra de Pesquisa de Paciente Aqui</h3>
+      <div>
+        <InputComponent
+          id="searchPatientInp"
+          type="text"
+          placeholder="Digite o nome do paciente"
+          label="Buscar Paciente"
+          value={searchQuery}
+          onInput={(event) => setSearchQuery(event.target.value)}
+        />
+        <ButtonComponent
+          id="searchPatientBtn"
+          type="button"
+          label="Buscar Paciente"
+          onClick={handleSearchPatient}
+        />
+      </div>
+
       <Styled.MedicalRegisterComponent>
         <form onSubmit={handleFormSubmission} noValidate>
           <ButtonComponent
@@ -172,7 +246,12 @@ export const MedicalRegisterComponent = () => {
             </div>
           )}
 
-          <h3>Dados da Consulta</h3>
+          {!foundPatient ? (
+            <div>Para começar, escolha um paciente</div>
+          ) : (
+            <div>Paciente: {foundPatient.name}</div>
+          )}
+          {foundPatientError && <div>{foundPatientError}</div>}
 
           <InputComponent
             id="appointReason"
@@ -188,7 +267,6 @@ export const MedicalRegisterComponent = () => {
           <InputComponent
             id="appointDate"
             type="date"
-            placeholder="01/01/2024"
             label="Data da Consulta"
             value={appointDate}
             onInput={handleInput}
@@ -208,15 +286,16 @@ export const MedicalRegisterComponent = () => {
           <InputComponent
             id="problemDescription"
             type="textarea"
+            placeholder="Digite a descrição do problema"
             label="Descrição do Problema"
             value={problemDescription}
             onInput={handleInput}
-            error={problemDescriptionError}
           />
           {problemDescriptionError && <div>{problemDescriptionError}</div>}
 
           <InputComponent
             id="medicationPrescribed"
+            placeholder="Digite a prescrição médica"
             type="textarea"
             label="Medicação Receitada"
             onInput={handleInput}
@@ -224,11 +303,11 @@ export const MedicalRegisterComponent = () => {
 
           <InputComponent
             id="dosageAndPrecautions"
+            placeholder="Digite as dosagens e prescrição"
             type="textarea"
             label="Dosagem e Precauções"
             value={dosageAndPrecautions}
             onInput={handleInput}
-            error={dosageAndPrecautionsError}
           />
           {dosageAndPrecautionsError && <div>{dosageAndPrecautionsError}</div>}
         </form>
