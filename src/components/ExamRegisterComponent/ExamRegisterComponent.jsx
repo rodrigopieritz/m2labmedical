@@ -7,48 +7,52 @@ import { addmedicalAppointment } from "../../service/medicalAppointment.service"
 import { Spinner } from "react-bootstrap";
 
 export const ExamRegisterComponent = () => {
-//   const [appointReason, setAppointReason] = useState("");
-//   const [appointReasonError, setAppointReasonError] = useState("");
-//   const [appointDate, setAppointDate] = useState("");
-//   const [appointDatError, setAppointDateError] = useState("");
-//   const [submitButtonState, setSubmitButtonState] = useState("");
-//   const [editButtonState, setEditButtonState] = useState(false);
-//   const [deleteButtonState, setDeleteButtonState] = useState(false);
-//   const [appointTime, setAppointTime] = useState("");
-//   const [appointTimeError, setAppointTimeError] = useState("");
-//   const [problemDescription, setProblemDescription] = useState("");
-//   const [problemDescriptionError, setProblemDescriptionError] = useState("");
+
+  const [examName, setExamName] = useState("");
+  const [examNameError, setExamNameError] = useState("");
+
+
+  const [examDate, setExamDate] = useState("");
+  const [examDateError, setExamDateError] = useState("");
+
+  const [submitButtonState, setSubmitButtonState] = useState("");
+  const [editButtonState, setEditButtonState] = useState(false);
+  const [deleteButtonState, setDeleteButtonState] = useState(false);
+  const [examTime, setExamTime] = useState("");
+  const [examTimeError, setExamTimeError] = useState("");
+  const [examType, setExamType] = useState("");
+  const [examTypeError, setExamTypeError] = useState("");
 //   const [medicationPrescribed, setMedicationPrescribed] = useState("");
 //   const [dosageAndPrecautions, setDosageAndPrecautions] = useState("");
 //   const [dosageAndPrecautionsError, setDosageAndPrecautionsError] =
 //     useState("");
-//   const [currentDate, setCurrentDate] = useState("");
-//   const [currentTime, setCurrentTime] = useState("");
+  const [currentDate, setCurrentDate] = useState("");
+  const [currentTime, setCurrentTime] = useState("");
 //   const [searchQuery, setSearchQuery] = useState("");
 //   const [foundPatient, setFoundPatient] = useState(null);
 //   const [foundPatientError, setFoundPatientError] = useState(null);
 
-//   useEffect(() => {
-//     const getCurrentDate = () => {
-//       const now = new Date();
-//       const year = now.getFullYear();
-//       const month = String(now.getMonth() + 1).padStart(2, "0");
-//       const day = String(now.getDate()).padStart(2, "0");
-//       return `${year}-${month}-${day}`;
-//     };
+  useEffect(() => {
+    const getCurrentDate = () => {
+      const now = new Date();
+      const year = now.getFullYear();
+      const month = String(now.getMonth() + 1).padStart(2, "0");
+      const day = String(now.getDate()).padStart(2, "0");
+      return `${year}-${month}-${day}`;
+    };
 
-//     const getCurrentTime = () => {
-//       const now = new Date();
-//       const hours = String(now.getHours()).padStart(2, "0");
-//       const minutes = String(now.getMinutes()).padStart(2, "0");
-//       return `${hours}:${minutes}`;
-//     };
+    const getCurrentTime = () => {
+      const now = new Date();
+      const hours = String(now.getHours()).padStart(2, "0");
+      const minutes = String(now.getMinutes()).padStart(2, "0");
+      return `${hours}:${minutes}`;
+    };
 
-//     setAppointDate(getCurrentDate());
-//     setCurrentDate(getCurrentDate());
-//     setAppointTime(getCurrentTime());
-//     setCurrentTime(getCurrentTime());
-//   }, []);
+    setExamDate(getCurrentDate());
+    setCurrentDate(getCurrentDate());
+    setExamTime(getCurrentTime());
+    setCurrentTime(getCurrentTime());
+  }, []);
 
 //   const handleSearchPatient = () => {
 //     if (searchQuery.trim() === "") {
@@ -69,23 +73,23 @@ export const ExamRegisterComponent = () => {
 //     }
 //   };
 
-//   const handleInput = (event) => {
-//     event.preventDefault();
-//     setDeleteButtonState(true);
-//     setEditButtonState(true);
-//     const { value, id } = event.target;
-//     if (id === "appointReason") {
-//       setAppointReason(value);
-//       setAppointReasonError("");
-//     } else if (id === "appointDate") {
-//       setAppointDate(value);
-//       setAppointDateError("");
-//     } else if (id === "appointTime") {
-//       setAppointTime(value);
-//       setAppointTimeError("");
-//     } else if (id === "problemDescription") {
-//       setProblemDescription(value);
-//       setProblemDescriptionError("");
+  const handleInput = (event) => {
+    event.preventDefault();
+    setDeleteButtonState(true);
+    setEditButtonState(true);
+    const { value, id } = event.target;
+    if (id === "examName") {
+      setExamName(value);
+      setExamNameError("");
+    } else if (id === "examDateDate") {
+      setExamDate(value);
+      setExamDateError("");
+    } else if (id === "examTime") {
+      setExamTime(value);
+      setExamTimeError("");
+    } else if (id === "examType") {
+      setExamType(value);
+      setExamTypeError("");
 //     } else if (id === "medicationPrescribed") {
 //       setMedicationPrescribed(value);
 //     } else if (id === "dosageAndPrecautions") {
@@ -94,16 +98,17 @@ export const ExamRegisterComponent = () => {
 //     } else if (id === "foundPatient") {
 //       setFoundPatient(value);
 //       setFoundPatientError("");
-//     }
-//   };
+    }
+  };
 
 //   const addMedicalAppointmentToLocalStorage = () => {
 //     const newMedicalAppointment = {
 //       patient: foundPatient.id,
-//       appointReason: appointReason,
-//       appointDate: appointDate,
-//       appointTime: appointTime,
-//       problemDescription: problemDescription,
+//       examName: examName,
+//       examDate: examDate,
+//       examTime: examTime,
+//       examType: examType,
+
 //       dosageAndPrecautions: dosageAndPrecautions,
 //       medicationPrescribed: medicationPrescribed,
 //     };
@@ -111,10 +116,10 @@ export const ExamRegisterComponent = () => {
 //     setSubmitButtonState("");
 //   };
 
-//   const handleFormSubmission = (e) => {
-//     e.preventDefault();
+  const handleFormSubmission = (e) => {
+    e.preventDefault();
 
-//     const validationSchema = yup.object().shape({
+    const validationSchema = yup.object().shape({
 //         foundPatient: yup
 //         .mixed()
 //         .nullable("Este campo é obrigatório")
@@ -125,74 +130,76 @@ export const ExamRegisterComponent = () => {
 //             return value !== null;
 //           }
 //         ),
-//       appointReason: yup
-//         .string()
-//         .min(6, "Este campo deve ter pelo menos 6 caracteres")
-//         .max(60, "Este campo deve ter no máximo 60 caracteres"),
-//       appointDate: yup
-//         .date("Este campo é obrigatório")
-//         .required("Este campo é obrigatório")
-//         .nullable("Este campo é obrigatório")
-//         .typeError("Data de nascimento inválida"),
-//       appointTime: yup.string().required("Este campo é obrigatório"),
-//       problemDescription: yup
-//         .string()
-//         .min(15, "Este campo deve ter pelo menos 15 caracteres")
-//         .max(1000, "Este campo deve ter no máximo 1000 caracteres")
-//         .required("Este campo é obrigatório"),
+      examName: yup
+        .string()
+        .min(5, "Este campo deve ter pelo menos 6 caracteres")
+        .max(50, "Este campo deve ter no máximo 60 caracteres"),
+        examDate: yup
+        .date("Este campo é obrigatório")
+        .required("Este campo é obrigatório")
+        .nullable("Este campo é obrigatório")
+        .typeError("Data inválida"),
+      examTime: yup
+      .string()
+      .required("Este campo é obrigatório"),
+      examType: yup
+        .string()
+        .min(5, "Este campo deve ter pelo menos 5 caracteres")
+        .max(30, "Este campo deve ter no máximo 30 caracteres")
+        .required("Este campo é obrigatório"),
 //       dosageAndPrecautions: yup
 //         .string()
 //         .min(15, "Este campo deve ter pelo menos 15 caracteres")
 //         .max(250, "Este campo deve ter no máximo 250 caracteres")
 //         .required("Este campo é obrigatório"),
-//     });
+    });
 
-//     validationSchema
-//       .validate(
-//         {
+    validationSchema
+      .validate(
+        {
 //           foundPatient,
-//           appointReason,
-//           appointDate,
-//           appointTime,
-//           problemDescription,
+          examName,
+          examDate,
+          examTime,
+          examType,
 //           dosageAndPrecautions,
-//         },
-//         { abortEarly: false }
-//       )
-//       .then(() => {
+        },
+        { abortEarly: false }
+      )
+      .then(() => {
 //         setSubmitButtonState("Carregando...");
 //         setTimeout(() => {
 //           addMedicalAppointmentToLocalStorage();
-//           alert("Nova consulta médica cadastrada com sucesso");
+          alert("Novo exame cadastrado com sucesso");
 //         }, 2000);
-//       })
-//       .catch((error) => {
-//         if (error.inner) {
-//           error.inner.forEach((err) => {
-//             const { path, message } = err;
-//             if (path === "appointReason") {
-//               setAppointReasonError(message);
-//             } else if (path === "appointDate") {
-//               setAppointDateError(message);
-//             } else if (path === "appointTime") {
-//               setAppointTimeError(message);
-//             } else if (path === "problemDescription") {
-//               setProblemDescriptionError(message);
+      })
+      .catch((error) => {
+        if (error.inner) {
+          error.inner.forEach((err) => {
+            const { path, message } = err;
+            if (path === "examName") {
+                setExamNameError(message);
+            } else if (path === "examDate") {
+              setExamDateError(message);
+            } else if (path === "examTime") {
+              setExamTimeError(message);
+            } else if (path === "examType") {
+              setExamTypeError(message);
 //             } else if (path === "medicationPrescribed") {
 //               setMedicationPrescribedError(message);
 //             } else if (path === "dosageAndPrecautions") {
 //               setDosageAndPrecautionsError(message);
 //             } else if (path === "foundPatient") {
 //               setFoundPatientError(message);
-//             }
-//           });
-//         }
-//       });
-//   };
+            }
+          });
+        }
+      });
+  };
 
   return (
     <>
-    <p>Exam Register Component is Render</p>
+    
       {/* <div>
         <InputComponent
           id="searchPatientInp"
@@ -208,9 +215,9 @@ export const ExamRegisterComponent = () => {
           label="Buscar Paciente"
           onClick={handleSearchPatient}
         />
-      </div>
+      </div> */}
 
-      <Styled.MedicalRegisterComponent>
+      
         <form onSubmit={handleFormSubmission} noValidate>
           <ButtonComponent
             id="editButton"
@@ -248,54 +255,54 @@ export const ExamRegisterComponent = () => {
             </div>
           )}
 
-          {!foundPatient ? (
+          {/* {!foundPatient ? (
             <div>Para começar, escolha um paciente</div>
           ) : (
             <div>Paciente: {foundPatient.name}</div>
           )}
-          {foundPatientError && <div>{foundPatientError}</div>}
+          {foundPatientError && <div>{foundPatientError}</div>} */}
 
           <InputComponent
-            id="appointReason"
+            id="examName"
             type="text"
-            placeholder="Digite o motivo da consulta"
-            label="Motivo da Consulta"
-            value={appointReason}
+            placeholder="Digite o Nome do Exame"
+            label="Nome do Exame"
+            value={examName}
             onInput={handleInput}
-            error={appointReasonError}
+            error={examNameError}
           />
-          {appointReasonError && <div>{appointReasonError}</div>}
+          {examNameError && <div>{examNameError}</div>}
 
           <InputComponent
-            id="appointDate"
+            id="examDate"
             type="date"
-            label="Data da Consulta"
-            value={appointDate}
+            label="Data do Exame"
+            value={examDate}
             onInput={handleInput}
-            error={appointDate}
+            error={examDate}
           />
-          {appointDatError && <div>{appointDatError}</div>}
+          {examDateError && <div>{examDateError}</div>}
           <InputComponent
-            id="appointTime"
+            id="examTime"
             type="time"
-            label="Horário da Consulta"
-            value={appointTime}
+            label="Horário do Exame"
+            value={examTime}
             onInput={handleInput}
-            error={appointTimeError}
+            error={examTimeError}
           />
-          {appointTimeError && <div>{appointTimeError}</div>}
+          {examTimeError && <div>{examTimeError}</div>}
 
           <InputComponent
-            id="problemDescription"
+            id="examType"
             type="textarea"
-            placeholder="Digite a descrição do problema"
-            label="Descrição do Problema"
-            value={problemDescription}
+            placeholder="Digite o tipo de Exame"
+            label="Tipo de Exame"
+            value={examType}
             onInput={handleInput}
           />
-          {problemDescriptionError && <div>{problemDescriptionError}</div>}
+          {examTypeError && <div>{examTypeError}</div>}
 
-          <InputComponent
+          {/* <InputComponent
             id="medicationPrescribed"
             placeholder="Digite a prescrição médica"
             type="textarea"
@@ -311,9 +318,9 @@ export const ExamRegisterComponent = () => {
             value={dosageAndPrecautions}
             onInput={handleInput}
           />
-          {dosageAndPrecautionsError && <div>{dosageAndPrecautionsError}</div>}
+          {dosageAndPrecautionsError && <div>{dosageAndPrecautionsError}</div>} */}
         </form>
-      </Styled.MedicalRegisterComponent> */}
+     
     </>
   );
 };
