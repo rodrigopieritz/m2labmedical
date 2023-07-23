@@ -3,7 +3,7 @@ import * as Styled from "./ExamRegisterComponent.style";
 import { ButtonComponent } from "../Button/buttonComponent";
 import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
-import { addmedicalAppointment } from "../../service/medicalAppointment.service";
+import { addExamRegister } from "../../service/examRegister.service";
 import { Spinner } from "react-bootstrap";
 
 export const ExamRegisterComponent = () => {
@@ -110,21 +110,21 @@ export const ExamRegisterComponent = () => {
     }
   };
 
-//   const addMedicalAppointmentToLocalStorage = () => {
-//     const newMedicalAppointment = {
-//       patient: foundPatient.id,
-//       examName: examName,
-//       examDate: examDate,
-//       examTime: examTime,
-//       examType: examType,
-//       urlDoc: urlDoc,
-//       laboratory: laboratory
-//       results: results,
-//       
-//     };
-//     addmedicalAppointment(newMedicalAppointment);
-//     setSubmitButtonState("");
-//   };
+  const addExamRegisterToLocalStorage = () => {
+    const newExamRegister = {
+      patient: foundPatient.id,
+      examName: examName,
+      examDate: examDate,
+      examTime: examTime,
+      examType: examType,
+      urlDoc: urlDoc,
+      laboratory: laboratory,
+      results: results,
+      
+    };
+    addExamRegister(newExamRegister);
+    setSubmitButtonState("");
+  };
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
@@ -183,11 +183,11 @@ results
         { abortEarly: false }
       )
       .then(() => {
-//         setSubmitButtonState("Carregando...");
-//         setTimeout(() => {
-//           addMedicalAppointmentToLocalStorage();
+        setSubmitButtonState("Carregando...");
+        setTimeout(() => {
+          addExamRegisterToLocalStorage();
           alert("Novo exame cadastrado com sucesso");
-//         }, 2000);
+        }, 2000);
       })
       .catch((error) => {
         if (error.inner) {
@@ -205,8 +205,8 @@ results
               setLaboratoryError(message);
             } else if (path === "results") {
                 setResultsError(message);
-//             } else if (path === "foundPatient") {
-//               setFoundPatientError(message);
+            } else if (path === "foundPatient") {
+              setFoundPatientError(message);
             }
           });
         }

@@ -78,29 +78,58 @@ const App = () => {
   };
 
   const addMedicalAppointmentsToLocalStorage = () => {
-  const medicalAppointments = [
-    {
-      appointDate: "2023-07-22",
-      appointReason: "Dores de Cabeça",
-      appointTime: "16:39",
-      dosageAndPrecautions: "Tomar por 1 semana  3x ao dia de 8 em 8h",
-      id: 1,
-      medicationPrescribed: "Paracetamol",
-      patient: 1,
-      problemDescription: "O paciente relatou fortes dores de cabeça.",
-    },
-    {
-      appointDate: "2023-07-18",
-      appointReason: "Diarréia",
-      appointTime: "12:45",
-      dosageAndPrecautions: "",
-      id: 2,
-      medicationPrescribed: "Ingestão de líquido e repouso",
-      patient: 2,
-      problemDescription: "O paciente relatou estar com diarréia há 3 dias.",
-    },
-  ];
-  LocalStorageService.set("medicalAppointments", medicalAppointments);}
+    const medicalAppointments = [
+      {
+        appointDate: "2023-07-22",
+        appointReason: "Dores de Cabeça",
+        appointTime: "16:39",
+        dosageAndPrecautions: "Tomar por 1 semana  3x ao dia de 8 em 8h",
+        id: 1,
+        medicationPrescribed: "Paracetamol",
+        patient: 1,
+        problemDescription: "O paciente relatou fortes dores de cabeça.",
+      },
+      {
+        appointDate: "2023-07-18",
+        appointReason: "Diarréia",
+        appointTime: "12:45",
+        dosageAndPrecautions: "",
+        id: 2,
+        medicationPrescribed: "Ingestão de líquido e repouso",
+        patient: 2,
+        problemDescription: "O paciente relatou estar com diarréia há 3 dias.",
+      },
+    ];
+    LocalStorageService.set("medicalAppointments", medicalAppointments);
+  };
+
+  const addExamsToLocalStorage = () => {
+    const exams = [
+  {
+    examDate: "2023-07-22",
+    examName: "Exame de Sangue OXYZ",
+    examTime: "23:06",
+    examType: "Exame de Sangue",
+    id: 1,
+    laboratory: "LabExams",
+    patient: 1,
+    results: "Tipo de Sangue Orh+, Quantidade de hemácias: 60% do normal, Glicemia: 95, outros: Normal",
+    urlDoc: "https://examedesangue.labexams/exame",
+  },
+  {
+    examDate: "2023-07-18",
+    examName: "Mamografia",
+    examTime: "13:06",
+    examType: "Exame de Mamas",
+    id: 2,
+    laboratory: "LabExams",
+    patient: 2,
+    results: "Exame realizada com a máquina abc, evidenciou não haver nenhum sinal anormal que indique...",
+    urlDoc: "https://examedesangue.labexams/exame",
+  }
+];
+  LocalStorageService.set("exams", exams);
+  }
 
   if (!LocalStorageService.get("allowedUsers")) {
     addAllowedUsersToLocalStorage();
@@ -110,6 +139,9 @@ const App = () => {
   }
   if (!LocalStorageService.get("medicalAppointments")) {
     addMedicalAppointmentsToLocalStorage();
+  }
+  if (!LocalStorageService.get("exams")) {
+    addExamsToLocalStorage();
   }
 
   return (
