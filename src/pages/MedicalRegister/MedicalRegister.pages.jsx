@@ -4,6 +4,7 @@ import { Navigate } from "react-router"
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu"
 import Toolbar from "../../components/Toolbar/ToolbarComponent"
 import * as Styled from "../../global.style";
+import { MedicalRegisterComponent } from "../../components/MedicalRegister/MedicalRegisterComponent";
 
 export const MedicalRegister = () => {
     const { auth } = useContext(AuthContext);
@@ -11,8 +12,7 @@ export const MedicalRegister = () => {
     const userName = userEmail.split("@")[0];
   
     const render = () => {
-      const userEmail = auth.user.email;
-      const userName = userEmail.split("@")[0];
+     
       return (
         <Styled.PageContainer>
           <SidebarMenu />
@@ -23,7 +23,7 @@ export const MedicalRegister = () => {
               userPhoto="userPhoto.png"
             />
             <Styled.SpecificPageContent>
-             <MedicalRegister/>
+            <MedicalRegisterComponent/>
             </Styled.SpecificPageContent>
           </Styled.MainContent>
         </Styled.PageContainer>

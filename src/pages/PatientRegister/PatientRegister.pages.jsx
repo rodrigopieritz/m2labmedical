@@ -4,7 +4,7 @@ import { Navigate } from "react-router";
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 import Toolbar from "../../components/Toolbar/ToolbarComponent";
 import * as Styled from "../../global.style";
-import { PatientRegister } from "../../components/PatientRegister/PatientRegister";
+import { PatientRegisterComponent } from "../../components/PatientRegisterComponent/PatientRegisterComponent";
 
 export const PatientRegisterPage = () => {
   const { auth } = useContext(AuthContext);
@@ -21,7 +21,7 @@ export const PatientRegisterPage = () => {
             userName={userName}
             userPhoto="userPhoto.png"
           />
-          <PatientRegister />
+          <PatientRegisterComponent/>
         </Styled.MainContent>
       </Styled.PageContainer>
     );
@@ -34,7 +34,7 @@ export const PatientRegisterPage = () => {
 // import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 // import Toolbar from "../../components/Toolbar/ToolbarComponent";
 // import * as Styled from "../../global.style";
-// import { PatientRegister } from "../../components/PatientRegister/PatientRegister";
+// import { PatientRegisterComponent } from "../../components/PatientRegisterComponent/PatientRegisterComponent";
 
 // export const PatientRegisterPage = () => {
  
@@ -47,7 +47,7 @@ export const PatientRegisterPage = () => {
 //             userName="Página de teste"
 //             userPhoto="userPhoto.png"
 //           />
-//           <PatientRegister />
+//           <PatientRegisterComponent/>
 //         </Styled.MainContent>
 //       </Styled.PageContainer>
 //     );

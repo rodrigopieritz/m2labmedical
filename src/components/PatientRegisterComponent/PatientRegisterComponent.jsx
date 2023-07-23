@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import * as Styled from "./PatientRegister.style";
+import * as Styled from "./PatientRegisterComponent.style";
 import { ButtonComponent } from "../Button/buttonComponent";
 import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
@@ -7,7 +7,7 @@ import { addPatient } from "../../service/patients.service";
 import { Spinner } from 'react-bootstrap';
 
 
-export const PatientRegister = () => {
+export const PatientRegisterComponent = () => {
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [gender, setGender] = useState("");
@@ -48,13 +48,13 @@ export const PatientRegister = () => {
   const [complement, setComplement] = useState("");
   const [nextTo, setNextTo] = useState("");
   const [submitButtonState, setSubmitButtonState] = useState("");
-  const [editButtonState, setEditButtonState] = useState("");
-  const [deleteButtonState, setDeleteButtonState] = useState("");
+  const [editButtonState, setEditButtonState] = useState(false);
+  const [deleteButtonState, setDeleteButtonState] = useState(false);
 
   const handleInput = (event) => {
     event.preventDefault();
-  setDeleteButtonState("true");
-  setEditButtonState("true");
+  setDeleteButtonState(true);
+  setEditButtonState(true);
 
     const { value, id } = event.target;
     if (id === "name") {

@@ -4,7 +4,7 @@ import { HomePage } from "./pages/Home/Home.pages";
 import { ModalProvider } from "./context/ModalContext";
 import { PatientRegisterPage } from "./pages/PatientRegister/PatientRegister.pages";
 import { MedicalRegister } from "./pages/MedicalRegister/MedicalRegister.pages";
-import { MedicalRecord } from "./pages/MedicalRecord/MedicalRecord.pages";
+import { MedicalRecordList } from "./pages/MedicalRecordList/MedicalRecordList.pages";
 import { ExamRegister } from "./pages/ExamRegister/ExamRegister.pages";
 import { LocalStorageService } from "./service/LocalStorage.service";
 
@@ -152,7 +152,7 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/patient-register" element={<PatientRegisterPage />} />
           <Route path="/medical-register" element={<MedicalRegister />} />
-          <Route path="/medical-record" element={<MedicalRecord />} />
+          <Route path="/medical-record" element={<MedicalRecordList />} />
           <Route path="/exam-register" element={<ExamRegister />} />
           <Route
             path="*"
