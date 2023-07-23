@@ -5,7 +5,7 @@ import SidebarMenu from "../../components/SidebarMenu/SidebarMenu"
 import Toolbar from "../../components/Toolbar/ToolbarComponent"
 import * as Styled from "../../global.style";
 
-export const MedicalRecord = () => {
+export const MedicalRecordList = () => {
     const { auth } = useContext(AuthContext);
     const userEmail = auth.user.email;
     const userName = userEmail.split("@")[0];
@@ -21,7 +21,7 @@ export const MedicalRecord = () => {
                 userPhoto="userPhoto.png"
               />
               <Styled.SpecificPageContent>
-                <p> Medical Record is render </p>
+                <p> Medical Record List is render </p>
               </Styled.SpecificPageContent>
             </Styled.MainContent>
           </Styled.PageContainer>
