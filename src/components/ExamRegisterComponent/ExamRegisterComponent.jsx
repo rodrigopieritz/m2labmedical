@@ -33,9 +33,9 @@ export const ExamRegisterComponent = () => {
 
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
-//   const [searchQuery, setSearchQuery] = useState("");
-//   const [foundPatient, setFoundPatient] = useState(null);
-//   const [foundPatientError, setFoundPatientError] = useState(null);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [foundPatient, setFoundPatient] = useState(null);
+  const [foundPatientError, setFoundPatientError] = useState(null);
 
   useEffect(() => {
     const getCurrentDate = () => {
@@ -59,24 +59,24 @@ export const ExamRegisterComponent = () => {
     setCurrentTime(getCurrentTime());
   }, []);
 
-//   const handleSearchPatient = () => {
-//     if (searchQuery.trim() === "") {
-//          setFoundPatient(null);
-//         return;
-//       }
-//     const patientsList = JSON.parse(localStorage.getItem("patients")) || [];
+  const handleSearchPatient = () => {
+    if (searchQuery.trim() === "") {
+         setFoundPatient(null);
+        return;
+      }
+    const patientsList = JSON.parse(localStorage.getItem("patients")) || [];
 
-//     const patient = patientsList.find((patient) =>
-//       patient.name.toLowerCase().includes(searchQuery.toLowerCase())
-//     );
+    const patient = patientsList.find((patient) =>
+      patient.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
 
-//     if (patient) {
-//       setFoundPatient(patient);
-//     } else {
-//       setFoundPatient(null);
-//       alert("Paciente não encontrado.");
-//     }
-//   };
+    if (patient) {
+      setFoundPatient(patient);
+    } else {
+      setFoundPatient(null);
+      alert("Paciente não encontrado.");
+    }
+  };
 
   const handleInput = (event) => {
     event.preventDefault();
@@ -104,9 +104,9 @@ export const ExamRegisterComponent = () => {
         setResults(value);
         setResultsError("");
 
-//     } else if (id === "foundPatient") {
-//       setFoundPatient(value);
-//       setFoundPatientError("");
+    } else if (id === "foundPatient") {
+      setFoundPatient(value);
+      setFoundPatientError("");
     }
   };
 
@@ -130,16 +130,16 @@ export const ExamRegisterComponent = () => {
     e.preventDefault();
 
     const validationSchema = yup.object().shape({
-//         foundPatient: yup
-//         .mixed()
-//         .nullable("Este campo é obrigatório")
-//         .test(
-//           "is-patient-selected",
-//           "Por favor, selecione um paciente.",
-//           (value) => {
-//             return value !== null;
-//           }
-//         ),
+        foundPatient: yup
+        .mixed()
+        .nullable("Este campo é obrigatório")
+        .test(
+          "is-patient-selected",
+          "Por favor, selecione um paciente.",
+          (value) => {
+            return value !== null;
+          }
+        ),
       examName: yup
         .string()
         .min(5, "Este campo deve ter pelo menos 6 caracteres")
@@ -172,7 +172,7 @@ export const ExamRegisterComponent = () => {
     validationSchema
       .validate(
         {
-//           foundPatient,
+          foundPatient,
           examName,
           examDate,
           examTime,
@@ -216,7 +216,7 @@ results
   return (
     <>
     
-      {/* <div>
+      <div>
         <InputComponent
           id="searchPatientInp"
           type="text"
@@ -231,7 +231,7 @@ results
           label="Buscar Paciente"
           onClick={handleSearchPatient}
         />
-      </div> */}
+      </div>
 
       
         <form onSubmit={handleFormSubmission} noValidate>
@@ -271,12 +271,12 @@ results
             </div>
           )}
 
-          {/* {!foundPatient ? (
+          {!foundPatient ? (
             <div>Para começar, escolha um paciente</div>
           ) : (
             <div>Paciente: {foundPatient.name}</div>
           )}
-          {foundPatientError && <div>{foundPatientError}</div>} */}
+          {foundPatientError && <div>{foundPatientError}</div>}
 
           <InputComponent
             id="examName"
