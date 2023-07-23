@@ -22,10 +22,15 @@ export const ExamRegisterComponent = () => {
   const [examTimeError, setExamTimeError] = useState("");
   const [examType, setExamType] = useState("");
   const [examTypeError, setExamTypeError] = useState("");
-//   const [medicationPrescribed, setMedicationPrescribed] = useState("");
-//   const [dosageAndPrecautions, setDosageAndPrecautions] = useState("");
-//   const [dosageAndPrecautionsError, setDosageAndPrecautionsError] =
-//     useState("");
+  const [urlDoc, setUrlDoc] = useState("");
+  const [laboratory, setLaboratory] = useState("");
+  const [laboratoryError, setLaboratoryError] =
+    useState("");
+    const [results, setResults] = useState("");
+    const [resultsError, setResultsError] =
+      useState("");
+
+
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
 //   const [searchQuery, setSearchQuery] = useState("");
@@ -90,11 +95,15 @@ export const ExamRegisterComponent = () => {
     } else if (id === "examType") {
       setExamType(value);
       setExamTypeError("");
-//     } else if (id === "medicationPrescribed") {
-//       setMedicationPrescribed(value);
-//     } else if (id === "dosageAndPrecautions") {
-//       setDosageAndPrecautions(value);
-//       setDosageAndPrecautionsError("");
+    } else if (id === "urlDoc") {
+      setUrlDoc(value);
+    } else if (id === "laboratory") {
+      setLaboratory(value);
+      setLaboratoryError("");
+    } else if (id === "results") {
+        setResults(value);
+        setResultsError("");
+
 //     } else if (id === "foundPatient") {
 //       setFoundPatient(value);
 //       setFoundPatientError("");
@@ -108,9 +117,10 @@ export const ExamRegisterComponent = () => {
 //       examDate: examDate,
 //       examTime: examTime,
 //       examType: examType,
-
-//       dosageAndPrecautions: dosageAndPrecautions,
-//       medicationPrescribed: medicationPrescribed,
+//       urlDoc: urlDoc,
+//       laboratory: laboratory
+//       results: results,
+//       
 //     };
 //     addmedicalAppointment(newMedicalAppointment);
 //     setSubmitButtonState("");
@@ -147,11 +157,16 @@ export const ExamRegisterComponent = () => {
         .min(5, "Este campo deve ter pelo menos 5 caracteres")
         .max(30, "Este campo deve ter no máximo 30 caracteres")
         .required("Este campo é obrigatório"),
-//       dosageAndPrecautions: yup
-//         .string()
-//         .min(15, "Este campo deve ter pelo menos 15 caracteres")
-//         .max(250, "Este campo deve ter no máximo 250 caracteres")
-//         .required("Este campo é obrigatório"),
+      laboratory: yup
+        .string()
+        .min(5, "Este campo deve ter pelo menos 5 caracteres")
+        .max(30, "Este campo deve ter no máximo 30 caracteres")
+        .required("Este campo é obrigatório"),
+        results: yup
+        .string()
+        .min(15, "Este campo deve ter pelo menos 15 caracteres")
+        .max(1000, "Este campo deve ter no máximo 1.000 caracteres")
+        .required("Este campo é obrigatório"),
     });
 
     validationSchema
@@ -162,7 +177,8 @@ export const ExamRegisterComponent = () => {
           examDate,
           examTime,
           examType,
-//           dosageAndPrecautions,
+          laboratory,
+results
         },
         { abortEarly: false }
       )
@@ -185,10 +201,10 @@ export const ExamRegisterComponent = () => {
               setExamTimeError(message);
             } else if (path === "examType") {
               setExamTypeError(message);
-//             } else if (path === "medicationPrescribed") {
-//               setMedicationPrescribedError(message);
-//             } else if (path === "dosageAndPrecautions") {
-//               setDosageAndPrecautionsError(message);
+                        } else if (path === "laboratory") {
+              setLaboratoryError(message);
+            } else if (path === "results") {
+                setResultsError(message);
 //             } else if (path === "foundPatient") {
 //               setFoundPatientError(message);
             }
@@ -302,23 +318,33 @@ export const ExamRegisterComponent = () => {
           />
           {examTypeError && <div>{examTypeError}</div>}
 
-          {/* <InputComponent
-            id="medicationPrescribed"
-            placeholder="Digite a prescrição médica"
+          <InputComponent
+            id="urlDoc"
+            placeholder="Digite a URL da documentação"
             type="textarea"
-            label="Medicação Receitada"
+            label="URL da documentação"
             onInput={handleInput}
           />
 
           <InputComponent
-            id="dosageAndPrecautions"
-            placeholder="Digite as dosagens e prescrição"
-            type="textarea"
-            label="Dosagem e Precauções"
-            value={dosageAndPrecautions}
+            id="laboratory"
+            placeholder="Digite o nome do laboratório"
+            type="text"
+            label="Laboratório"
+            value={laboratory}
             onInput={handleInput}
           />
-          {dosageAndPrecautionsError && <div>{dosageAndPrecautionsError}</div>} */}
+          {laboratoryError && <div>{laboratoryError}</div>}
+
+          <InputComponent
+            id="results"
+            placeholder="Escreva os resultados"
+            type="textarea"
+            label="Resultados"
+            value={results}
+            onInput={handleInput}
+          />
+          {resultsError && <div>{resultsError}</div>}
         </form>
      
     </>
