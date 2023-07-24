@@ -4,11 +4,18 @@ import { InputComponent } from "../Input/inputComponent";
 import * as Styled from "./MedicalRecordListComponent.style";
 import PatientCard from "../PatientCard/PatientCard";
 import { getPatients } from "../../service/patients.service";
+import { Navigate, useNavigate } from "react-router-dom";
 
 export const MedicalRecordListComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [foundPatient, setFoundPatient] = useState(null);
   const [foundPatientError, setFoundPatientError] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleRedirect = (path) => {
+    navigate(path);
+  };
 
   const patientsListRender = getPatients();
 
@@ -17,7 +24,7 @@ export const MedicalRecordListComponent = () => {
       return null;
     }
 
-    const patientsList = JSON.parse(localStorage.getItem("patients")) || [];
+    const patientsList = getPatients();
 
     const foundByName = patientsList.find((patient) =>
       patient.name.toLowerCase().includes(query.toLowerCase())
@@ -44,11 +51,9 @@ export const MedicalRecordListComponent = () => {
     const foundPatient = searchLocalStorage(searchQuery);
     if (foundPatient) {
       setFoundPatient(foundPatient);
-      console.log(foundPatient);
     } else {
       setFoundPatient(null);
       alert("Paciente não encontrado.");
-      console.log(foundPatient);
     }
   };
 
@@ -75,28 +80,38 @@ export const MedicalRecordListComponent = () => {
           Para começar, escolha um paciente
           <div>
             {patientsListRender.map((patient) => (
-              <PatientCard
-              id={patient.id}
-              name={patient.name}
-              birthdate={patient.bithdate}
-              insurance={patient.insurance}
-              phone={patient.phone}
-              navigateTo=""
-              />
+              <div key={patient.id}>
+                <PatientCard
+                  id={patient.id}
+                  name={patient.name}
+                  birthdate={patient.bithdate}
+                  insurance={patient.insurance}
+                  phone={patient.phone}
+                />
+                <ButtonComponent
+                  id={`seeMoreBtn${patient.id}`}
+                  onClick={() => handleRedirect("/patient-medical-record")}
+                  label="Veja Mais"
+                />
+              </div>
             ))}
           </div>
         </div>
       ) : (
         <div>
           Paciente Selecionado: {foundPatient.name}
-          <div>
+          <div key={foundPatient.id}>
             <PatientCard
               id={foundPatient.id}
               name={foundPatient.name}
               birthdate={foundPatient.bithdate}
               insurance={foundPatient.insurance}
               phone={foundPatient.phone}
-              navigateTo=""
+            />
+            <ButtonComponent
+              id={`seeMoreBtn${foundPatient.id}`}
+              onClick={() => handleRedirect("/patient-medical-record")}
+              label="Veja Mais"
             />
           </div>
         </div>

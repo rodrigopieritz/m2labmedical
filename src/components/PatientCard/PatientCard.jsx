@@ -1,10 +1,8 @@
 import React from "react";
 import { FaUser } from "react-icons/fa";
 import PropTypes from "prop-types";
-import { useNavigate } from "react-router-dom";
 
 const calculateAge = (birthdate) => {
- 
   if (!birthdate) return 0;
 
   const [year, month, day] = birthdate.split("-").map(Number);
@@ -26,11 +24,7 @@ const calculateAge = (birthdate) => {
   return age;
 };
 
-const PatientCard = ({ id, name, birthdate, insurance, phone, navigateTo }) => {
-  const handleVejaMaisClick = () => {
-    navigate(navigateTo);
-  };
-
+const PatientCard = ({ id, name, birthdate, insurance, phone }) => {
   const idade = calculateAge(birthdate);
 
   return (
@@ -45,7 +39,6 @@ const PatientCard = ({ id, name, birthdate, insurance, phone, navigateTo }) => {
         <p>Convênio: {insurance}</p>
         <p>Telefone: {phone}</p>
       </div>
-      <button onClick={handleVejaMaisClick}>Veja mais</button>
     </div>
   );
 };
@@ -58,5 +51,4 @@ PatientCard.propTypes = {
   birthdate: PropTypes.string,
   insurance: PropTypes.string,
   phone: PropTypes.string,
-  navigateTo: PropTypes.string,
 };
