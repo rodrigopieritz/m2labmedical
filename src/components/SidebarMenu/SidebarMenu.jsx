@@ -29,7 +29,7 @@ const SidebarMenu = () => {
   return (
     <Styled.Sidebar>
       <div>
-        <img src="lab-medical-logo-white.png" alt="Logo" width="165" height="160"/>
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="165" height="160"/>
       </div>
 
       <ButtonComponent

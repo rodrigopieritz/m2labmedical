@@ -38,7 +38,9 @@ import { PatientMedicalRecordComponent } from "../../components/PatientMedicalRe
 import { useParams } from "react-router-dom";
 
 
+
 export const PatientMedicalRecord = () => {
+  
   const { id } = useParams();
   
   return (
@@ -47,13 +49,12 @@ export const PatientMedicalRecord = () => {
         <SidebarMenu />
         <Styled.MainContent>
           <Toolbar
-            pageTitle="Prontuário do Paciente"
-            userName="{userName}"
-            userPhoto="userPhoto.png"
+               pageTitle="Prontuário do Paciente"
+               userName="{userName}"
+               userPhoto="/../../userPhoto.png"
           />
           <Styled.SpecificPageContent>
-          <p>ID do paciente: {id}</p>
-            <PatientMedicalRecordComponent/>
+          <PatientMedicalRecordComponent id={id}/>
           </Styled.SpecificPageContent>
         </Styled.MainContent>
       </Styled.PageContainer>
