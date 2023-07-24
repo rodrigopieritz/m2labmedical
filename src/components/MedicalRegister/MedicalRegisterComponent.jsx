@@ -22,6 +22,7 @@ export const MedicalRegisterComponent = () => {
   const [dosageAndPrecautions, setDosageAndPrecautions] = useState("");
   const [dosageAndPrecautionsError, setDosageAndPrecautionsError] =
     useState("");
+
   const [currentDate, setCurrentDate] = useState("");
   const [currentTime, setCurrentTime] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
@@ -250,7 +251,7 @@ export const MedicalRegisterComponent = () => {
           {!foundPatient ? (
             <div>Para começar, escolha um paciente</div>
           ) : (
-            <div>Paciente: {foundPatient.name}</div>
+            <div>Paciente Selecionado: {foundPatient.name}</div>
           )}
           {foundPatientError && <div>{foundPatientError}</div>}
 

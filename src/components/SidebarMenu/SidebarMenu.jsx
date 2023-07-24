@@ -46,7 +46,7 @@ const SidebarMenu = () => {
 
       <ButtonComponent
         id="medicalRecordButton"
-        onClick={() => handleRedirect("/medical-record")}
+        onClick={() => handleRedirect("/medical-record-list")}
         label="Listar Prontuários"
       />
 

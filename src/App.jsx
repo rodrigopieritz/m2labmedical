@@ -7,6 +7,7 @@ import { MedicalRegister } from "./pages/MedicalRegister/MedicalRegister.pages";
 import { MedicalRecordList } from "./pages/MedicalRecordList/MedicalRecordList.pages";
 import { ExamRegister } from "./pages/ExamRegister/ExamRegister.pages";
 import { LocalStorageService } from "./service/LocalStorage.service";
+import { PatientMedicalRecord } from "./pages/PatientMedicalRecord/PatientMedicalRecord.pages.jsx";
 
 const App = () => {
   const addAllowedUsersToLocalStorage = () => {
@@ -152,8 +153,9 @@ const App = () => {
           <Route path="/" element={<HomePage />} />
           <Route path="/patient-register" element={<PatientRegisterPage />} />
           <Route path="/medical-register" element={<MedicalRegister />} />
-          <Route path="/medical-record" element={<MedicalRecordList />} />
+          <Route path="/medical-record-list" element={<MedicalRecordList />} />
           <Route path="/exam-register" element={<ExamRegister />} />
+          <Route path="/patient-medical-record" element={<PatientMedicalRecord />} />
           <Route
             path="*"
             element={
