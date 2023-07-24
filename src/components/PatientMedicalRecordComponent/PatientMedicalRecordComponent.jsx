@@ -1,10 +1,25 @@
 import React from "react";
 import PropTypes from "prop-types";
+import { getPatientById } from './../../service/patients.service';
+import PatientCard from "../PatientCard/PatientCard";
 
 export const PatientMedicalRecordComponent = ({id}) => {
-   return (
+  const patientData = getPatientById(id);
+  
+  
+  return (
     <>
-     <p>teste de patient Medical Record</p> {id}
+     <h3>Identificação do Paciente</h3>
+     
+     <PatientCard
+                  id={patientData.id}
+                  name={patientData.name}
+                  insurance={patientData.insurance}
+                  emergencyContact= {patientData.emergencyContact}
+                  allergies={patientData.allergies}
+                  specialCare = {patientData.specialCare}
+                />
+
     </>
   );
 };
