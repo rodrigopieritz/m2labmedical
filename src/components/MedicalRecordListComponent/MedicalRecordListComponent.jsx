@@ -90,7 +90,7 @@ export const MedicalRecordListComponent = () => {
                 />
                 <ButtonComponent
                   id={`seeMoreBtn${patient.id}`}
-                  onClick={() => handleRedirect("/patient-medical-record")}
+                  onClick={() => handleRedirect(`/patient-medical-record/${patient.id}`)}
                   label="Veja Mais"
                 />
               </div>

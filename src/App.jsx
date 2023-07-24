@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  
+  Routes,
+  Route,
+} from "react-router-dom";
 import { LoginPage } from "./pages/Login/Login.pages";
 import { HomePage } from "./pages/Home/Home.pages";
 import { ModalProvider } from "./context/ModalContext";
@@ -106,31 +111,33 @@ const App = () => {
 
   const addExamsToLocalStorage = () => {
     const exams = [
-  {
-    examDate: "2023-07-22",
-    examName: "Exame de Sangue OXYZ",
-    examTime: "23:06",
-    examType: "Exame de Sangue",
-    id: 1,
-    laboratory: "LabExams",
-    patient: 1,
-    results: "Tipo de Sangue Orh+, Quantidade de hemácias: 60% do normal, Glicemia: 95, outros: Normal",
-    urlDoc: "https://examedesangue.labexams/exame",
-  },
-  {
-    examDate: "2023-07-18",
-    examName: "Mamografia",
-    examTime: "13:06",
-    examType: "Exame de Mamas",
-    id: 2,
-    laboratory: "LabExams",
-    patient: 2,
-    results: "Exame realizada com a máquina abc, evidenciou não haver nenhum sinal anormal que indique...",
-    urlDoc: "https://examedesangue.labexams/exame",
-  }
-];
-  LocalStorageService.set("exams", exams);
-  }
+      {
+        examDate: "2023-07-22",
+        examName: "Exame de Sangue OXYZ",
+        examTime: "23:06",
+        examType: "Exame de Sangue",
+        id: 1,
+        laboratory: "LabExams",
+        patient: 1,
+        results:
+          "Tipo de Sangue Orh+, Quantidade de hemácias: 60% do normal, Glicemia: 95, outros: Normal",
+        urlDoc: "https://examedesangue.labexams/exame",
+      },
+      {
+        examDate: "2023-07-18",
+        examName: "Mamografia",
+        examTime: "13:06",
+        examType: "Exame de Mamas",
+        id: 2,
+        laboratory: "LabExams",
+        patient: 2,
+        results:
+          "Exame realizada com a máquina abc, evidenciou não haver nenhum sinal anormal que indique...",
+        urlDoc: "https://examedesangue.labexams/exame",
+      },
+    ];
+    LocalStorageService.set("exams", exams);
+  };
 
   if (!LocalStorageService.get("allowedUsers")) {
     addAllowedUsersToLocalStorage();
@@ -148,23 +155,31 @@ const App = () => {
   return (
     <ModalProvider>
       <Router>
-        <Routes>
-          <Route path="/login" element={<LoginPage />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/patient-register" element={<PatientRegisterPage />} />
-          <Route path="/medical-register" element={<MedicalRegister />} />
-          <Route path="/medical-record-list" element={<MedicalRecordList />} />
-          <Route path="/exam-register" element={<ExamRegister />} />
-          <Route path="/patient-medical-record" element={<PatientMedicalRecord />} />
-          <Route
-            path="*"
-            element={
-              <>
-                <p>Página não encontrada</p>
-              </>
-            }
-          />
-        </Routes>
+        
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/patient-register" element={<PatientRegisterPage />} />
+            <Route path="/medical-register" element={<MedicalRegister />} />
+            <Route
+              path="/medical-record-list"
+              element={<MedicalRecordList />}
+            />
+            <Route path="/exam-register" element={<ExamRegister />} />
+            <Route
+              path="/patient-medical-record/:id"
+              element={<PatientMedicalRecord />}
+            />
+            <Route
+              path="*"
+              element={
+                <>
+                  <p>Página não encontrada</p>
+                </>
+              }
+            />
+          </Routes>
+        
       </Router>
     </ModalProvider>
   );

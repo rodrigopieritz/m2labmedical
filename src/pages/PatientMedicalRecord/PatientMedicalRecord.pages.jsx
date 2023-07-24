@@ -35,8 +35,12 @@ import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 import Toolbar from "../../components/Toolbar/ToolbarComponent";
 import * as Styled from "../../global.style";
 import { PatientMedicalRecordComponent } from "../../components/PatientMedicalRecordComponent/PatientMedicalRecordComponent";
+import { useParams } from "react-router-dom";
+
 
 export const PatientMedicalRecord = () => {
+  const { id } = useParams();
+  
   return (
     <>
       <Styled.PageContainer>
@@ -48,7 +52,7 @@ export const PatientMedicalRecord = () => {
             userPhoto="userPhoto.png"
           />
           <Styled.SpecificPageContent>
-            
+          <p>ID do paciente: {id}</p>
             <PatientMedicalRecordComponent/>
           </Styled.SpecificPageContent>
         </Styled.MainContent>
