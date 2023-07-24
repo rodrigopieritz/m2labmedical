@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { useNavigate } from "react-router-dom";
 
 const calculateAge = (birthdate) => {
-  console.log(birthdate);
+ 
   if (!birthdate) return 0;
 
   const [year, month, day] = birthdate.split("-").map(Number);
