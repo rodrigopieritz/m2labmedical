@@ -274,7 +274,7 @@ results
           {!foundPatient ? (
             <div>Para começar, escolha um paciente</div>
           ) : (
-            <div>Paciente: {foundPatient.name}</div>
+            <div>Paciente Selecionado: {foundPatient.name}</div>
           )}
           {foundPatientError && <div>{foundPatientError}</div>}
 
