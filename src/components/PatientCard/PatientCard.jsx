@@ -33,7 +33,7 @@ const PatientCard = ({ id, name, birthdate, insurance, phone, emergencyContact, 
         <FaUser />
       </div>
       <div>
-        {id && <p>ID do Paciente: {id}</p>}
+        {id && <p>ID: {id}</p>}
         {name && <p>Nome do Paciente: {name}</p>}
         {birthdate && <p>Idade: {idade}</p>}
         {insurance && <p>Convênio: {insurance} </p>}
