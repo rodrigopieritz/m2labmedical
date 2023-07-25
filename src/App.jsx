@@ -165,7 +165,7 @@ const App = () => {
               path="/medical-record-list"
               element={<MedicalRecordList />}
             />
-            <Route path="/exam-register" element={<ExamRegister />} />
+            <Route path="/exam-register/:id" element={<ExamRegister />} />
             <Route
               path="/patient-medical-record/:id"
               element={<PatientMedicalRecord />}

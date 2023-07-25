@@ -58,7 +58,7 @@ const SidebarMenu = () => {
 
       <ButtonComponent
         id="examRegisterButton"
-        onClick={() => handleRedirect("/exam-register")}
+        onClick={() => handleRedirect("/exam-register/newExam")}
         label="Cadastrar Exame"
       />
 

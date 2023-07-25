@@ -4,6 +4,7 @@ import { ButtonComponent } from "../Button/buttonComponent";
 import { Navigate, useNavigate } from "react-router-dom";
 
 export const MedicalRecordCard = ({
+  id,
   label,
   isAppoint,
   appointDate,
@@ -31,7 +32,7 @@ export const MedicalRecordCard = ({
       {isAppoint && (
         <div>
           <div>
-            <label><h6>Data da Consulta:</h6></label>
+             <label><h6>Data da Consulta:</h6></label>
             <div>{appointDate}</div>
             <label><h6>Hora da Consulta:</h6></label>
             <div>{appointTime}</div>
@@ -57,6 +58,8 @@ export const MedicalRecordCard = ({
       {!isAppoint && (
         <div>
           <div>
+          <label>ID:</label>
+            <div>{id}</div>
             <label><h6>Data do Exame:</h6></label>
             <div>{examDate}</div>
             <label><h6>Hora do Exame:</h6></label>
@@ -74,7 +77,7 @@ export const MedicalRecordCard = ({
           </div>
           <ButtonComponent
               id={`editBtn${examDate}${examTime}`}
-              onClick={() => handleRedirect("/exam-register")}
+              onClick={() => handleRedirect(`/exam-register/${id}`)}
               label="Editar Exame"
             />
           <div>-----</div>
@@ -85,6 +88,7 @@ export const MedicalRecordCard = ({
 };
 
 MedicalRecordCard.propTypes = {
+  id: PropTypes.string,
   label: PropTypes.string,
   isAppoint: PropTypes.bool,
   appointDate: PropTypes.string,

@@ -3,10 +3,11 @@ import * as Styled from "./ExamRegisterComponent.style";
 import { ButtonComponent } from "../Button/buttonComponent";
 import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
-import { addExamRegister } from "../../service/examRegister.service";
+import { addExamRegister, getExamById } from "../../service/examRegister.service";
 import { Spinner } from "react-bootstrap";
+import PropTypes from "prop-types";
 
-export const ExamRegisterComponent = () => {
+export const ExamRegisterComponent = ( {id} ) => {
 
   const [examName, setExamName] = useState("");
   const [examNameError, setExamNameError] = useState("");
@@ -37,6 +38,8 @@ export const ExamRegisterComponent = () => {
   const [foundPatient, setFoundPatient] = useState(null);
   const [foundPatientError, setFoundPatientError] = useState(null);
 
+  const [examRender, setExamRender] = useState(null);
+
   useEffect(() => {
     const getCurrentDate = () => {
       const now = new Date();
@@ -58,6 +61,27 @@ export const ExamRegisterComponent = () => {
     setExamTime(getCurrentTime());
     setCurrentTime(getCurrentTime());
   }, []);
+
+  useEffect(() => {
+    
+    if (id === "newExam") {
+      setExamRender("Modo de Cadastro");
+      setEditButtonState(false);
+      setDeleteButtonState(false);
+    } else {
+      
+      const exam = getExamById(id);
+      if (exam) {
+        setExamRender(exam);
+        setEditButtonState(true);
+        setDeleteButtonState(true);
+      } else {
+        setExamRender(null);
+        alert("Exame não encontrado.");
+      }
+    }
+  }, [id]);
+
 
   const handleSearchPatient = () => {
     if (searchQuery.trim() === "") {
@@ -215,7 +239,13 @@ results
 
   return (
     <>
-    
+     {examRender ? (
+        <>
+          <h4>{typeof examRender === "string" ? examRender : "Modo Visualização"}</h4>
+           </>
+      ) : (
+        <div>ID de Exame inválido ou não encontrado.</div>
+      )}
       <div>
         <InputComponent
           id="searchPatientInp"
@@ -349,4 +379,8 @@ results
      
     </>
   );
+};
+
+ExamRegisterComponent.propTypes = {
+  id: PropTypes.string.isRequired,
 };

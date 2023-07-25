@@ -64,6 +64,7 @@ export const PatientMedicalRecordComponent = ({ id }) => {
               <MedicalRecordCard
                 label="Exame de Laboratório"
                 isAppoint={false}
+                id={patientRecord.id}
                 examDate={patientRecord.examDate}
                 examTime={patientRecord.examTime}
                 laboratory={patientRecord.laboratory}

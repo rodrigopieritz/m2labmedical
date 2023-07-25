@@ -19,3 +19,10 @@ export const removeexam = (examId) => {
   examsList = examsList.filter((exam) => exam.id !== examId);
   localStorage.setItem(EXAMREGISTER_KEY, JSON.stringify(examsList));
 };
+
+export const getExamById = (examId) => {
+  const exams = getExamsList();
+  const idToFind = +examId;
+
+  return exams.find((exam) => exam.id === idToFind);
+};
