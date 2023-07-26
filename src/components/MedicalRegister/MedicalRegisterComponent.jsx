@@ -419,8 +419,8 @@ export const MedicalRegisterComponent = ({ id }) => {
     if (formMode === "read") {
       setReadMode(true);
       setEditButtonDisabled(false);
-      setDeleteButtonDisabled(true);
-      setSaveButtonDisabled(true);
+      setDeleteButtonDisabled(false);
+      setSaveButtonDisabled(false);
       setSearchPatientRender(false);
       setMedAppointRender(getMedAppointRender());
     }

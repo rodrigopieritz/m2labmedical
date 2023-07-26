@@ -99,8 +99,8 @@ export const ExamRegisterComponent = ({ id }) => {
     if (formMode === "read") {
       setReadMode(true);
       setEditButtonDisabled(false);
-      setDeleteButtonDisabled(true);
-      setSaveButtonDisabled(true);
+      setDeleteButtonDisabled(false);
+      setSaveButtonDisabled(false);
       setSearchPatientRender(false);
       setExamRender(getExamRenderData());
     }
