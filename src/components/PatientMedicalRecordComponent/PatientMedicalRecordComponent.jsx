@@ -53,6 +53,7 @@ export const PatientMedicalRecordComponent = ({ id }) => {
               <MedicalRecordCard
                 label="Consulta Médica"
                 isAppoint={true}
+                id={patientRecord.id}
                 appointDate={patientRecord.appointDate}
                 appointTime={patientRecord.appointTime}
                 appointReason={patientRecord.appointReason}

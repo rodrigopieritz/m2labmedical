@@ -502,5 +502,5 @@ export const ExamRegisterComponent = ({ id }) => {
 };
 
 ExamRegisterComponent.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
 };

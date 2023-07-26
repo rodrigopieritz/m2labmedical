@@ -52,7 +52,7 @@ const SidebarMenu = () => {
 
       <ButtonComponent
         id="medicalRegisterButton"
-        onClick={() => handleRedirect("/medical-register")}
+        onClick={() => handleRedirect("/medical-register/newMedicalRegister")}
         label="Cadastrar Consulta"
       />
 

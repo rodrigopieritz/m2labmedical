@@ -5,6 +5,7 @@ import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
 import { addmedicalAppointment } from "../../service/medicalAppointment.service";
 import { Spinner } from "react-bootstrap";
+import PropTypes from "prop-types";
 
 export const MedicalRegisterComponent = () => {
   const [appointReason, setAppointReason] = useState("");
@@ -316,4 +317,8 @@ export const MedicalRegisterComponent = () => {
       </Styled.MedicalRegisterComponent>
     </>
   );
+};
+
+MedicalRegisterComponent.propTypes = {
+  id: PropTypes.number,
 };

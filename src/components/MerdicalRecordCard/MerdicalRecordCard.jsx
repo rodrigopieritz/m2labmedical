@@ -49,7 +49,7 @@ export const MedicalRecordCard = ({
           </div>
           <ButtonComponent
               id={`editBtn${appointDate}${appointTime}`}
-              onClick={() => handleRedirect("/medical-register")}
+              onClick={() => handleRedirect(`/medical-register/${id}`)}
               label="Editar Consulta"
             />
           <div>-----</div>
