@@ -82,5 +82,5 @@ export const PatientMedicalRecordComponent = ({ id }) => {
 };
 
 PatientMedicalRecordComponent.propTypes = {
-  id: PropTypes.string.isRequired,
+  id: PropTypes.string,
 };

@@ -48,7 +48,7 @@ export const ExamRegister = () => {
         <Toolbar
           pageTitle="Cadastrar Exame"
           userName="Nome do Usuário"
-          userPhoto="userPhoto.png"
+          userPhoto="/../../userPhoto.png"
         />
         <Styled.SpecificPageContent>
           <ExamRegisterComponent id={id}/>

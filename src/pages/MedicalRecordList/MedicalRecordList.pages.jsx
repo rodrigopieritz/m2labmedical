@@ -47,7 +47,7 @@ export const MedicalRecordList = () => {
         <Toolbar
           pageTitle="Listar Prontuários"
           userName="{userName}"
-          userPhoto="userPhoto.png"
+          userPhoto="/../../userPhoto.png"
         />
         <Styled.SpecificPageContent>
           <MedicalRecordListComponent />

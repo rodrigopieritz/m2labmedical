@@ -26,3 +26,14 @@ export const getExamById = (examId) => {
 
   return exams.find((exam) => exam.id === idToFind);
 };
+
+export const updateExamRegister = (examId, updatedExam) => {
+  const examsList = getExamsList();
+  const idToUpdate = +examId;
+
+  const updatedExamsList = examsList.map((exam) =>
+    exam.id === idToUpdate ? { ...exam, ...updatedExam } : exam
+  );
+
+  localStorage.setItem(EXAMREGISTER_KEY, JSON.stringify(updatedExamsList));
+};

@@ -88,7 +88,7 @@ export const MedicalRecordCard = ({
 };
 
 MedicalRecordCard.propTypes = {
-  id: PropTypes.string,
+  id: PropTypes.number,
   label: PropTypes.string,
   isAppoint: PropTypes.bool,
   appointDate: PropTypes.string,
