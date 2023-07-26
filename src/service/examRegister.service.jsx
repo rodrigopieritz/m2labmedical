@@ -37,3 +37,9 @@ export const updateExamRegister = (examId, updatedExam) => {
 
   localStorage.setItem(EXAMREGISTER_KEY, JSON.stringify(updatedExamsList));
 };
+
+export const deleteExam = (examId) => {
+  let examsList = getExamsList();
+  examsList = examsList.filter((exam) => exam.id !== examId);
+  localStorage.setItem(EXAMREGISTER_KEY, JSON.stringify(examsList));
+};

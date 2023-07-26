@@ -436,11 +436,13 @@ import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
 import {
   addExamRegister,
+  deleteExam,
   getExamById,
   updateExamRegister,
 } from "../../service/examRegister.service";
 import { Spinner } from "react-bootstrap";
 import PropTypes from "prop-types";
+import { Navigate, useNavigate } from "react-router";
 
 export const ExamRegisterComponent = ({ id }) => {
   //Variáveis dos Campos do Formulário
@@ -480,6 +482,12 @@ export const ExamRegisterComponent = ({ id }) => {
   const [formMode, setFormMode] = useState(null);
   const [readMode, setReadMode] = useState(true);
   const [examRender, setExamRender] = useState(null);
+  
+  const navigate = useNavigate();
+
+  const handleRedirect = (path) => {
+    navigate(path);
+  };
 
   useEffect(() => {
     switch (id) {
@@ -610,8 +618,10 @@ export const ExamRegisterComponent = ({ id }) => {
     }
   };
 
+  //Funções CRUD
+
   const updateExamRegisterToLocalStorage = () => {
-    const idUpdate = + id;
+    const idFromLocalStorage = + id;
     const setExamRegister = {
       patient: foundPatient,
       examName: examName,
@@ -622,10 +632,9 @@ export const ExamRegisterComponent = ({ id }) => {
       laboratory: laboratory,
       results: results,
     };
-console.log(setExamRegister)
-console.log(idUpdate)
-    updateExamRegister(idUpdate, setExamRegister);
+    updateExamRegister(idFromLocalStorage, setExamRegister);
     setSaveAnimationRender(false);
+    setFormMode("read");
   };
 
   const addExamRegisterToLocalStorage = () => {
@@ -652,6 +661,13 @@ console.log(idUpdate)
     setResults("");
     setFoundPatient("");
     setSearchQuery("");
+  };
+
+  const deletExamRegisterToLocalStorage = () => {
+    const idFromLocalStorage = + id;
+    deleteExam (idFromLocalStorage);
+    alert("Exame deletado com sucesso!")
+    handleRedirect("/")
   };
 
   const handleFormSubmission = (e) => {
@@ -798,9 +814,7 @@ console.log(idUpdate)
           type="button"
           label="Apagar"
           disabled={deleteButtonDisabled}
-          onClick={() => {
-            alert("funcionalidade não desenvolvida- fora do escopo do projeto");
-          }}
+          onClick={() => deletExamRegisterToLocalStorage()}
         />
         <ButtonComponent
           id="save"
