@@ -19,3 +19,27 @@ export const removemedicalAppointment = (medicalAppointmentId) => {
   medAppList = medAppList.filter((medicalAppointment) => medicalAppointment.id !== medicalAppointmentId);
   localStorage.setItem(MEDICALAPPOINTMENT_KEY, JSON.stringify(medAppList));
 };
+
+export const getMedAppointById = (medAppointId) => {
+  const medAppoints = getMedAppList();
+  const idToFind = +medAppointId;
+
+  return medAppoints.find((medAppoint) => medAppoint.id === idToFind);
+};
+
+export const updateMedAppoint = (medAppointId, updatedMedAppoint) => {
+  const medAppointList = getMedAppList();
+  const idToUpdate = +medAppointId;
+
+  const updatedMedAppointList = medAppointList.map((medAppoint) =>
+    medAppoint.id === idToUpdate ? { ...medAppoint, ...updatedMedAppoint} : medAppoint
+  );
+
+  localStorage.setItem(MEDICALAPPOINTMENT_KEY, JSON.stringify(updatedMedAppointList));
+};
+
+export const deleteMedAppoint = (MedAppointId) => {
+  let medAppointList = getMedAppList();
+  medAppointList = medAppointList.filter((medAppoint) => medAppoint.id !== MedAppointId);
+  localStorage.setItem(MEDICALAPPOINTMENT_KEY, JSON.stringify(medAppointList));
+};

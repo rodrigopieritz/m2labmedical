@@ -35,8 +35,12 @@ import { ExamRegisterComponent } from "../../components/ExamRegisterComponent/Ex
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 import Toolbar from "../../components/Toolbar/ToolbarComponent";
 import * as Styled from "../../global.style";
+import { useParams } from "react-router-dom";
 
 export const ExamRegister = () => {
+
+  const { id } = useParams();
+
   return (
     <Styled.PageContainer>
       <SidebarMenu />
@@ -44,10 +48,10 @@ export const ExamRegister = () => {
         <Toolbar
           pageTitle="Cadastrar Exame"
           userName="Nome do Usuário"
-          userPhoto="userPhoto.png"
+          userPhoto="/../../userPhoto.png"
         />
         <Styled.SpecificPageContent>
-          <ExamRegisterComponent />
+          <ExamRegisterComponent id={id}/>
         </Styled.SpecificPageContent>
       </Styled.MainContent>
     </Styled.PageContainer>

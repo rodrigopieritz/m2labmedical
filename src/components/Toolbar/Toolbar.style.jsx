@@ -2,7 +2,7 @@ import styled from 'styled-components'
 
 export const Toolbar = styled.div`
   height: 15vh;
-  background-color: #2E3136;
+  background-color: #006b66;
   color: whitesmoke;
   display: flex;
   align-items: center;

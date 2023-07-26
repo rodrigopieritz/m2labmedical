@@ -24,7 +24,7 @@ const calculateAge = (birthdate) => {
   return age;
 };
 
-const PatientCard = ({ id, name, birthdate, insurance, phone }) => {
+const PatientCard = ({ id, name, birthdate, insurance, phone, emergencyContact, allergies, specialCare }) => {
   const idade = calculateAge(birthdate);
 
   return (
@@ -33,11 +33,14 @@ const PatientCard = ({ id, name, birthdate, insurance, phone }) => {
         <FaUser />
       </div>
       <div>
-        <p>ID do Paciente: {id}</p>
-        <p>Nome do Paciente: {name}</p>
-        <p>Idade: {idade}</p>
-        <p>Convênio: {insurance}</p>
-        <p>Telefone: {phone}</p>
+        {id && <p>ID: {id}</p>}
+        {name && <p>Nome do Paciente: {name}</p>}
+        {birthdate && <p>Idade: {idade}</p>}
+        {insurance && <p>Convênio: {insurance} </p>}
+        {phone && <p>Telefone: {phone}</p>}
+        {emergencyContact && <p>Contato de Emergência: {emergencyContact}</p>}
+        {allergies && <p>Lista de Alergias: {allergies}</p>}
+        {specialCare && <p>Cudidados Especiais: {specialCare}</p>}
       </div>
     </div>
   );
@@ -51,4 +54,7 @@ PatientCard.propTypes = {
   birthdate: PropTypes.string,
   insurance: PropTypes.string,
   phone: PropTypes.string,
+  emergencyContact: PropTypes.string,
+  allergies: PropTypes.string,
+  specialCare: PropTypes.string,
 };

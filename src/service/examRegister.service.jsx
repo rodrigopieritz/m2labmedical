@@ -19,3 +19,27 @@ export const removeexam = (examId) => {
   examsList = examsList.filter((exam) => exam.id !== examId);
   localStorage.setItem(EXAMREGISTER_KEY, JSON.stringify(examsList));
 };
+
+export const getExamById = (examId) => {
+  const exams = getExamsList();
+  const idToFind = +examId;
+
+  return exams.find((exam) => exam.id === idToFind);
+};
+
+export const updateExamRegister = (examId, updatedExam) => {
+  const examsList = getExamsList();
+  const idToUpdate = +examId;
+
+  const updatedExamsList = examsList.map((exam) =>
+    exam.id === idToUpdate ? { ...exam, ...updatedExam } : exam
+  );
+
+  localStorage.setItem(EXAMREGISTER_KEY, JSON.stringify(updatedExamsList));
+};
+
+export const deleteExam = (examId) => {
+  let examsList = getExamsList();
+  examsList = examsList.filter((exam) => exam.id !== examId);
+  localStorage.setItem(EXAMREGISTER_KEY, JSON.stringify(examsList));
+};

@@ -29,7 +29,7 @@ const SidebarMenu = () => {
   return (
     <Styled.Sidebar>
       <div>
-        <img src="lab-medical-logo-white.png" alt="Logo" width="165" height="160"/>
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="165" height="160"/>
       </div>
 
       <ButtonComponent
@@ -52,13 +52,13 @@ const SidebarMenu = () => {
 
       <ButtonComponent
         id="medicalRegisterButton"
-        onClick={() => handleRedirect("/medical-register")}
+        onClick={() => handleRedirect("/medical-register/newMedAppoint")}
         label="Cadastrar Consulta"
       />
 
       <ButtonComponent
         id="examRegisterButton"
-        onClick={() => handleRedirect("/exam-register")}
+        onClick={() => handleRedirect("/exam-register/newExam")}
         label="Cadastrar Exame"
       />
 

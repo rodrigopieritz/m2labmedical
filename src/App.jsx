@@ -98,7 +98,7 @@ const App = () => {
       {
         appointDate: "2023-07-18",
         appointReason: "Diarréia",
-        appointTime: "12:45",
+        appointTime: "15:00",
         dosageAndPrecautions: "",
         id: 2,
         medicationPrescribed: "Ingestão de líquido e repouso",
@@ -112,7 +112,7 @@ const App = () => {
   const addExamsToLocalStorage = () => {
     const exams = [
       {
-        examDate: "2023-07-22",
+        examDate: "2023-05-22",
         examName: "Exame de Sangue OXYZ",
         examTime: "23:06",
         examType: "Exame de Sangue",
@@ -124,9 +124,9 @@ const App = () => {
         urlDoc: "https://examedesangue.labexams/exame",
       },
       {
-        examDate: "2023-07-18",
+        examDate: "2023-07-20",
         examName: "Mamografia",
-        examTime: "13:06",
+        examTime: "16:00",
         examType: "Exame de Mamas",
         id: 2,
         laboratory: "LabExams",
@@ -160,12 +160,12 @@ const App = () => {
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<HomePage />} />
             <Route path="/patient-register" element={<PatientRegisterPage />} />
-            <Route path="/medical-register" element={<MedicalRegister />} />
+            <Route path="/medical-register/:id" element={<MedicalRegister />} />
             <Route
               path="/medical-record-list"
               element={<MedicalRecordList />}
             />
-            <Route path="/exam-register" element={<ExamRegister />} />
+            <Route path="/exam-register/:id" element={<ExamRegister />} />
             <Route
               path="/patient-medical-record/:id"
               element={<PatientMedicalRecord />}

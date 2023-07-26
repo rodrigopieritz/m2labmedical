@@ -19,3 +19,12 @@ export const removePatient = (patientId) => {
   patients = patients.filter((patient) => patient.id !== patientId);
   localStorage.setItem(PATIENTS_KEY, JSON.stringify(patients));
 };
+
+export const getPatientById = (patientId) => {
+  const patients = getPatients();
+  const idToFind = +patientId;
+
+  return patients.find((patient) => patient.id === idToFind);
+};
+
+
