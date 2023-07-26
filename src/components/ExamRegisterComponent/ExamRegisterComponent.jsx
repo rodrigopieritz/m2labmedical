@@ -351,9 +351,6 @@ export const ExamRegisterComponent = ({ id }) => {
       });
   };
 
-  console.log(foundPatientData);
-  console.log(foundPatientId);
-  console.log(id);
   return (
     <>
       <p> {formMode} </p>
@@ -382,8 +379,7 @@ export const ExamRegisterComponent = ({ id }) => {
         <h5>Para começar, escolha um paciente</h5>
       ) : (
         <h5>
-          {" "}
-          <h6>Paciente Selecionado:</h6> {foundPatientData.name}
+          Paciente Selecionado: {foundPatientData.name}
         </h5>
       )}
       {foundPatientDataError && <div>{foundPatientDataError}</div>}
