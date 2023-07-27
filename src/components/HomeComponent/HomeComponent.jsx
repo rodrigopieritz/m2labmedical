@@ -1,17 +1,31 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ButtonComponent } from "../Button/buttonComponent";
 import { InputComponent } from "../Input/inputComponent";
 import * as Styled from "./HomeComponent.style";
 import PatientCard from "../PatientCard/PatientCard";
 import { getPatients } from "../../service/patients.service";
-import { Navigate, useNavigate } from "react-router-dom";
+import { getExamsList } from "../../service/examRegister.service";
+import { useNavigate } from "react-router-dom";
+import { StatsCardComponent } from "../StatsCardComponent/StatsCardComponent";
+import { getMedAppList } from "../../service/medicalAppointment.service";
 
 export const HomeComponent = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [foundPatient, setFoundPatient] = useState(null);
   const [foundPatientError, setFoundPatientError] = useState(null);
+  const [totalPatients, setTotalPatients] = useState(null);
+  const [totalExams, setTotalExams] = useState(null);
+  const [totalMedicalAppointments, setTotalMedicalAppointments] = useState(null);
+
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setTotalPatients(getPatients().length);
+    setTotalExams(getExamsList().length);
+    setTotalMedicalAppointments(getMedAppList().length);
+  }, []);
+
 
   const handleRedirect = (path) => {
     navigate(path);
@@ -57,11 +71,20 @@ export const HomeComponent = () => {
     }
   };
 
+  useEffect(() => {
+    setTotalPatients(getPatients().length);
+  }, []);
+
   return (
     <>
       <div>
         <h5>Estatísticas do Sistema</h5>
       </div>
+      <StatsCardComponent
+        totalPatients={totalPatients}
+        totalExams={totalExams}
+        totalMedicalAppointments={totalMedicalAppointments}
+      />
 
       <div>
         <h5>Informações Rápidas de Pacientes</h5>
