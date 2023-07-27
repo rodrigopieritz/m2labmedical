@@ -29,7 +29,7 @@ const App = () => {
       {
         id: 1,
         allergies: "Nenhuma",
-        bithdate: "2000-01-01",
+        birthdate: "2000-01-01",
         cpf: "999.999.999-99",
         email: "paciente.um@email.com",
         emergencyContact: "(99) 9 9999-99999",
@@ -55,7 +55,7 @@ const App = () => {
       {
         id: 2,
         allergies: "Lactose",
-        bithdate: "2002-01-05",
+        birthdate: "2002-01-05",
         cpf: "888.888.888-88",
         email: "paciente.dois@email.com",
         emergencyContact: "(88) 8 8888-8888",
@@ -66,7 +66,7 @@ const App = () => {
         maritalStatus: "Solteiro(a)",
         name: "Paciente Exemplo Dois",
         naturalness: "Brasileiro",
-        phone: "(99) 9 9999-99999",
+        phone: "(88) 8 8888-8888",
         rg: "99.999.999-9",
         specialCare: "Nenhum",
         cep: "88034040",
