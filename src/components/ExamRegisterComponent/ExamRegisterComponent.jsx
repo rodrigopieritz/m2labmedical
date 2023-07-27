@@ -419,7 +419,7 @@ export const ExamRegisterComponent = ({ id }) => {
         <InputComponent
           id="examName"
           type="text"
-          placeholder="Digite o Nome do Exame"
+          placeholder="Digite o nome do Exame"
           label="Nome do Exame"
           value={examName}
           onInput={handleInput}

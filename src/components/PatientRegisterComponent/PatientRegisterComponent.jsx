@@ -3,12 +3,15 @@ import * as Styled from "./PatientRegisterComponent.style";
 import { ButtonComponent } from "../Button/buttonComponent";
 import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
-import { addPatient } from "../../service/patients.service";
+import { addPatient, getPatientById, getPatients } from "../../service/patients.service";
 import { Spinner } from 'react-bootstrap';
 import PropTypes from "prop-types";
 
+import { Navigate, useNavigate } from "react-router";
+
 
 export const PatientRegisterComponent = ({id}) => {
+  //Variáveis dos Campos do Formulário
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [gender, setGender] = useState("");
@@ -48,15 +51,142 @@ export const PatientRegisterComponent = ({id}) => {
   const [houseNumberError, setHouseNumberError] = useState("");
   const [complement, setComplement] = useState("");
   const [nextTo, setNextTo] = useState("");
-  const [submitButtonState, setSubmitButtonState] = useState("");
-  const [editButtonState, setEditButtonState] = useState(false);
-  const [deleteButtonState, setDeleteButtonState] = useState(false);
+  
+  
+  //Variáveis dos botões
+  const [editButtonDisabled, setEditButtonDisabled] = useState(false);
+  const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
+
+   //Variáveis Barra de Pesquisa
+  const [searchQuery, setSearchQuery] = useState("");
+  const [foundPatientData, setFoundPatientData] = useState(null);
+  const [foundPatientDataError, setFoundPatientDataError] = useState(null);
+  const [foundPatientId, setFoundPatientId] = useState(null);
+  const [foundPatientIdError, setFoundPatientIdError] = useState(null);
+
+  //Auxiliares renderização e assist LEC
+const [saveAnimationRender, setSaveAnimationRender] = useState(false);
+const [searchPatientRender, setSearchPatientRender] = useState(false);
+const [formMode, setFormMode] = useState(null);
+const [readMode, setReadMode] = useState(true);
+//const [examRender, setExamRender] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleRedirect = (path) => {
+    navigate(path);}
+
+    useEffect(() => {
+      switch (id) {
+        case "newPatient":
+          setFormMode("register");
+          break;
+        default:
+          setFormMode("read");
+      }
+    }, [id]);
+
+    useEffect(() => {
+      const newPatientData = getPatientById(foundPatientId);
+      setFoundPatientData(newPatientData);
+    }, [foundPatientId]);
+
+    useEffect(() => {
+      if (formMode === "register") {
+        setReadMode(false);
+        setEditButtonDisabled(true);
+        setDeleteButtonDisabled(true);
+        setSaveButtonDisabled(false);
+        setSearchPatientRender(true);
+        setFoundPatientData("");
+        setFoundPatientId("");
+        setSearchQuery("");
+  setName("");
+setGender("");
+  setBirthdate("");
+  setCpf("");
+  setRg("");
+  setMaritalStatus("");
+  setPhone("");
+  setEmail("");
+  setNaturalness("");
+  setEmergencyContact("");
+  setAllergies("");
+  setSpecialCare("");
+  setInsurance("");
+  setInsuranceNumber("");
+  setInsuranceValidity("");
+  setCep("");
+  setCity("");
+  setUf("");
+setNeighborhood("");
+setStreet("");
+   setHouseNumber("");
+   setComplement("");
+  setNextTo("");
+
+      }
+      if (formMode === "read") {
+        setReadMode(true);
+        setEditButtonDisabled(false);
+        setDeleteButtonDisabled(false);
+        setSaveButtonDisabled(false);
+        setSearchPatientRender(false);
+        //setExamRender(getExamRenderData());
+      }
+      if (formMode === "edit") {
+        setReadMode(false);
+        setEditButtonDisabled(true);
+        setDeleteButtonDisabled(false);
+        setSaveButtonDisabled(false);
+        setSearchPatientRender(false);
+        //setExamRender(getExamRenderData());
+      }
+    }, [formMode]);
+
+    // const getExamRenderData = () => {
+    //   const exam = getExamById(id);
+    //   if (exam) {
+    //     setFoundPatientId(exam.patient);
+    //     setExamName(exam.examName);
+    //     setExamDate(exam.examDate);
+    //     setExamTime(exam.examTime);
+    //     setExamType(exam.examType);
+    //     setUrlDoc(exam.urlDoc);
+    //     setLaboratory(exam.laboratory);
+    //     setResults(exam.results);
+    //   } else {
+    //     setExamRender(false);
+    //     alert("Exame não encontrado.");
+    //   }
+    // };
+
+    const handleSearchPatient = () => {
+      if (searchQuery.trim() === "") {
+        setFoundPatientData(null);
+        setFoundPatientId(null);
+        return;
+      }
+      const patientsList = getPatients();
+  
+      const patient = patientsList.find((patient) =>
+        patient.name.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+  
+      if (patient) {
+        setFoundPatientData(patient);
+        setFoundPatientId(patient.id);
+      } else {
+        setFoundPatientData(null);
+        setFoundPatientId(patient.id);
+        alert("Paciente não encontrado.");
+      }
+    };
 
   const handleInput = (event) => {
     event.preventDefault();
-  setDeleteButtonState(true);
-  setEditButtonState(true);
-
+  
     const { value, id } = event.target;
     if (id === "name") {
       setName(value);
@@ -156,6 +286,8 @@ export const PatientRegisterComponent = ({id}) => {
     }
   }, [cep]);
 
+  // função para busca do CEP
+  
   const API_VIACEP = "https://viacep.com.br/ws/CEP/json/";
 
   async function requestCep(cep) {
@@ -172,11 +304,30 @@ export const PatientRegisterComponent = ({id}) => {
     }
   }
 
+  //Funções CRUD
+
+  // const updateExamRegisterToLocalStorage = () => {
+  //   const idFromLocalStorage = +id;
+  //   const setExamRegister = {
+  //     patient: foundPatientId,
+  //     examName: examName,
+  //     examDate: examDate,
+  //     examTime: examTime,
+  //     examType: examType,
+  //     urlDoc: urlDoc,
+  //     laboratory: laboratory,
+  //     results: results,
+  //   };
+  //   updateExamRegister(idFromLocalStorage, setExamRegister);
+  //   setSaveAnimationRender(false);
+  //   setFormMode("read");
+  //   handleRedirect("/medical-record-list");
+
   const addPatientToLocalStorage = () => {
     const newPatientRegister = {
       name: name,
       gender: gender,
-      bithdate: birthdate,
+      birthdate: birthdate,
       cpf: cpf,
       rg: rg,
       maritalStatus: maritalStatus,
@@ -199,8 +350,42 @@ export const PatientRegisterComponent = ({id}) => {
       nextTo: nextTo,
     };
     addPatient(newPatientRegister);
-    setSubmitButtonState("");
+    setSaveAnimationRender(false);
+    setName("");
+    setGender("");
+      setBirthdate("");
+      setCpf("");
+      setRg("");
+      setMaritalStatus("");
+      setPhone("");
+      setEmail("");
+      setNaturalness("");
+      setEmergencyContact("");
+      setAllergies("");
+      setSpecialCare("");
+      setInsurance("");
+      setInsuranceNumber("");
+      setInsuranceValidity("");
+      setCep("");
+      setCity("");
+      setUf("");
+    setNeighborhood("");
+    setStreet("");
+       setHouseNumber("");
+       setComplement("");
+      setNextTo("");
+    setFoundPatientData("");
+    setFoundPatientId("");
+    setSearchQuery("");
+    alert("Paciente cadastrado com sucesso")
   };
+
+  // const deletExamRegisterToLocalStorage = () => {
+  //   const idFromLocalStorage = +id;
+  //   deleteExam(idFromLocalStorage);
+  //   alert("Exame deletado com sucesso!");
+  //   handleRedirect("/medical-record-list");
+  // };
 
   const handleFormSubmission = (e) => {
     e.preventDefault();
@@ -309,12 +494,18 @@ export const PatientRegisterComponent = ({id}) => {
         { abortEarly: false }
       )
       .then(() => {
-        setSubmitButtonState("Carregando...");
-        setTimeout(() => {
-          addPatientToLocalStorage();
-          alert("Novo paciente cadastrado com sucesso");
-        }, 2000);
-       
+        setSaveAnimationRender(true);
+        if (formMode === "register") {
+          setTimeout(() => {
+            addPatientToLocalStorage();
+            alert("Paciente cadastrado com sucesso");
+          }, 2000);
+        } else {
+          setTimeout(() => {
+           // updateExamRegisterToLocalStorage();
+            alert("Paciente atualizado com sucesso");
+          }, 1500);
+        }
       })
       .catch((error) => {
         if (error.inner) {
@@ -367,43 +558,68 @@ export const PatientRegisterComponent = ({id}) => {
   console.log(id);
   return (
     <>
+<p> {formMode} </p>
 
-    
-      <Styled.PatientRegister>
-      
-        <form onSubmit={handleFormSubmission} noValidate>
-          <ButtonComponent
-            id="editButton"
-            type="button"
-            label="Editar"
-            disabled={editButtonState}
-            onClick={() => {
-              alert(
-                "funcionalidade não desenvolvida - fora do escopo do projeto"
-              );
-            }}
-          />
-          <ButtonComponent
-            id="deletButton"
-            type="button"
-            label="Apagar"
-            disabled={deleteButtonState}
-            onClick={() => {
-              alert(
-                "funcionalidade não desenvolvida- fora do escopo do projeto"
-              );
-            }}
-          />
-          <ButtonComponent
-            id="save"
-            type="submit"
-            label="Salvar"
-            onClick={handleFormSubmission}
-          />
-          {submitButtonState && <div><Spinner animation="border" role="status">
-      <span className="visually-hidden">Carregando...</span>
-    </Spinner>
-    </div>}
+{formMode === "register" ? (
+  <div>
+    <InputComponent
+      id="searchPatientInp"
+      type="text"
+      placeholder="Digite o nome do paciente"
+      label="Buscar Paciente"
+      value={searchQuery}
+      onInput={(event) => setSearchQuery(event.target.value)}
+    />
+    <ButtonComponent
+      id="searchPatientBtn"
+      type="button"
+      label="Buscar Paciente"
+      onClick={handleSearchPatient}
+    />
+  </div>
+) : (
+  <></>
+)}
+{!foundPatientData ? (
+  <h5>Para começar, escolha um paciente</h5>
+) : (
+  <h5>
+    Paciente Selecionado: {foundPatientData.name}
+  </h5>
+)}
+{foundPatientDataError && <div>{foundPatientDataError}</div>}
+
+<form onSubmit={handleFormSubmission} noValidate>
+  <ButtonComponent
+    id="editButton"
+    type="button"
+    label="Editar"
+    disabled={editButtonDisabled}
+    onClick={() => {
+      setFormMode("edit");
+    }}
+  />
+  <ButtonComponent
+    id="deletButton"
+    type="button"
+    label="Apagar"
+    disabled={deleteButtonDisabled}
+    onClick={() => alert("ainda precisa ser desenvolvido")}
+  />
+  <ButtonComponent
+    id="save"
+    type="submit"
+    label="Salvar"
+    onClick={handleFormSubmission}
+    disabled={saveButtonDisabled}
+  />
+  {saveAnimationRender && (
+    <div>
+      <Spinner animation="border" role="status">
+        <span className="visually-hidden">Carregando...</span>
+      </Spinner>
+    </div>
+  )}
          
 
           <h3>Informações do Paciente</h3>
@@ -418,6 +634,7 @@ export const PatientRegisterComponent = ({id}) => {
             value={name}
             onInput={handleInput}
             error={nameError}
+            readOnly={readMode}
           />
           {nameError && <div>{nameError}</div>}
 
@@ -427,6 +644,7 @@ export const PatientRegisterComponent = ({id}) => {
               <select
                 id="gender"
                 value={gender}
+                readOnly={readMode}
                 onChange={handleInput}
                 onBlur={handleInput}
                 className={genderError ? "error" : ""}
@@ -449,6 +667,7 @@ export const PatientRegisterComponent = ({id}) => {
             value={birthdate}
             onInput={handleInput}
             error={birthdateError}
+            readOnly={readMode}
           />
           {birthdateError && <div>{birthdateError}</div>}
 
@@ -460,6 +679,7 @@ export const PatientRegisterComponent = ({id}) => {
             value={cpf}
             onInput={handleInput}
             error={cpfError}
+            readOnly={readMode}
           />
           {cpfError && <div>{cpfError}</div>}
 
@@ -471,6 +691,7 @@ export const PatientRegisterComponent = ({id}) => {
             value={rg}
             onInput={handleInput}
             error={rgError}
+            readOnly={readMode}
           />
           {rgError && <div>{rgError}</div>}
           <div>
@@ -479,6 +700,7 @@ export const PatientRegisterComponent = ({id}) => {
               <select
                 id="maritalStatus"
                 value={maritalStatus}
+                readOnly={readMode}
                 onChange={handleInput}
                 onBlur={handleInput}
                 className={maritalStatusError ? "error" : ""}
@@ -506,6 +728,7 @@ export const PatientRegisterComponent = ({id}) => {
             value={naturalness}
             onInput={handleInput}
             error={naturalnessError}
+            readOnly={readMode}
           />
           {naturalnessError && <div>{naturalnessError}</div>}
 
@@ -516,6 +739,7 @@ export const PatientRegisterComponent = ({id}) => {
             label="Alergias"
             value={allergies}
             onInput={handleInput}
+            readOnly={readMode}
           />
 
           <InputComponent
@@ -525,6 +749,7 @@ export const PatientRegisterComponent = ({id}) => {
             label="Cuidados Específicos"
             value={specialCare}
             onInput={handleInput}
+            readOnly={readMode}
           />
 
           <InputComponent
@@ -534,6 +759,7 @@ export const PatientRegisterComponent = ({id}) => {
             label="Convênio"
             value={insurance}
             onInput={handleInput}
+            readOnly={readMode}
           />
 
           <InputComponent
@@ -543,6 +769,7 @@ export const PatientRegisterComponent = ({id}) => {
             label="Número do Convênio"
             value={insuranceNumber}
             onInput={handleInput}
+            readOnly={readMode}
           />
 
           <InputComponent
@@ -552,6 +779,7 @@ export const PatientRegisterComponent = ({id}) => {
             label="Validade do Convênio"
             value={insuranceValidity}
             onInput={handleInput}
+            readOnly={readMode}
           />
           <h3>Contato</h3>
 
@@ -563,6 +791,7 @@ export const PatientRegisterComponent = ({id}) => {
             value={phone}
             onInput={handleInput}
             error={phoneError}
+            readOnly={readMode}
           />
           {phoneError && <div>{phoneError}</div>}
 
@@ -574,6 +803,7 @@ export const PatientRegisterComponent = ({id}) => {
             value={email}
             onInput={handleInput}
             error={emailError}
+            readOnly={readMode}
           />
           {emailError && <div>{emailError}</div>}
 
@@ -585,6 +815,7 @@ export const PatientRegisterComponent = ({id}) => {
             value={emergencyContact}
             onInput={handleInput}
             error={emergencyContactError}
+            readOnly={readMode}
           />
           {emergencyContactError && <div>{emergencyContactError}</div>}
 
@@ -596,6 +827,7 @@ export const PatientRegisterComponent = ({id}) => {
             label="CEP"
             onChange={handleCep}
             error={cepError}
+            readOnly={readMode}
           />
           {cepError && <div>{cepError}</div>}
           <InputComponent
@@ -606,6 +838,7 @@ export const PatientRegisterComponent = ({id}) => {
             onInput={handleInput}
             value={city}
             readOnly={true}
+            
           />
           {cityError && <div>{cityError}</div>}
 
@@ -670,7 +903,7 @@ export const PatientRegisterComponent = ({id}) => {
             readOnly={false}
           />
         </form>
-      </Styled.PatientRegister>
+      
     </>
   );
 };
@@ -678,4 +911,4 @@ export const PatientRegisterComponent = ({id}) => {
 
 PatientRegisterComponent.propTypes = {
   id: PropTypes.number,
-};
+}
