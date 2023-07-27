@@ -40,7 +40,7 @@ const SidebarMenu = () => {
 
       <ButtonComponent
         id="patientRegisterButton"
-        onClick={() => handleRedirect("/patient-register")}
+        onClick={() => handleRedirect("/patient-register/newPatient")}
         label="Cadastrar Paciente"
       />
 

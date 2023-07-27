@@ -1,6 +1,5 @@
 import {
   BrowserRouter as Router,
-  
   Routes,
   Route,
 } from "react-router-dom";
@@ -159,7 +158,7 @@ const App = () => {
           <Routes>
             <Route path="/login" element={<LoginPage />} />
             <Route path="/" element={<HomePage />} />
-            <Route path="/patient-register" element={<PatientRegisterPage />} />
+            <Route path="/patient-register/:id" element={<PatientRegisterPage />} />
             <Route path="/medical-register/:id" element={<MedicalRegister />} />
             <Route
               path="/medical-record-list"

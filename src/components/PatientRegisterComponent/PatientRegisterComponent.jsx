@@ -5,9 +5,10 @@ import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
 import { addPatient } from "../../service/patients.service";
 import { Spinner } from 'react-bootstrap';
+import PropTypes from "prop-types";
 
 
-export const PatientRegisterComponent = () => {
+export const PatientRegisterComponent = ({id}) => {
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [gender, setGender] = useState("");
@@ -363,9 +364,11 @@ export const PatientRegisterComponent = () => {
         }
       });
   };
-
+  console.log(id);
   return (
     <>
+
+    
       <Styled.PatientRegister>
       
         <form onSubmit={handleFormSubmission} noValidate>
@@ -670,4 +673,9 @@ export const PatientRegisterComponent = () => {
       </Styled.PatientRegister>
     </>
   );
+};
+
+
+PatientRegisterComponent.propTypes = {
+  id: PropTypes.number,
 };

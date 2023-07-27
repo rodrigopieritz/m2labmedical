@@ -118,7 +118,7 @@ export const HomeComponent = () => {
                   <ButtonComponent
                     id={`seeMoreBtn${patient.id}`}
                     onClick={() =>
-                      handleRedirect(`/patient-medical-record/${patient.id}`)
+                      handleRedirect(`/patient-register/${patient.id}`)
                     }
                     label="Veja Mais"
                   />
@@ -140,7 +140,7 @@ export const HomeComponent = () => {
               <ButtonComponent
                 id={`seeMoreBtn${foundPatient.id}`}
                 onClick={() =>
-                  handleRedirect(`/patient-medical-record/${foundPatient.id}`)
+                  handleRedirect(`/patient-register/${foundPatient.id}`)
                 }
                 label="Veja Mais"
               />
