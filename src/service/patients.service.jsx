@@ -25,6 +25,22 @@ export const getPatientById = (patientId) => {
   const idToFind = +patientId;
 
   return patients.find((patient) => patient.id === idToFind);
-};
+}
 
+export const updatePatientRegister = (patientId, updatedPatient) => {
+    const PatientList = getPatients();
+    const idToUpdate = +patientId;
+  
+    const updatedPatientsList = PatientList.map((patient) =>
+      patient.id === idToUpdate ? { ...patient, ...updatedPatient } : patient
+    );
+  
+    localStorage.setItem(PATIENTS_KEY, JSON.stringify(updatedPatientsList));
+  };
+  
 
+  export const deletePatient = (patientId) => {
+    let PatientList = getPatients();
+    PatientList = PatientList.filter((patient) => patient.id !== patientId);
+    localStorage.setItem(PATIENTS_KEY, JSON.stringify(PatientList));
+}

@@ -3,11 +3,20 @@ import * as Styled from "./PatientRegisterComponent.style";
 import { ButtonComponent } from "../Button/buttonComponent";
 import { InputComponent } from "../Input/inputComponent";
 import * as yup from "yup";
-import { addPatient } from "../../service/patients.service";
-import { Spinner } from 'react-bootstrap';
+import {
+  addPatient,
+  deletePatient,
+  getPatientById,
+  getPatients,
+  updatePatientRegister,
+} from "../../service/patients.service";
+import { Spinner } from "react-bootstrap";
+import PropTypes from "prop-types";
 
+import { Navigate, useNavigate } from "react-router";
 
-export const PatientRegisterComponent = () => {
+export const PatientRegisterComponent = ({ id }) => {
+  //Variáveis dos Campos do Formulário
   const [name, setName] = useState("");
   const [nameError, setNameError] = useState("");
   const [gender, setGender] = useState("");
@@ -32,7 +41,7 @@ export const PatientRegisterComponent = () => {
   const [specialCare, setSpecialCare] = useState("");
   const [insurance, setInsurance] = useState("");
   const [insuranceNumber, setInsuranceNumber] = useState("");
-  const [insuranceValidity, setInsuranceValidity] = useState("");
+  const [insuranceVality, setInsuranceValidity] = useState("");
   const [cep, setCep] = useState("");
   const [cepError, setCepError] = useState("");
   const [city, setCity] = useState("");
@@ -47,14 +56,158 @@ export const PatientRegisterComponent = () => {
   const [houseNumberError, setHouseNumberError] = useState("");
   const [complement, setComplement] = useState("");
   const [nextTo, setNextTo] = useState("");
-  const [submitButtonState, setSubmitButtonState] = useState("");
-  const [editButtonState, setEditButtonState] = useState(false);
-  const [deleteButtonState, setDeleteButtonState] = useState(false);
+
+  //Variáveis dos botões
+  const [editButtonDisabled, setEditButtonDisabled] = useState(false);
+  const [deleteButtonDisabled, setDeleteButtonDisabled] = useState(false);
+  const [saveButtonDisabled, setSaveButtonDisabled] = useState(false);
+
+  //Variáveis Barra de Pesquisa
+  const [searchQuery, setSearchQuery] = useState("");
+  const [foundPatientData, setFoundPatientData] = useState(null);
+  const [foundPatientDataError, setFoundPatientDataError] = useState(null);
+  const [foundPatientId, setFoundPatientId] = useState(null);
+  const [foundPatientIdError, setFoundPatientIdError] = useState(null);
+
+  //Auxiliares renderização e assist LEC
+  const [saveAnimationRender, setSaveAnimationRender] = useState(false);
+  const [searchPatientRender, setSearchPatientRender] = useState(false);
+  const [formMode, setFormMode] = useState(null);
+  const [readMode, setReadMode] = useState(true);
+  const [patientRender, setPatientRender] = useState(null);
+
+  const navigate = useNavigate();
+
+  const handleRedirect = (path) => {
+    navigate(path);
+  };
+
+  useEffect(() => {
+    switch (id) {
+      case "newPatient":
+        setFormMode("register");
+        break;
+      default:
+        setFormMode("read");
+    }
+  }, [id]);
+
+  useEffect(() => {
+    const newPatientData = getPatientById(foundPatientId);
+    setFoundPatientData(newPatientData);
+  }, [foundPatientId]);
+
+  useEffect(() => {
+    if (formMode === "register") {
+      setReadMode(false);
+      setEditButtonDisabled(true);
+      setDeleteButtonDisabled(true);
+      setSaveButtonDisabled(false);
+      setSearchPatientRender(true);
+      setFoundPatientData("");
+      setFoundPatientId("");
+      setSearchQuery("");
+      setName("");
+      setGender("");
+      setBirthdate("");
+      setCpf("");
+      setRg("");
+      setMaritalStatus("");
+      setPhone("");
+      setEmail("");
+      setNaturalness("");
+      setEmergencyContact("");
+      setAllergies("");
+      setSpecialCare("");
+      setInsurance("");
+      setInsuranceNumber("");
+      setInsuranceValidity("");
+      setCep("");
+      setCity("");
+      setUf("");
+      setNeighborhood("");
+      setStreet("");
+      setHouseNumber("");
+      setComplement("");
+      setNextTo("");
+    }
+    if (formMode === "read") {
+      setReadMode(true);
+      setEditButtonDisabled(false);
+      setDeleteButtonDisabled(false);
+      setSaveButtonDisabled(false);
+      setSearchPatientRender(false);
+      setPatientRender(getPatientRenderData());
+    }
+    if (formMode === "edit") {
+      setReadMode(false);
+      setEditButtonDisabled(true);
+      setDeleteButtonDisabled(false);
+      setSaveButtonDisabled(false);
+      setSearchPatientRender(false);
+      setPatientRender(getPatientRenderData());
+    }
+  }, [formMode]);
+
+  const getPatientRenderData = () => {
+    const patient = getPatientById(id);
+    if (patient) {
+      setFoundPatientData(patient);
+      setFoundPatientId(patient.id);
+      setSearchQuery("");
+      setName(patient.name);
+      setGender(patient.gender);
+      setBirthdate(patient.birthdate);
+      setCpf(patient.cpf);
+      setRg(patient.rg);
+      setMaritalStatus(patient.maritalStatus);
+      setPhone(patient.phone);
+      setEmail(patient.email);
+      setNaturalness(patient.naturalness);
+      setEmergencyContact(patient.emergencyContact);
+      setAllergies(patient.allergies);
+      setSpecialCare(patient.specialCare);
+      setInsurance(patient.insurance);
+      setInsuranceNumber(patient.insuranceNumber);
+      setInsuranceValidity(patient.insuranceVality);
+      setCep(patient.cep);
+      setCity(patient.city);
+      setUf(patient.uf);
+      setNeighborhood(patient.neighborhood);
+      setStreet(patient.street);
+      setHouseNumber(patient.houseNumber);
+      setComplement(patient.complement);
+      setNextTo(patient.nextTo);
+    } else {
+      setPatientRender(false);
+      alert("Paciente não encontrado.");
+    }
+  };
+
+  const handleSearchPatient = () => {
+    if (searchQuery.trim() === "") {
+      setFoundPatientData(null);
+      setFoundPatientId(null);
+      return;
+    }
+    const patientsList = getPatients();
+
+    const patient = patientsList.find((patient) =>
+      patient.name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    if (patient) {
+      setFoundPatientData(patient);
+      setFoundPatientId(patient.id);
+    } else {
+      setFoundPatientData(null);
+      setFoundPatientId(patient.id);
+      alert("Paciente não encontrado.");
+    }
+  };
 
   const handleInput = (event) => {
     event.preventDefault();
-  setDeleteButtonState(true);
-  setEditButtonState(true);
 
     const { value, id } = event.target;
     if (id === "name") {
@@ -95,7 +248,7 @@ export const PatientRegisterComponent = () => {
       setInsurance(value);
     } else if (id === "insuranceNumber") {
       setInsuranceNumber(value);
-    } else if (id === "insuranceValidity") {
+    } else if (id === "insuranceVality") {
       setInsuranceValidity(value);
     } else if (id === "cep") {
       setCep(value);
@@ -122,12 +275,12 @@ export const PatientRegisterComponent = () => {
     }
   };
 
+  // função para busca do CEP
   const handleCep = async (event) => {
     event.preventDefault();
     const { value } = event.target;
 
     setCepError("");
-    setCep("");
     setCity("");
     setUf("");
     setNeighborhood("");
@@ -139,21 +292,17 @@ export const PatientRegisterComponent = () => {
 
     if (value.length === 8) {
       try {
-        console.log("Iniciar consulta à API de CEP", value);
         await requestCep(value);
-        console.log("Consulta concluída");
-        handleInput(event);
-      } catch (error) {
-        console.error("Ocorreu um erro na consulta do CEP:", error);
-      }
+       handleInput(event);
+      } catch (error) {}
     }
   };
 
-  useEffect(() => {
-    if (cep.length === 8) {
-      requestCep(cep);
-    }
-  }, [cep]);
+  // useEffect(() => {
+  //   if (cep.length === 8) {
+  //     requestCep(cep);
+  //   }
+  // }, [cep]);
 
   const API_VIACEP = "https://viacep.com.br/ws/CEP/json/";
 
@@ -163,7 +312,6 @@ export const PatientRegisterComponent = () => {
     if (data.erro) {
       setCepError("CEP inválido");
     } else {
-      console.log(data);
       setCity(data.localidade);
       setUf(data.uf);
       setNeighborhood(data.bairro);
@@ -171,11 +319,14 @@ export const PatientRegisterComponent = () => {
     }
   }
 
-  const addPatientToLocalStorage = () => {
-    const newPatientRegister = {
+  //Funções CRUD
+
+  const updatePatientRegisterToLocalStorage = () => {
+    const idFromLocalStorage = +id;
+    const setPatientRegister = {
       name: name,
       gender: gender,
-      bithdate: birthdate,
+      birthdate: birthdate,
       cpf: cpf,
       rg: rg,
       maritalStatus: maritalStatus,
@@ -187,7 +338,39 @@ export const PatientRegisterComponent = () => {
       specialCare: specialCare,
       insurance: insurance,
       insuranceNumber: insuranceNumber,
-      insuranceVality: insuranceValidity,
+      insuranceVality: insuranceVality,
+      cep: cep,
+      city: city,
+      uf: uf,
+      neighborhood: neighborhood,
+      street: street,
+      houseNumber: houseNumber,
+      complement: complement,
+      nextTo: nextTo,
+    };
+    updatePatientRegister(idFromLocalStorage, setPatientRegister);
+    setSaveAnimationRender(false);
+    setFormMode("read");
+    handleRedirect("/");
+  };
+
+  const addPatientToLocalStorage = () => {
+    const newPatientRegister = {
+      name: name,
+      gender: gender,
+      birthdate: birthdate,
+      cpf: cpf,
+      rg: rg,
+      maritalStatus: maritalStatus,
+      phone: phone,
+      email: email,
+      naturalness: naturalness,
+      emergencyContact: emergencyContact,
+      allergies: allergies,
+      specialCare: specialCare,
+      insurance: insurance,
+      insuranceNumber: insuranceNumber,
+      insuranceVality: insuranceVality,
       cep: cep,
       city: city,
       uf: uf,
@@ -198,7 +381,41 @@ export const PatientRegisterComponent = () => {
       nextTo: nextTo,
     };
     addPatient(newPatientRegister);
-    setSubmitButtonState("");
+    setSaveAnimationRender(false);
+    setName("");
+    setGender("");
+    setBirthdate("");
+    setCpf("");
+    setRg("");
+    setMaritalStatus("");
+    setPhone("");
+    setEmail("");
+    setNaturalness("");
+    setEmergencyContact("");
+    setAllergies("");
+    setSpecialCare("");
+    setInsurance("");
+    setInsuranceNumber("");
+    setInsuranceValidity("");
+    setCep("");
+    setCity("");
+    setUf("");
+    setNeighborhood("");
+    setStreet("");
+    setHouseNumber("");
+    setComplement("");
+    setNextTo("");
+    setFoundPatientData("");
+    setFoundPatientId("");
+    setSearchQuery("");
+    alert("Paciente cadastrado com sucesso");
+  };
+
+  const deletePatientToLocalStorage = () => {
+    const idFromLocalStorage = +id;
+    deletePatient(idFromLocalStorage);
+    alert("Paciente deletado com sucesso!");
+    handleRedirect("/");
   };
 
   const handleFormSubmission = (e) => {
@@ -268,7 +485,7 @@ export const PatientRegisterComponent = () => {
         .max(200, "Este campo deve ter no máximo 200 caracteres"),
       insurance: yup.string(),
       insuranceNumber: yup.string(),
-      insuranceValidity: yup.string(),
+      insuranceVality: yup.string(),
       cep: yup
         .string()
         .length(8, "CEP Inválido")
@@ -297,7 +514,7 @@ export const PatientRegisterComponent = () => {
           specialCare,
           insurance,
           insuranceNumber,
-          insuranceValidity,
+          insuranceVality,
           cep,
           city,
           uf,
@@ -308,12 +525,18 @@ export const PatientRegisterComponent = () => {
         { abortEarly: false }
       )
       .then(() => {
-        setSubmitButtonState("Carregando...");
-        setTimeout(() => {
-          addPatientToLocalStorage();
-          alert("Novo paciente cadastrado com sucesso");
-        }, 2000);
-       
+        setSaveAnimationRender(true);
+        if (formMode === "register") {
+          setTimeout(() => {
+            addPatientToLocalStorage();
+            alert("Paciente cadastrado com sucesso");
+          }, 2000);
+        } else {
+          setTimeout(() => {
+            updatePatientRegisterToLocalStorage();
+            alert("Paciente atualizado com sucesso");
+          }, 1500);
+        }
       })
       .catch((error) => {
         if (error.inner) {
@@ -363,311 +586,332 @@ export const PatientRegisterComponent = () => {
         }
       });
   };
-
+  console.log(id);
   return (
     <>
-      <Styled.PatientRegister>
-      
-        <form onSubmit={handleFormSubmission} noValidate>
-          <ButtonComponent
-            id="editButton"
-            type="button"
-            label="Editar"
-            disabled={editButtonState}
-            onClick={() => {
-              alert(
-                "funcionalidade não desenvolvida - fora do escopo do projeto"
-              );
-            }}
-          />
-          <ButtonComponent
-            id="deletButton"
-            type="button"
-            label="Apagar"
-            disabled={deleteButtonState}
-            onClick={() => {
-              alert(
-                "funcionalidade não desenvolvida- fora do escopo do projeto"
-              );
-            }}
-          />
-          <ButtonComponent
-            id="save"
-            type="submit"
-            label="Salvar"
-            onClick={handleFormSubmission}
-          />
-          {submitButtonState && <div><Spinner animation="border" role="status">
-      <span className="visually-hidden">Carregando...</span>
-    </Spinner>
-    </div>}
-         
+      {!foundPatientData ? (
+        <h5>Preencha o formulário abaixo para cadastrar um novo paciente</h5>
+      ) : (
+        <h5>Paciente Selecionado: {foundPatientData.name}</h5>
+      )}
+      {foundPatientDataError && <div>{foundPatientDataError}</div>}
 
-          <h3>Informações do Paciente</h3>
-
-         
-
-          <InputComponent
-            id="name"
-            type="text"
-            placeholder="Digite seu nome completo"
-            label="Nome Completo"
-            value={name}
-            onInput={handleInput}
-            error={nameError}
-          />
-          {nameError && <div>{nameError}</div>}
-
+      <form onSubmit={handleFormSubmission} noValidate>
+        <ButtonComponent
+          id="editButton"
+          type="button"
+          label="Editar"
+          disabled={editButtonDisabled}
+          onClick={() => {
+            setFormMode("edit");
+          }}
+        />
+        <ButtonComponent
+          id="deletButton"
+          type="button"
+          label="Apagar"
+          disabled={deleteButtonDisabled}
+          onClick={() => deletePatientToLocalStorage()}
+        />
+        <ButtonComponent
+          id="save"
+          type="submit"
+          label="Salvar"
+          onClick={handleFormSubmission}
+          disabled={saveButtonDisabled}
+        />
+        {saveAnimationRender && (
           <div>
-            <label htmlFor="gender">Gênero</label>
-            <div>
-              <select
-                id="gender"
-                value={gender}
-                onChange={handleInput}
-                onBlur={handleInput}
-                className={genderError ? "error" : ""}
-              >
-                <option disabled hidden value="">
-                  Selecione o gênero
-                </option>
-                <option value="Masculino">Masculino</option>
-                <option value="Feminino">Feminino</option>
-              </select>
-            </div>
+            <Spinner animation="border" role="status">
+              <span className="visually-hidden">Carregando...</span>
+            </Spinner>
           </div>
-          {genderError && <div>{genderError}</div>}
+        )}
 
-          <InputComponent
-            id="birthdate"
-            type="date"
-            placeholder="01/01/2001"
-            label="Data de Nascimento"
-            value={birthdate}
-            onInput={handleInput}
-            error={birthdateError}
-          />
-          {birthdateError && <div>{birthdateError}</div>}
+        <h3>Informações do Paciente</h3>
 
-          <InputComponent
-            id="cpf"
-            type="text"
-            placeholder="Digite o CPF no formato 99.999.999-99"
-            label="CPF"
-            value={cpf}
-            onInput={handleInput}
-            error={cpfError}
-          />
-          {cpfError && <div>{cpfError}</div>}
+        <InputComponent
+          id="name"
+          type="text"
+          placeholder="Digite seu nome completo"
+          label="Nome Completo"
+          value={name}
+          onInput={handleInput}
+          error={nameError}
+          readOnly={readMode}
+        />
+        {nameError && <div>{nameError}</div>}
 
-          <InputComponent
-            id="rg"
-            type="text"
-            placeholder="Digite o RG"
-            label="RG"
-            value={rg}
-            onInput={handleInput}
-            error={rgError}
-          />
-          {rgError && <div>{rgError}</div>}
+        <div>
+          <label htmlFor="gender">Gênero</label>
           <div>
-            <label htmlFor="Estado Civil">Estado Civil</label>
-            <div>
-              <select
-                id="maritalStatus"
-                value={maritalStatus}
-                onChange={handleInput}
-                onBlur={handleInput}
-                className={maritalStatusError ? "error" : ""}
-              >
-                <option disabled hidden value="">
-                  Selecione o estado civil
-                </option>
-                <option value="Solteiro(a)">Solteiro(a)</option>
-                <option value="Casado(a)/ União Estável">
-                  Casado(a)/ União Estável
-                </option>
-                <option value="Viúvo(a)">Viúvo(a)</option>
-                <option value="Separado(a)">Separado(a)</option>
-                <option value="Divorciado(a)">Divorciado(a)</option>
-              </select>
-            </div>
+            <select
+              id="gender"
+              value={gender}
+              readOnly={readMode}
+              onChange={handleInput}
+              onBlur={handleInput}
+              className={genderError ? "error" : ""}
+            >
+              <option disabled hidden value="">
+                Selecione o gênero
+              </option>
+              <option value="Masculino">Masculino</option>
+              <option value="Feminino">Feminino</option>
+            </select>
           </div>
-          {maritalStatusError && <div>{maritalStatusError}</div>}
+        </div>
+        {genderError && <div>{genderError}</div>}
 
-          <InputComponent
-            id="naturalness"
-            type="text"
-            placeholder="Digite a naturalidade"
-            label="Naturalidade"
-            value={naturalness}
-            onInput={handleInput}
-            error={naturalnessError}
-          />
-          {naturalnessError && <div>{naturalnessError}</div>}
+        <InputComponent
+          id="birthdate"
+          type="date"
+          placeholder="01/01/2001"
+          label="Data de Nascimento"
+          value={birthdate}
+          onInput={handleInput}
+          error={birthdateError}
+          readOnly={readMode}
+        />
+        {birthdateError && <div>{birthdateError}</div>}
 
-          <InputComponent
-            id="allergies"
-            type="text"
-            placeholder="Digite as alergias"
-            label="Alergias"
-            value={allergies}
-            onInput={handleInput}
-          />
+        <InputComponent
+          id="cpf"
+          type="text"
+          placeholder="Digite o CPF no formato 99.999.999-99"
+          label="CPF"
+          value={cpf}
+          onInput={handleInput}
+          error={cpfError}
+          readOnly={readMode}
+        />
+        {cpfError && <div>{cpfError}</div>}
 
-          <InputComponent
-            id="specialCare"
-            type="text"
-            placeholder="Digite os cuidados especiais"
-            label="Cuidados Específicos"
-            value={specialCare}
-            onInput={handleInput}
-          />
+        <InputComponent
+          id="rg"
+          type="text"
+          placeholder="Digite o RG"
+          label="RG"
+          value={rg}
+          onInput={handleInput}
+          error={rgError}
+          readOnly={readMode}
+        />
+        {rgError && <div>{rgError}</div>}
+        <div>
+          <label htmlFor="Estado Civil">Estado Civil</label>
+          <div>
+            <select
+              id="maritalStatus"
+              value={maritalStatus}
+              readOnly={readMode}
+              onChange={handleInput}
+              onBlur={handleInput}
+              className={maritalStatusError ? "error" : ""}
+            >
+              <option disabled hidden value="">
+                Selecione o estado civil
+              </option>
+              <option value="Solteiro(a)">Solteiro(a)</option>
+              <option value="Casado(a)/ União Estável">
+                Casado(a)/ União Estável
+              </option>
+              <option value="Viúvo(a)">Viúvo(a)</option>
+              <option value="Separado(a)">Separado(a)</option>
+              <option value="Divorciado(a)">Divorciado(a)</option>
+            </select>
+          </div>
+        </div>
+        {maritalStatusError && <div>{maritalStatusError}</div>}
 
-          <InputComponent
-            id="insurance"
-            type="text"
-            placeholder="Digite o convênio"
-            label="Convênio"
-            value={insurance}
-            onInput={handleInput}
-          />
+        <InputComponent
+          id="naturalness"
+          type="text"
+          placeholder="Digite a naturalidade"
+          label="Naturalidade"
+          value={naturalness}
+          onInput={handleInput}
+          error={naturalnessError}
+          readOnly={readMode}
+        />
+        {naturalnessError && <div>{naturalnessError}</div>}
 
-          <InputComponent
-            id="insuranceNumber"
-            type="text"
-            placeholder="Digite o número do convênio"
-            label="Número do Convênio"
-            value={insuranceNumber}
-            onInput={handleInput}
-          />
+        <InputComponent
+          id="allergies"
+          type="text"
+          placeholder="Digite as alergias"
+          label="Alergias"
+          value={allergies}
+          onInput={handleInput}
+          readOnly={readMode}
+        />
 
-          <InputComponent
-            id="insuranceValidity"
-            type="text"
-            placeholder="Digite a validade do convênio"
-            label="Validade do Convênio"
-            value={insuranceValidity}
-            onInput={handleInput}
-          />
-          <h3>Contato</h3>
+        <InputComponent
+          id="specialCare"
+          type="text"
+          placeholder="Digite os cuidados especiais"
+          label="Cuidados Específicos"
+          value={specialCare}
+          onInput={handleInput}
+          readOnly={readMode}
+        />
 
-          <InputComponent
-            id="phone"
-            type="text"
-            placeholder="Digite o telefone no formato (99) 9 9999-99999"
-            label="Telefone"
-            value={phone}
-            onInput={handleInput}
-            error={phoneError}
-          />
-          {phoneError && <div>{phoneError}</div>}
+        <InputComponent
+          id="insurance"
+          type="text"
+          placeholder="Digite o convênio"
+          label="Convênio"
+          value={insurance}
+          onInput={handleInput}
+          readOnly={readMode}
+        />
 
-          <InputComponent
-            id="email"
-            type="email"
-            placeholder="Digite o email"
-            label="E-mail"
-            value={email}
-            onInput={handleInput}
-            error={emailError}
-          />
-          {emailError && <div>{emailError}</div>}
+        <InputComponent
+          id="insuranceNumber"
+          type="text"
+          placeholder="Digite o número do convênio"
+          label="Número do Convênio"
+          value={insuranceNumber}
+          onInput={handleInput}
+          readOnly={readMode}
+        />
 
-          <InputComponent
-            id="emergencyContact"
-            type="text"
-            placeholder="Digite o contato de emergência no formato (99) 9 9999-99999"
-            label="Contato de Emergência"
-            value={emergencyContact}
-            onInput={handleInput}
-            error={emergencyContactError}
-          />
-          {emergencyContactError && <div>{emergencyContactError}</div>}
+        <InputComponent
+          id="insuranceVality"
+          type="text"
+          placeholder="Digite a validade do convênio"
+          label="Validade do Convênio"
+          value={insuranceVality}
+          onInput={handleInput}
+          readOnly={readMode}
+        />
+        <h3>Contato</h3>
 
-          <p>Endereço</p>
-          <InputComponent
-            id="cep"
-            type="text"
-            placeholder="Digite seu CEP"
-            label="CEP"
-            onChange={handleCep}
-            error={cepError}
-          />
-          {cepError && <div>{cepError}</div>}
-          <InputComponent
-            id="city"
-            type="text"
-            placeholder="Cidade"
-            label="Cidade"
-            onInput={handleInput}
-            value={city}
-            readOnly={true}
-          />
-          {cityError && <div>{cityError}</div>}
+        <InputComponent
+          id="phone"
+          type="text"
+          placeholder="Digite o telefone no formato (99) 9 9999-99999"
+          label="Telefone"
+          value={phone}
+          onInput={handleInput}
+          error={phoneError}
+          readOnly={readMode}
+        />
+        {phoneError && <div>{phoneError}</div>}
 
-          <InputComponent
-            id="uf"
-            type="text"
-            placeholder="Digite o estado (UF)"
-            label="Estado (UF)"
-            onInput={handleInput}
-            value={uf}
-            readOnly={true}
-          />
-          {ufError && <div>{ufError}</div>}
-          <InputComponent
-            id="neighborhood"
-            type="text"
-            placeholder="Digite o bairro"
-            label="Bairro"
-            onInput={handleInput}
-            value={neighborhood}
-            readOnly={false}
-          />
-          {neighborhoodError && <div>{neighborhoodError}</div>}
-          <InputComponent
-            id="street"
-            type="text"
-            placeholder="Digite o logradouro"
-            label="Logradouro"
-            onInput={handleInput}
-            value={street}
-            readOnly={false}
-          />
-          {streetError && <div>{streetError}</div>}
+        <InputComponent
+          id="email"
+          type="email"
+          placeholder="Digite o email"
+          label="E-mail"
+          value={email}
+          onInput={handleInput}
+          error={emailError}
+          readOnly={readMode}
+        />
+        {emailError && <div>{emailError}</div>}
 
-          <InputComponent
-            id="houseNumber"
-            type="text"
-            placeholder="Digite o número da casa"
-            label="Número"
-            value={houseNumber}
-            onInput={handleInput}
-            readOnly={false}
-          />
-          {houseNumberError && <div>{houseNumberError}</div>}
+        <InputComponent
+          id="emergencyContact"
+          type="text"
+          placeholder="Digite o contato de emergência no formato (99) 9 9999-99999"
+          label="Contato de Emergência"
+          value={emergencyContact}
+          onInput={handleInput}
+          error={emergencyContactError}
+          readOnly={readMode}
+        />
+        {emergencyContactError && <div>{emergencyContactError}</div>}
 
-          <InputComponent
-            id="complement"
-            type="text"
-            placeholder="Digite o complemento (apartamento, casa, etc.)"
-            label="Complemento"
-            value={complement}
-            onInput={handleInput}
-            readOnly={false}
-          />
-          <InputComponent
-            id="nextTo"
-            type="text"
-            placeholder="Informe um local próximo"
-            label="Próximo à:"
-            value={nextTo}
-            onInput={handleInput}
-            readOnly={false}
-          />
-        </form>
-      </Styled.PatientRegister>
+        <p>Endereço</p>
+        <InputComponent
+          id="cep"
+          type="text"
+          placeholder="Digite seu CEP"
+          label="CEP"
+          onChange={handleCep}
+          value={formMode === "register" || formMode === "edit"? null : cep}
+          defaultValue = {formMode === "edit"? cep : null}
+          error={cepError}
+          readOnly={readMode}
+        />
+        {cepError && <div>{cepError}</div>}
+        <InputComponent
+          id="city"
+          type="text"
+          placeholder="Cidade"
+          label="Cidade"
+          onInput={handleInput}
+          value={city}
+          readOnly={readMode}
+        />
+        {cityError && <div>{cityError}</div>}
+
+        <InputComponent
+          id="uf"
+          type="text"
+          placeholder="Digite o estado (UF)"
+          label="Estado (UF)"
+          onInput={handleInput}
+          value={uf}
+          readOnly={readMode}
+        />
+        {ufError && <div>{ufError}</div>}
+        <InputComponent
+          id="neighborhood"
+          type="text"
+          placeholder="Digite o bairro"
+          label="Bairro"
+          onInput={handleInput}
+          value={neighborhood}
+          readOnly={readMode}
+        />
+        {neighborhoodError && <div>{neighborhoodError}</div>}
+        <InputComponent
+          id="street"
+          type="text"
+          placeholder="Digite o logradouro"
+          label="Logradouro"
+          onInput={handleInput}
+          value={street}
+          readOnly={readMode}
+        />
+        {streetError && <div>{streetError}</div>}
+
+        <InputComponent
+          id="houseNumber"
+          type="text"
+          placeholder="Digite o número da casa"
+          label="Número"
+          value={houseNumber}
+          onInput={handleInput}
+          readOnly={readMode}
+        />
+        {houseNumberError && <div>{houseNumberError}</div>}
+
+        <InputComponent
+          id="complement"
+          type="text"
+          placeholder="Digite o complemento (apartamento, casa, etc.)"
+          label="Complemento"
+          value={complement}
+          onInput={handleInput}
+          readOnly={readMode}
+        />
+        <InputComponent
+          id="nextTo"
+          type="text"
+          placeholder="Informe um local próximo"
+          label="Próximo à:"
+          value={nextTo}
+          onInput={handleInput}
+          readOnly={readMode}
+        />
+      </form>
     </>
   );
+};
+
+PatientRegisterComponent.propTypes = {
+  id: PropTypes.number,
 };
