@@ -7,6 +7,7 @@ export const PageContainer = styled.div`
 
 export const MainContent = styled.div`
   flex-grow: 1;
+  height:auto;
 `;
 
 export const SpecificPageContent = styled.div`

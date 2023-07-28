@@ -830,7 +830,8 @@ export const PatientRegisterComponent = ({ id }) => {
           placeholder="Digite seu CEP"
           label="CEP"
           onChange={handleCep}
-          value={cep}
+          value={formMode === "register" || formMode === "edit"? null : cep}
+          defaultValue = {formMode === "edit"? cep : null}
           error={cepError}
           readOnly={readMode}
         />
