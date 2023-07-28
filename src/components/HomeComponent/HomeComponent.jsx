@@ -33,35 +33,7 @@ export const HomeComponent = () => {
 
   const patientsListRender = getPatients();
 
-  // const searchLocalStorage = (query) => {
-  //   if (query.trim() === "") {
-  //     return null;
-  //   }
-
-  //   const patientsList = getPatients();
-
-  //   const foundByName = patientsList.find((patient) =>
-  //     patient.name.toLowerCase().includes(query.toLowerCase())
-  //   );
-
-  //   if (foundByName) {
-  //     return foundByName;
-  //   }
-
-  //   const queryAsNumber = Number(query);
-  //   if (!isNaN(queryAsNumber)) {
-  //     const foundById = patientsList.find(
-  //       (patient) => patient.id === queryAsNumber
-  //     );
-  //     if (foundById) {
-  //       return foundById;
-  //     }
-  //   }
-
-  //   return null;
-  // };
-
-  const searchLocalStorage = (query) => {
+    const searchLocalStorage = (query) => {
     if (query.trim() === "") {
       return null;
     }
