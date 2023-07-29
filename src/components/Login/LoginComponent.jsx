@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { InputComponent } from "../Input/inputComponent";
 import { AuthContext } from "../../context/auth/auth.context";
 import { ButtonComponent } from "../Button/buttonComponent";
+import * as Styled from "./LoginComponent.style";
 
 export const LoginComponent = () => {
   const { setShowModal: setShowModalContext } = useContext(ModalContext);
@@ -91,51 +92,84 @@ export const LoginComponent = () => {
       });
   };
 
-  return (
-    <>
-      <form onSubmit={handleFormSubmit} noValidate>
-        <legend>Login</legend>
-        <InputComponent
-          id="email"
-          type="email"
-          placeholder="Digite seu email"
-          label="E-mail"
-          value={email}
-          onInput={handleInput}
-          error={emailError}
+    return (
+    <section className="vh-100 my-5 mx-4">
+      <div className="container-fluid">
+        <div className="row">
+          <div className="col-sm-6 text-black">
+            <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+              <form
+                style={{ width: "23rem" }}
+                onSubmit={handleFormSubmit}
+                noValidate
+              >
+                <h3
+                  className="fw-normal mb-3 pb-3"
+                  style={{ letterSpacing: "1px" }}
+                >
+                  Log in
+                </h3>
+
+                <InputComponent
+                  id="email"
+                  type="email"
+                  placeholder="Digite seu email"
+                  label="E-mail"
+                  value={email}
+                  onInput={handleInput}
+                  error={emailError}
+                />
+
+                <InputComponent
+                  id="password"
+                  type="password"
+                  placeholder="Digite sua senha"
+                  label="Senha"
+                  value={password}
+                  onInput={handleInput}
+                  error={passwordError}
+                />
+
+                <ButtonComponent id="loginButton" type="submit" label="Logar" />
+
+                {emailError && (
+                  <div className="small mb-5 pb-lg-2">{emailError}</div>
+                )}
+                {passwordError && (
+                  <div className="small mb-5 pb-lg-2">{passwordError}</div>
+                )}
+
+                <p className="small mb-5 pb-lg-2">
+                  <a
+                    className="text-muted"
+                    href="#!"
+                    onClick={handleForgotPassword}
+                  >
+                    Esqueceu a senha?
+                  </a>
+                </p>
+                <p>
+                  Não tem conta?{" "}
+                  <a href="#!" className="link-info" onClick={handleShowModal}>
+                    Registre-se
+                  </a>
+                </p>
+                <p>Usuário e senha expostos para facilitar os testes</p>
+                <p> usuário: usuariopermitido@email.com </p>
+                <p> senha: usuariopermitido </p>
+              </form>
+            </div>
+          </div>
+          <div className="col-sm-6 px-0 d-none d-sm-block d-flex justify-content-center align-items-center my-5">
+        <img
+          src="login-image-large.jpeg"
+          alt="Login image"
+          className="w-100 vh-60"
+          style={{ objectFit: "cover", objectPosition: "right" }}
         />
-        <InputComponent
-          id="password"
-          type="password"
-          placeholder="Digite sua senha"
-          label="Senha"
-          value={password}
-          onInput={handleInput}
-          error={passwordError}
-        />
-        {emailError && <div>{emailError}</div>}
-        {passwordError && <div>{passwordError}</div>}
-        
-        <ButtonComponent
-        id="loginButton"
-        type="submit"
-        label="Logar"
-        />
-      </form>
-      <div>
-        <a href="#" onClick={handleForgotPassword}>
-          Esqueci minha senha
-        </a>
-        <ButtonComponent
-        id="openModalButton"
-        type="button"
-        label="Criar Conta"
-        onClick={handleShowModal}/>
-        
-        <p>Usuário e senha expostos para facilitar os testes</p>
-        <p> usuário: usuariopermitido@email.com </p>
-        <p> senha: usuariopermitido </p>
       </div>
-    </>
+        </div>
+      </div>
+    </section>
   );
 };

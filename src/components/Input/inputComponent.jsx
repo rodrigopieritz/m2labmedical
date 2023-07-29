@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 
 export const InputComponent = ({ label, type, id, placeholder, value, onInput,onChange, readOnly, defaultValue}) => {
   return (
-    <div>
-      <label htmlFor={id}>{label}</label>
+    <div className="form-outline mb-4">
+      <label className="form-label" htmlFor={id}>{label}</label>
       <div>
-        <input type={type} id={id} placeholder={placeholder} value={value} onInput={onInput} onChange={onChange} readOnly={readOnly} defaultValue={defaultValue}/>
+        <input className="form-control form-control-lg" type={type} id={id} placeholder={placeholder} value={value} onInput={onInput} onChange={onChange} readOnly={readOnly} defaultValue={defaultValue}/>
       </div>
        </div>
   );
