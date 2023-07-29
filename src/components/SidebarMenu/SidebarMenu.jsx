@@ -94,7 +94,15 @@ import React, { useContext, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/auth/auth.context";
 import { ButtonComponent } from "../Button/buttonComponent";
-import { FaCircleNotch, FaHome } from "react-icons/fa";
+import {
+  FaCircleNotch,
+  FaHome,
+  FaUserPlus,
+  FaClipboardList,
+  FaCalendarPlus,
+  FaFileAlt,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import styled, { keyframes } from "styled-components";
 import * as Styled from "../SidebarMenu/Sidebar.style";
 
@@ -104,6 +112,7 @@ const SidebarMenu = () => {
   const [isLoading, setIsLoading] = useState(true); // Estado para controlar a animação de loading
   const navigate = useNavigate();
   const { setAuth } = useContext(AuthContext);
+  const [isSwitchOn, setIsSwitchOn] = useState(true);
 
   useEffect(() => {
     // Simulando o tempo de carregamento com setTimeout
@@ -114,6 +123,11 @@ const SidebarMenu = () => {
     return () => clearTimeout(loadingTimeout);
   }, []);
 
+  const handleSwitchToggle = () => {
+    setIsSwitchOn((prevState) => !prevState);
+    expandCollapse();
+  };
+  
   const handleRedirect = (path) => {
     setIsLoading(true); // Iniciar a animação de loading ao redirecionar para uma nova página
     navigate(path);
@@ -138,64 +152,61 @@ const SidebarMenu = () => {
       <Styled.Sidebar className={isExpanded ? "" : "collapsed"}>
         
       <div>
-        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="100%" />
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="220px"/>
       </div>
-      <div>
-        <div>
-          <div>
-          <FaHome/>
-
-          </div>
-          <div>
-            <ButtonComponent
-              id="homeButton"
-              onClick={() => handleRedirect("/")}
-              label="Home"
-            />
-          </div>
-        </div>
-        <div>
-          <ButtonComponent
-            id="patientRegisterButton"
-            onClick={() => handleRedirect("/patient-register/newPatient")}
-            label="Cadastrar Paciente"
-          />
-        </div>
-        <div>
-          <ButtonComponent
-            id="medicalRecordButton"
-            onClick={() => handleRedirect("/medical-record-list")}
-            label="Listar Prontuários"
-          />
-        </div>
+      
+      <ButtonComponent
+          id="homeButton"
+          onClick={() => handleRedirect("/")}
+          label="Home"
+          icon={<FaHome/>}
+        />
+        <ButtonComponent
+          id="patientRegisterButton"
+          onClick={() => handleRedirect("/patient-register/newPatient")}
+          label="Cadastrar Paciente"
+          icon={<FaUserPlus />}
+        />
+        <ButtonComponent
+          id="medicalRecordButton"
+          onClick={() => handleRedirect("/medical-record-list")}
+          label="Listar Prontuários"
+          icon={<FaClipboardList/>}
+        />
         <ButtonComponent
           id="medicalRegisterButton"
           onClick={() => handleRedirect("/medical-register/newMedAppoint")}
           label="Cadastrar Consulta"
+          icon={<FaCalendarPlus/>}
         />
-      </div>
-      <div>
         <ButtonComponent
           id="examRegisterButton"
           onClick={() => handleRedirect("/exam-register/newExam")}
           label="Cadastrar Exame"
+          icon={<FaFileAlt/>}
         />
-      </div>
-      <div>
-        <ButtonComponent
-          id="expandCollapseButton"
-          onClick={() => expandCollapse()}
-          label="Exibir/ Recolher"
-        />
-      </div>
 
-      <ButtonComponent id="logouButton" onClick={handleLogout} label="Logout" />
+
+      <ButtonComponent id="logouButton" onClick={handleLogout} label="Logout" icon= {<FaSignOutAlt/>} />
+
+        <div className="mt-5 pt-5d-align-items-center justify-content-center">
+      <button
+          id="expandCollapseButton"
+          className={`btn btn-toggle ${isSwitchOn ? "active" : ""}`}
+          onClick={handleSwitchToggle}
+        >
+          Exibir/ Recolher
+        </button>
+      </div>
 
       {isLoading && <FaCircleNotch>Loading...</FaCircleNotch>}
       
       </Styled.Sidebar>
     </>
   );
+  
+
 };
+
 
 export default SidebarMenu;
