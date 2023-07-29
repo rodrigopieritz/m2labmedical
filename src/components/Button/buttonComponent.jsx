@@ -7,8 +7,8 @@ export const ButtonComponent = ({ id, label, type, icon, onClick, disabled }) =>
     <div>
     <img src={icon}/>
     </div>
-      <div className="pt-1 mb-4">
-        <button className="btn btn-info btn-lg btn-block w-100" style={{ backgroundColor: "rgb(0, 133, 132)" }} type={type} id={id} onClick={onClick} disabled={disabled}>
+      <div className=" mb-2">
+        <button className="btn btn-info btn-lg btn-block w-100" style={{ backgroundColor: "rgb(0, 133, 132)", color:"whitesmoke" }} type={type} id={id} onClick={onClick} disabled={disabled}>
           {label}
         </button>
       </div>
