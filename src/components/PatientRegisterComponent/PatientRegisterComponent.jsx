@@ -586,7 +586,7 @@ export const PatientRegisterComponent = ({ id }) => {
         }
       });
   };
-  console.log(id);
+  
   return (
     <>
       {!foundPatientData ? (
@@ -913,5 +913,5 @@ export const PatientRegisterComponent = ({ id }) => {
 };
 
 PatientRegisterComponent.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
 };

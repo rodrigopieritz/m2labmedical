@@ -465,5 +465,5 @@ export const MedicalRegisterComponent = ({ id }) => {
 };
 
 MedicalRegisterComponent.propTypes = {
-  id: PropTypes.number,
+  id: PropTypes.string,
 };

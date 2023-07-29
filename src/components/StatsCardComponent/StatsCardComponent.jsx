@@ -37,7 +37,7 @@ export const StatsCardComponent = ({
 };
 
 StatsCardComponent.propTypes = {
-    totalPatients: PropTypes.string,
-    totalExams: PropTypes.string,
-    totalMedicalAppointments: PropTypes.string,
+    totalPatients: PropTypes.number,
+    totalExams: PropTypes.number,
+    totalMedicalAppointments: PropTypes.number,
 }
