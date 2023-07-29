@@ -293,7 +293,7 @@ export const PatientRegisterComponent = ({ id }) => {
     if (value.length === 8) {
       try {
         await requestCep(value);
-       handleInput(event);
+        handleInput(event);
       } catch (error) {}
     }
   };
@@ -586,328 +586,418 @@ export const PatientRegisterComponent = ({ id }) => {
         }
       });
   };
-  
+
   return (
     <>
-      {!foundPatientData ? (
-        <h5>Preencha o formulário abaixo para cadastrar um novo paciente</h5>
-      ) : (
-        <h5>Paciente Selecionado: {foundPatientData.name}</h5>
-      )}
-      {foundPatientDataError && <div>{foundPatientDataError}</div>}
-
-      <form onSubmit={handleFormSubmission} noValidate>
-        <ButtonComponent
-          id="editButton"
-          type="button"
-          label="Editar"
-          disabled={editButtonDisabled}
-          onClick={() => {
-            setFormMode("edit");
-          }}
-        />
-        <ButtonComponent
-          id="deletButton"
-          type="button"
-          label="Apagar"
-          disabled={deleteButtonDisabled}
-          onClick={() => deletePatientToLocalStorage()}
-        />
-        <ButtonComponent
-          id="save"
-          type="submit"
-          label="Salvar"
-          onClick={handleFormSubmission}
-          disabled={saveButtonDisabled}
-        />
-        {saveAnimationRender && (
-          <div>
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Carregando...</span>
-            </Spinner>
+    <Styled.PatientRegister>
+      <section className="vh-100 my-1 mx-1">
+        <div className="container-fluid">
+          <div className="row mt-1 mb-3 text-black d-flex align-items-center justify-content-center text-center">
+            {!foundPatientData ? (
+              <h5>
+                Preencha o formulário abaixo para cadastrar um novo paciente
+              </h5>
+            ) : (
+              <h5>Paciente Selecionado: {foundPatientData.name}</h5>
+            )}
+            {foundPatientDataError && <div>{foundPatientDataError}</div>}
           </div>
+          <form onSubmit={handleFormSubmission} noValidate>
+            <div className="row mt-5">
+              <div class="col-6"></div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="editButton"
+                  type="button"
+                  label="Editar"
+                  disabled={editButtonDisabled}
+                  onClick={() => {
+                    setFormMode("edit");
+                  }}
+                />
+              </div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="deletButton"
+                  type="button"
+                  label="Apagar"
+                  disabled={deleteButtonDisabled}
+                  onClick={() => deletePatientToLocalStorage()}
+                />
+              </div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="save"
+                  type="submit"
+                  label="Salvar"
+                  onClick={handleFormSubmission}
+                  disabled={saveButtonDisabled}
+                />
+              </div>
+            </div>
+            <div className="row">
+              {saveAnimationRender && (
+                <div>
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Carregando...</span>
+                  </Spinner>
+                </div>
+              )}
+            </div>
+           
+            <div className="row mt-1 mb-4 text-black d-flex align-items-center justify-content-center text-center">
+              <h3>Informações do Paciente</h3>
+            </div>
+
+            <div className="row mt-5 mb-1 text-black d-flex">
+
+            <div class="col-6 text-center">
+            <InputComponent
+              id="name"
+              type="text"
+              placeholder="Digite seu nome completo"
+              label="Nome Completo"
+              value={name}
+              onInput={handleInput}
+              error={nameError}
+              readOnly={readMode}
+            />
+            {nameError && <div>{nameError}</div>}
+            </div>
+            <div class="col-3 text-center">
+            <div className={`form-outline mb-4 ${genderError ? "error" : ""}`}>
+              <label htmlFor="gender" className="mb-2">
+                Gênero
+              </label>
+              <div>
+                <select
+                  id="gender"
+                  value={gender}
+                  readOnly={readMode}
+                  onChange={handleInput}
+                  onBlur={handleInput}
+                  className={`form-select form-control-lg ${
+                    genderError ? "is-invalid" : ""
+                  }`}
+                >
+                  <option disabled hidden value="">
+                    Selecione o gênero
+                  </option>
+                  <option value="Masculino">Masculino</option>
+                  <option value="Feminino">Feminino</option>
+                </select>
+                {genderError && (
+                  <div className="invalid-feedback">{genderError}</div>
+                )}
+              </div>
+            </div>
+            </div>
+            <div class="col-3 text-center">
+            <InputComponent
+              id="birthdate"
+              type="date"
+              placeholder="01/01/2001"
+              label="Data de Nascimento"
+              value={birthdate}
+              onInput={handleInput}
+              error={birthdateError}
+              readOnly={readMode}
+            />
+            {birthdateError && <div>{birthdateError}</div>}
+            </div>
+           
+            </div>
+
+            <div className="row text-black d-flex">
+            <div class="col-3 text-center">
+            <InputComponent
+              id="cpf"
+              type="text"
+              placeholder="Ex. 999.999.999-99"
+              label="CPF"
+              value={cpf}
+              onInput={handleInput}
+              error={cpfError}
+              readOnly={readMode}
+            />
+            {cpfError && <div>{cpfError}</div>}
+            </div>
+  <div className="col-3 text-center">
+    <InputComponent
+      id="rg"
+      type="text"
+      placeholder="Digite o RG"
+      label="RG"
+      value={rg}
+      onInput={handleInput}
+      error={rgError}
+      readOnly={readMode}
+    />
+    {rgError && <div>{rgError}</div>}
+  </div>
+  <div className="col-3 text-center">
+    <div className={`form-outline mb-4 ${maritalStatusError ? "error" : ""}`}>
+      <label htmlFor="maritalStatus" className="mb-2">
+        Estado Civil
+      </label>
+      <div>
+        <select
+          id="maritalStatus"
+          value={maritalStatus}
+          readOnly={readMode}
+          onChange={handleInput}
+          onBlur={handleInput}
+          className={`form-select form-control-lg ${
+            maritalStatusError ? "is-invalid" : ""
+          }`}
+        >
+          <option disabled hidden value="">
+            Selecione o estado civil
+          </option>
+          <option value="Solteiro(a)">Solteiro(a)</option>
+          <option value="Casado(a)/ União Estável">
+            Casado(a)/ União Estável
+          </option>
+          <option value="Viúvo(a)">Viúvo(a)</option>
+          <option value="Separado(a)">Separado(a)</option>
+          <option value="Divorciado(a)">Divorciado(a)</option>
+        </select>
+        {maritalStatusError && (
+          <div className="invalid-feedback">{maritalStatusError}</div>
         )}
+      </div>
+    </div>
+  </div>
+  <div className="col-3 text-center">
+    <InputComponent
+      id="naturalness"
+      type="text"
+      placeholder="Digite a naturalidade"
+      label="Naturalidade"
+      value={naturalness}
+      onInput={handleInput}
+      error={naturalnessError}
+      readOnly={readMode}
+    />
+    {naturalnessError && <div>{naturalnessError}</div>}
+  </div>
+</div>
+<div className="row text-black d-flex">
+  <div className="col-6 text-center">
+    <InputComponent
+      id="insurance"
+      type="text"
+      placeholder="Digite o convênio"
+      label="Convênio"
+      value={insurance}
+      onInput={handleInput}
+      readOnly={readMode}
+    />
+  </div>
+  <div className="col-3 text-center">
+    <InputComponent
+      id="insuranceNumber"
+      type="text"
+      placeholder="Digite o número do convênio"
+      label="Número do Convênio"
+      value={insuranceNumber}
+      onInput={handleInput}
+      readOnly={readMode}
+    />
+  </div>
+  <div className="col-3 text-center">
+    <InputComponent
+      id="insuranceVality"
+      type="text"
+      placeholder="Digite a validade do convênio"
+      label="Validade do Convênio"
+      value={insuranceVality}
+      onInput={handleInput}
+      readOnly={readMode}
+    />
+  </div>
+</div>
+<div className="row text-black d-flex">
+  <div className="col-6 text-center">
+  <InputComponent
+    id="allergies"
+    type="text"
+    placeholder="Digite as alergias"
+    label="Alergias"
+    value={allergies}
+    onInput={handleInput}
+    readOnly={readMode}
+  />
+</div>
+<div className="col-6 text-center"> 
+ <InputComponent
+    id="specialCare"
+    type="text"
+    placeholder="Digite os cuidados especiais"
+    label="Cuidados Específicos"
+    value={specialCare}
+    onInput={handleInput}
+    readOnly={readMode}
+  />
+  </div>
 
-        <h3>Informações do Paciente</h3>
+</div>
 
-        <InputComponent
-          id="name"
-          type="text"
-          placeholder="Digite seu nome completo"
-          label="Nome Completo"
-          value={name}
-          onInput={handleInput}
-          error={nameError}
-          readOnly={readMode}
-        />
-        {nameError && <div>{nameError}</div>}
 
-        <div>
-          <label htmlFor="gender">Gênero</label>
-          <div>
-            <select
-              id="gender"
-              value={gender}
-              readOnly={readMode}
-              onChange={handleInput}
-              onBlur={handleInput}
-              className={genderError ? "error" : ""}
-            >
-              <option disabled hidden value="">
-                Selecione o gênero
-              </option>
-              <option value="Masculino">Masculino</option>
-              <option value="Feminino">Feminino</option>
-            </select>
-          </div>
+
+<div className="row mt-4 mb-4 text-black d-flex align-items-center justify-content-center text-center">
+  <h3>Contato</h3>
+</div>
+
+<div className="row mt-2 mb-2 text-black d-flex">
+<div className="col-4 text-center">
+  <InputComponent
+    id="phone"
+    type="text"
+    placeholder="Ex. (99) 9 9999-99999"
+    label="Telefone"
+    value={phone}
+    onInput={handleInput}
+    error={phoneError}
+    readOnly={readMode}
+  />
+  {phoneError && <div>{phoneError}</div>}
+  </div>
+  <div className="col-4 text-center">
+  <InputComponent
+    id="email"
+    type="email"
+    placeholder="Digite o email"
+    label="E-mail"
+    value={email}
+    onInput={handleInput}
+    error={emailError}
+    readOnly={readMode}
+  />
+  {emailError && <div>{emailError}</div>}
+  </div>
+<div className="col-4 text-center">
+  <InputComponent
+    id="emergencyContact"
+    type="text"
+    placeholder="Ex. (99) 9 9999-99999"
+    label="Contato de Emergência"
+    value={emergencyContact}
+    onInput={handleInput}
+    error={emergencyContactError}
+    readOnly={readMode}
+  />
+  {emergencyContactError && <div>{emergencyContactError}</div>}
+  </div>
+
+
+  <div className="col-4 text-center">
+  <InputComponent
+    id="cep"
+    type="text"
+    placeholder="Digite seu CEP"
+    label="CEP"
+    onChange={handleCep}
+    value={formMode === "register" || formMode === "edit" ? null : cep}
+    defaultValue={formMode === "edit" ? cep : null}
+    error={cepError}
+    readOnly={readMode}
+  />
+  {cepError && <div>{cepError}</div>}
+  </div>
+  <div className="col-6 text-center">
+  <InputComponent
+    id="city"
+    type="text"
+    placeholder="Cidade"
+    label="Cidade"
+    onInput={handleInput}
+    value={city}
+    readOnly={readMode}
+  />
+  {cityError && <div>{cityError}</div>}
+  </div>
+  <div className="col-2 text-center">
+  <InputComponent
+    id="uf"
+    type="text"
+    placeholder="UF"
+    label="UF"
+    onInput={handleInput}
+    value={uf}
+    readOnly={readMode}
+  />
+  {ufError && <div>{ufError}</div>}
+  </div>
+  <div className="col-4 text-center">
+  <InputComponent
+    id="neighborhood"
+    type="text"
+    placeholder="Digite o bairro"
+    label="Bairro"
+    onInput={handleInput}
+    value={neighborhood}
+    readOnly={readMode}
+  />
+  {neighborhoodError && <div>{neighborhoodError}</div>}
+</div>
+
+<div className="col-6 text-center">
+  <InputComponent
+    id="street"
+    type="text"
+    placeholder="Digite o logradouro"
+    label="Logradouro"
+    onInput={handleInput}
+    value={street}
+    readOnly={readMode}
+  />
+  {streetError && <div>{streetError}</div>}
+</div>
+
+<div className="col-2 text-center">
+  <InputComponent
+    id="houseNumber"
+    type="text"
+    placeholder="Digite o número da casa"
+    label="Número"
+    value={houseNumber}
+    onInput={handleInput}
+    readOnly={readMode}
+  />
+  {houseNumberError && <div>{houseNumberError}</div>}
+</div>
+
+<div className="col-6 text-center">
+  <InputComponent
+    id="complement"
+    type="text"
+    placeholder="Digite o complemento (apartamento, casa, etc.)"
+    label="Complemento"
+    value={complement}
+    onInput={handleInput}
+    readOnly={readMode}
+  />
+</div>
+
+<div className="col-6 text-center">
+  <InputComponent
+    id="nextTo"
+    type="text"
+    placeholder="Informe um local próximo"
+    label="Próximo à:"
+    value={nextTo}
+    onInput={handleInput}
+    readOnly={readMode}
+  />
+</div>
+
+</div>
+
+          </form>
         </div>
-        {genderError && <div>{genderError}</div>}
-
-        <InputComponent
-          id="birthdate"
-          type="date"
-          placeholder="01/01/2001"
-          label="Data de Nascimento"
-          value={birthdate}
-          onInput={handleInput}
-          error={birthdateError}
-          readOnly={readMode}
-        />
-        {birthdateError && <div>{birthdateError}</div>}
-
-        <InputComponent
-          id="cpf"
-          type="text"
-          placeholder="Digite o CPF no formato 99.999.999-99"
-          label="CPF"
-          value={cpf}
-          onInput={handleInput}
-          error={cpfError}
-          readOnly={readMode}
-        />
-        {cpfError && <div>{cpfError}</div>}
-
-        <InputComponent
-          id="rg"
-          type="text"
-          placeholder="Digite o RG"
-          label="RG"
-          value={rg}
-          onInput={handleInput}
-          error={rgError}
-          readOnly={readMode}
-        />
-        {rgError && <div>{rgError}</div>}
-        <div>
-          <label htmlFor="Estado Civil">Estado Civil</label>
-          <div>
-            <select
-              id="maritalStatus"
-              value={maritalStatus}
-              readOnly={readMode}
-              onChange={handleInput}
-              onBlur={handleInput}
-              className={maritalStatusError ? "error" : ""}
-            >
-              <option disabled hidden value="">
-                Selecione o estado civil
-              </option>
-              <option value="Solteiro(a)">Solteiro(a)</option>
-              <option value="Casado(a)/ União Estável">
-                Casado(a)/ União Estável
-              </option>
-              <option value="Viúvo(a)">Viúvo(a)</option>
-              <option value="Separado(a)">Separado(a)</option>
-              <option value="Divorciado(a)">Divorciado(a)</option>
-            </select>
-          </div>
-        </div>
-        {maritalStatusError && <div>{maritalStatusError}</div>}
-
-        <InputComponent
-          id="naturalness"
-          type="text"
-          placeholder="Digite a naturalidade"
-          label="Naturalidade"
-          value={naturalness}
-          onInput={handleInput}
-          error={naturalnessError}
-          readOnly={readMode}
-        />
-        {naturalnessError && <div>{naturalnessError}</div>}
-
-        <InputComponent
-          id="allergies"
-          type="text"
-          placeholder="Digite as alergias"
-          label="Alergias"
-          value={allergies}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-
-        <InputComponent
-          id="specialCare"
-          type="text"
-          placeholder="Digite os cuidados especiais"
-          label="Cuidados Específicos"
-          value={specialCare}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-
-        <InputComponent
-          id="insurance"
-          type="text"
-          placeholder="Digite o convênio"
-          label="Convênio"
-          value={insurance}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-
-        <InputComponent
-          id="insuranceNumber"
-          type="text"
-          placeholder="Digite o número do convênio"
-          label="Número do Convênio"
-          value={insuranceNumber}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-
-        <InputComponent
-          id="insuranceVality"
-          type="text"
-          placeholder="Digite a validade do convênio"
-          label="Validade do Convênio"
-          value={insuranceVality}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-        <h3>Contato</h3>
-
-        <InputComponent
-          id="phone"
-          type="text"
-          placeholder="Digite o telefone no formato (99) 9 9999-99999"
-          label="Telefone"
-          value={phone}
-          onInput={handleInput}
-          error={phoneError}
-          readOnly={readMode}
-        />
-        {phoneError && <div>{phoneError}</div>}
-
-        <InputComponent
-          id="email"
-          type="email"
-          placeholder="Digite o email"
-          label="E-mail"
-          value={email}
-          onInput={handleInput}
-          error={emailError}
-          readOnly={readMode}
-        />
-        {emailError && <div>{emailError}</div>}
-
-        <InputComponent
-          id="emergencyContact"
-          type="text"
-          placeholder="Digite o contato de emergência no formato (99) 9 9999-99999"
-          label="Contato de Emergência"
-          value={emergencyContact}
-          onInput={handleInput}
-          error={emergencyContactError}
-          readOnly={readMode}
-        />
-        {emergencyContactError && <div>{emergencyContactError}</div>}
-
-        <p>Endereço</p>
-        <InputComponent
-          id="cep"
-          type="text"
-          placeholder="Digite seu CEP"
-          label="CEP"
-          onChange={handleCep}
-          value={formMode === "register" || formMode === "edit"? null : cep}
-          defaultValue = {formMode === "edit"? cep : null}
-          error={cepError}
-          readOnly={readMode}
-        />
-        {cepError && <div>{cepError}</div>}
-        <InputComponent
-          id="city"
-          type="text"
-          placeholder="Cidade"
-          label="Cidade"
-          onInput={handleInput}
-          value={city}
-          readOnly={readMode}
-        />
-        {cityError && <div>{cityError}</div>}
-
-        <InputComponent
-          id="uf"
-          type="text"
-          placeholder="Digite o estado (UF)"
-          label="Estado (UF)"
-          onInput={handleInput}
-          value={uf}
-          readOnly={readMode}
-        />
-        {ufError && <div>{ufError}</div>}
-        <InputComponent
-          id="neighborhood"
-          type="text"
-          placeholder="Digite o bairro"
-          label="Bairro"
-          onInput={handleInput}
-          value={neighborhood}
-          readOnly={readMode}
-        />
-        {neighborhoodError && <div>{neighborhoodError}</div>}
-        <InputComponent
-          id="street"
-          type="text"
-          placeholder="Digite o logradouro"
-          label="Logradouro"
-          onInput={handleInput}
-          value={street}
-          readOnly={readMode}
-        />
-        {streetError && <div>{streetError}</div>}
-
-        <InputComponent
-          id="houseNumber"
-          type="text"
-          placeholder="Digite o número da casa"
-          label="Número"
-          value={houseNumber}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-        {houseNumberError && <div>{houseNumberError}</div>}
-
-        <InputComponent
-          id="complement"
-          type="text"
-          placeholder="Digite o complemento (apartamento, casa, etc.)"
-          label="Complemento"
-          value={complement}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-        <InputComponent
-          id="nextTo"
-          type="text"
-          placeholder="Informe um local próximo"
-          label="Próximo à:"
-          value={nextTo}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-      </form>
+      </section>
+      </Styled.PatientRegister>
     </>
   );
 };
