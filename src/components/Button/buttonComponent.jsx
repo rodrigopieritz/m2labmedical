@@ -6,7 +6,7 @@ export const ButtonComponent = ({ id, label, type, onClick, disabled, icon }) =>
     <>
       <div className=" mb-2">
         <button
-          className="btn btn-info btn-lg btn-block w-100"
+          className="btn btn-info btn-lg btn-block w-100 mb-4"
           style={{ backgroundColor: "rgb(0, 133, 132)", color: "whitesmoke" }}
           type={type}
           id={id}

@@ -1,7 +1,7 @@
 import styled, { keyframes } from 'styled-components'
 
 export const Sidebar = styled.div`
-  width: 12%;
+  width: 15%;
   background-color: #006b66;
   
   &.collapsed {

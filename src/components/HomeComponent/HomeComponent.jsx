@@ -15,8 +15,8 @@ export const HomeComponent = () => {
   const [foundPatientError, setFoundPatientError] = useState(null);
   const [totalPatients, setTotalPatients] = useState(null);
   const [totalExams, setTotalExams] = useState(null);
-  const [totalMedicalAppointments, setTotalMedicalAppointments] = useState(null);
-
+  const [totalMedicalAppointments, setTotalMedicalAppointments] =
+    useState(null);
 
   const navigate = useNavigate();
 
@@ -26,30 +26,27 @@ export const HomeComponent = () => {
     setTotalMedicalAppointments(getMedAppList().length);
   }, []);
 
-
   const handleRedirect = (path) => {
     navigate(path);
   };
 
   const patientsListRender = getPatients();
 
-    const searchLocalStorage = (query) => {
+  const searchLocalStorage = (query) => {
     if (query.trim() === "") {
       return null;
     }
-  
+
     const patientsList = getPatients();
-  
-   
+
     const foundByName = patientsList.find((patient) =>
       patient.name.toLowerCase().includes(query.toLowerCase())
     );
-  
+
     if (foundByName) {
       return foundByName;
     }
-  
-   
+
     const queryAsNumber = Number(query);
     if (!isNaN(queryAsNumber)) {
       const foundById = patientsList.find(
@@ -59,28 +56,25 @@ export const HomeComponent = () => {
         return foundById;
       }
     }
-  
-    
+
     const foundByPhone = patientsList.find((patient) =>
       patient.phone.includes(query)
     );
-  
+
     if (foundByPhone) {
       return foundByPhone;
     }
-  
-   
+
     const foundByEmail = patientsList.find((patient) =>
       patient.email.toLowerCase().includes(query.toLowerCase())
     );
-  
+
     if (foundByEmail) {
       return foundByEmail;
     }
-  
+
     return null;
   };
-  
 
   const handleSearchPatient = () => {
     const foundPatient = searchLocalStorage(searchQuery);
@@ -98,78 +92,93 @@ export const HomeComponent = () => {
 
   return (
     <>
-      <div>
-        <h5>Estatísticas do Sistema</h5>
+      <div className="row">
+        <div className="col-12">
+          <h5>Estatísticas do Sistema</h5>
+        </div>
       </div>
-      <StatsCardComponent
-        totalPatients={totalPatients}
-        totalExams={totalExams}
-        totalMedicalAppointments={totalMedicalAppointments}
-      />
-
-      <div>
-        <h5>Informações Rápidas de Pacientes</h5>
-        <div>
-          <InputComponent
-            id="searchPatientInp"
-            type="text"
-            placeholder="Digite o nome ou ID do paciente"
-            value={searchQuery}
-            onInput={(event) => setSearchQuery(event.target.value)}
-          />
-          <ButtonComponent
-            id="searchPatientBtn"
-            type="button"
-            label="Buscar Paciente"
-            onClick={handleSearchPatient}
+      <div className="row">
+        <div className="col-12">
+          <StatsCardComponent
+            totalPatients={totalPatients}
+            totalExams={totalExams}
+            totalMedicalAppointments={totalMedicalAppointments}
           />
         </div>
-        {!foundPatient ? (
-          <div>
-            <div>
-              {patientsListRender.map((patient) => (
-                <div key={patient.id}>
-                  <PatientCard
-                    id={patient.id}
-                    name={patient.name}
-                    birthdate={patient.bithdate}
-                    insurance={patient.insurance}
-                    phone={patient.phone}
-                  />
-                  <ButtonComponent
-                    id={`seeMoreBtn${patient.id}`}
-                    onClick={() =>
-                      handleRedirect(`/patient-register/${patient.id}`)
-                    }
-                    label="Veja Mais"
-                  />
-                </div>
-              ))}
-            </div>
-          </div>
-        ) : (
-          <div>
-            Paciente Selecionado: {foundPatient.name}
-            <div key={foundPatient.id}>
-              <PatientCard
-                id={foundPatient.id}
-                name={foundPatient.name}
-                birthdate={foundPatient.bithdate}
-                insurance={foundPatient.insurance}
-                phone={foundPatient.phone}
-              />
-              <ButtonComponent
-                id={`seeMoreBtn${foundPatient.id}`}
-                onClick={() =>
-                  handleRedirect(`/patient-register/${foundPatient.id}`)
-                }
-                label="Veja Mais"
-              />
-            </div>
-          </div>
-        )}
-        {foundPatientError && <div>{foundPatientError}</div>}
       </div>
+      <div>
+        <div className="row">
+          <h5>Informações Rápidas de Pacientes</h5>
+        </div>
+        <div className="row">
+          <div className="d-flex flex-row">
+            <div className="col-6">
+              <InputComponent
+                id="searchPatientInp"
+                type="text"
+                placeholder="Digite o nome ou ID do paciente"
+                value={searchQuery}
+                onInput={(event) => setSearchQuery(event.target.value)}
+              />
+            </div>
+            <div className="row" >
+              <ButtonComponent
+                id="searchPatientBtn"
+                type="button"
+                label="Buscar Paciente"
+                onClick={handleSearchPatient}
+              />
+            </div>
+            </div>
+          </div>
+          <div className="row"></div>
+          {!foundPatient ? (
+            <div>
+              <div>
+                {patientsListRender.map((patient) => (
+                  <div key={patient.id}>
+                    <PatientCard
+                      id={patient.id}
+                      name={patient.name}
+                      birthdate={patient.bithdate}
+                      insurance={patient.insurance}
+                      phone={patient.phone}
+                    />
+                    <ButtonComponent
+                      id={`seeMoreBtn${patient.id}`}
+                      onClick={() =>
+                        handleRedirect(`/patient-register/${patient.id}`)
+                      }
+                      label="Veja Mais"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          ) : (
+            <div>
+              Paciente Selecionado: {foundPatient.name}
+              <div key={foundPatient.id}>
+                <PatientCard
+                  id={foundPatient.id}
+                  name={foundPatient.name}
+                  birthdate={foundPatient.bithdate}
+                  insurance={foundPatient.insurance}
+                  phone={foundPatient.phone}
+                />
+                <ButtonComponent
+                  id={`seeMoreBtn${foundPatient.id}`}
+                  onClick={() =>
+                    handleRedirect(`/patient-register/${foundPatient.id}`)
+                  }
+                  label="Veja Mais"
+                />
+              </div>
+            </div>
+          )}
+          {foundPatientError && <div>{foundPatientError}</div>}
+        </div>
+      
     </>
   );
 };
