@@ -56,46 +56,45 @@ const SidebarMenu = () => {
 
   return (
     <>
+ 
       
-      <Styled.Sidebar className={isExpanded ? "" : "collapsed"}>
-        
+      <Styled.Sidebar className= {isExpanded ? "mt-4 reduced-height" : "mt-4 collapsed reduced-height"}>
       <div>
-        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="220px"/>
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
       </div>
-      
       <ButtonComponent
           id="homeButton"
           onClick={() => handleRedirect("/")}
-          label="Home"
+          label={isExpanded ?"Home":""}
           icon={<FaHome/>}
         />
         <ButtonComponent
           id="patientRegisterButton"
           onClick={() => handleRedirect("/patient-register/newPatient")}
-          label="Cadastrar Paciente"
+          label={isExpanded ?"Cadastrar Paciente":""}
           icon={<FaUserPlus />}
         />
         <ButtonComponent
           id="medicalRecordButton"
           onClick={() => handleRedirect("/medical-record-list")}
-          label="Listar Prontuários"
+          label={isExpanded ?"Listar Prontuários":""}
           icon={<FaClipboardList/>}
         />
         <ButtonComponent
           id="medicalRegisterButton"
           onClick={() => handleRedirect("/medical-register/newMedAppoint")}
-          label="Cadastrar Consulta"
+          label={isExpanded ?"Cadastrar Consulta":""}
           icon={<FaCalendarPlus/>}
         />
         <ButtonComponent
           id="examRegisterButton"
           onClick={() => handleRedirect("/exam-register/newExam")}
-          label="Cadastrar Exame"
+          label={isExpanded ?"Cadastrar Exame":""}
           icon={<FaFileAlt/>}
         />
 
 
-      <ButtonComponent id="logouButton" onClick={handleLogout} label="Logout" icon= {<FaSignOutAlt/>} />
+      <ButtonComponent id="logouButton" onClick={handleLogout} label= {isExpanded ?"Logou":""} icon= {<FaSignOutAlt/>} />
 
         <div className="mt-5 pt-5d-align-items-center justify-content-center">
       <button
@@ -103,7 +102,7 @@ const SidebarMenu = () => {
           className={`btn btn-toggle ${isSwitchOn ? "active" : ""}`}
           onClick={handleSwitchToggle}
         >
-          Exibir/ Recolher
+          {isExpanded ?"Hide":"Show"}
         </button>
       </div>
 

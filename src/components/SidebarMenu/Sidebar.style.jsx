@@ -1,11 +1,13 @@
 import styled, { keyframes } from 'styled-components'
 
 export const Sidebar = styled.div`
-  width: 15%;
-  background-color: #006b66;
+  width: 250px;
+  background-color: white;
+  
+
   
   &.collapsed {
-    width: 5%;
+    width: 70px;
   }
   button {
   width: 100%;
@@ -20,7 +22,9 @@ export const Sidebar = styled.div`
   align-items: center;
   height: 70px;
 }
-
+.reduced-height {
+  height: calc(100vh - 12vh);
+}
 button svg {
   margin-right: 10px;
 }

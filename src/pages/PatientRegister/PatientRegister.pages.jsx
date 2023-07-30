@@ -18,7 +18,7 @@ export const PatientRegisterPage = () => {
         <SidebarMenu />
         <Styled.MainContent>
           <Toolbar
-            pageTitle="Cadastrar Paciente"
+            pageTitle="Registro de Pacientes"
             userName={userName}
             userPhoto="/../../userPhoto.png"
           />

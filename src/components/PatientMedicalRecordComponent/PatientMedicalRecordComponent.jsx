@@ -35,6 +35,10 @@ export const PatientMedicalRecordComponent = ({ id }) => {
 
   return (
     <>
+         <div className="d-flex align-items-center mx-2 mb-2">
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
+      </div>
+      
       <h3>Identificação do Paciente</h3>
       <PatientCard
         id={patientData.id}

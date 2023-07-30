@@ -20,7 +20,7 @@ export const MedicalRegister = () => {
           <SidebarMenu />
           <Styled.MainContent>
             <Toolbar
-              pageTitle="Cadastrar Consulta"
+              pageTitle="Registro de Consultas"
               userName={userName}
               userPhoto="/../../userPhoto.png"
             />

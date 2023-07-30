@@ -19,7 +19,7 @@ export const ExamRegister = () => {
         <SidebarMenu />
         <Styled.MainContent>
           <Toolbar
-            pageTitle="Cadastrar Exame"
+            pageTitle="Registro de Exames"
             userName={userName}
             userPhoto="/../../userPhoto.png"
           />

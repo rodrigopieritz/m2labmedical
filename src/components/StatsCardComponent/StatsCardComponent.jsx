@@ -12,25 +12,32 @@ export const StatsCardComponent = ({
   totalMedicalAppointments,
 }) => {
   return (
-    <div className="d-flex flex-row">
-      <div className="card m-4" >
-        
-        <FaHospitalUser size="60%" className="mb-5 m-5"/>
-        <h6>Pacientes Cadastrados: <span>{totalPatients}</span></h6>
-      </div>
+<div className="d-flex flex-row">
+  <div className="card m-4 d-flex align-items-center justify-content-center">
+    <FaHospitalUser size="30%" className="mb-5 m-5" />
+    <div>
+      <h5>Pacientes Cadastrados: {totalPatients}</h5>
       
-      <div className="card m-4">
-        
-        <FaStethoscope size="60%" className="mb-5 m-5"/>
-        
-        <h6>Exames Cadastrados: <span>{totalExams}</span></h6>
-      </div>
-      <div className="card m-4">
-        
-        <FaUserDoctor size="60%" className="mb-5 m-5"/>
-        <h6>Consultas Cadastradas: <span>{totalMedicalAppointments}</span></h6>
-      </div>
-      </div>
+    </div>
+  </div>
+
+  <div className="card m-4 d-flex align-items-center justify-content-center">
+    <FaStethoscope size="30%" className="mb-5 m-5" />
+    <div>
+      <h5>Exames Cadastrados: {totalExams}</h5>
+      
+    </div>
+  </div>
+
+  <div className="card m-4 d-flex align-items-center justify-content-center">
+    <FaUserDoctor size="30%" className="mb-5 m-5" />
+    <div>
+      <h5>Consultas Cadastradas: {totalMedicalAppointments} </h5>
+     
+    </div>
+  </div>
+</div>
+
    
     
   );

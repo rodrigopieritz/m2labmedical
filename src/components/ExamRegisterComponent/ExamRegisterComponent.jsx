@@ -245,7 +245,7 @@ export const ExamRegisterComponent = ({ id }) => {
     setFoundPatientData("");
     setFoundPatientID("");
     setSearchQuery("");
-    alert("Exame cadastrado com sucesso")
+    alert("Exame cadastrado com sucesso");
   };
 
   const deletExamRegisterToLocalStorage = () => {
@@ -353,146 +353,189 @@ export const ExamRegisterComponent = ({ id }) => {
 
   return (
     <>
-      <p> {formMode} </p>
-
+         <div className="d-flex align-items-center mx-2 mb-2">
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
+      </div>
       {formMode === "register" ? (
-        <div>
-          <InputComponent
-            id="searchPatientInp"
-            type="text"
-            placeholder="Digite o nome do paciente"
-            label="Buscar Paciente"
-            value={searchQuery}
-            onInput={(event) => setSearchQuery(event.target.value)}
-          />
-          <ButtonComponent
-            id="searchPatientBtn"
-            type="button"
-            label="Buscar Paciente"
-            onClick={handleSearchPatient}
-          />
-        </div>
+        <>
+          <div className="row"></div>
+          <h5>Busca de Pacientes</h5>
+          <div className="row">
+            <div className="row"></div>
+            <div className="d-flex flex-row">
+              <div className="col-8">
+                <InputComponent
+                  id="searchPatientInp"
+                  type="text"
+                  placeholder="Digite o nome do paciente"
+                  value={searchQuery}
+                  onInput={(event) => setSearchQuery(event.target.value)}
+                />
+              </div>
+              <div className="col-8">
+                <div className="col-2 "></div>
+                <div className="col-2 ">
+                  <ButtonComponent
+                    id="searchPatientBtn"
+                    type="button"
+                    label="Buscar Paciente"
+                    onClick={handleSearchPatient}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
       ) : (
         <></>
       )}
-      {!foundPatientData ? (
-        <h5>Para começar, escolha um paciente</h5>
-      ) : (
-        <h5>
-          Paciente Selecionado: {foundPatientData.name}
-        </h5>
-      )}
-      {foundPatientDataError && <div>{foundPatientDataError}</div>}
+      <section className="vh-100 my-1 mx-1">
+        <div className="container-fluid">
+          <div className="row mt-1 mb-3 text-black d-flex align-items-center justify-content-center text-center"></div>
 
-      <form onSubmit={handleFormSubmission} noValidate>
-        <ButtonComponent
-          id="editButton"
-          type="button"
-          label="Editar"
-          disabled={editButtonDisabled}
-          onClick={() => {
-            setFormMode("edit");
-          }}
-        />
-        <ButtonComponent
-          id="deletButton"
-          type="button"
-          label="Apagar"
-          disabled={deleteButtonDisabled}
-          onClick={() => deletExamRegisterToLocalStorage()}
-        />
-        <ButtonComponent
-          id="save"
-          type="submit"
-          label="Salvar"
-          onClick={handleFormSubmission}
-          disabled={saveButtonDisabled}
-        />
-        {saveAnimationRender && (
-          <div>
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Carregando...</span>
-            </Spinner>
-          </div>
-        )}
+          {!foundPatientData ? (
+            <h5>Para começar, escolha um paciente</h5>
+          ) : (
+            <h5>Paciente Selecionado: {foundPatientData.name}</h5>
+          )}
+          {foundPatientDataError && <div>{foundPatientDataError}</div>}
 
-        <InputComponent
-          id="examName"
-          type="text"
-          placeholder="Digite o nome do Exame"
-          label="Nome do Exame"
-          value={examName}
-          onInput={handleInput}
-          error={examNameError}
-          readOnly={readMode}
-        />
-        {examNameError && <div>{examNameError}</div>}
+          <form onSubmit={handleFormSubmission} noValidate>
+            <div className="row mt-5">
+              <div class="col-6"></div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="editButton"
+                  type="button"
+                  label="Editar"
+                  disabled={editButtonDisabled}
+                  onClick={() => {
+                    setFormMode("edit");
+                  }}
+                />
+              </div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="deletButton"
+                  type="button"
+                  label="Apagar"
+                  disabled={deleteButtonDisabled}
+                  onClick={() => deletExamRegisterToLocalStorage()}
+                />
+              </div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="save"
+                  type="submit"
+                  label="Salvar"
+                  onClick={handleFormSubmission}
+                  disabled={saveButtonDisabled}
+                />
+              </div>
+            </div>
+            <div className="row">
+              {saveAnimationRender && (
+                <div>
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Carregando...</span>
+                  </Spinner>
+                </div>
+              )}
+            </div>
 
-        <InputComponent
-          id="examDate"
-          type="date"
-          label="Data do Exame"
-          value={examDate}
-          onInput={handleInput}
-          error={examDate}
-          readOnly={readMode}
-        />
-        {examDateError && <div>{examDateError}</div>}
-        <InputComponent
-          id="examTime"
-          type="time"
-          label="Horário do Exame"
-          value={examTime}
-          onInput={handleInput}
-          error={examTimeError}
-          readOnly={readMode}
-        />
-        {examTimeError && <div>{examTimeError}</div>}
 
-        <InputComponent
-          id="examType"
-          type="textarea"
-          placeholder="Digite o tipo de Exame"
-          label="Tipo de Exame"
-          value={examType}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-        {examTypeError && <div>{examTypeError}</div>}
-
-        <InputComponent
-          id="urlDoc"
-          placeholder="Digite a URL da documentação"
-          type="textarea"
-          label="URL da documentação"
-          value={urlDoc}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-        {urlDocError && <div>{urlDocError}</div>}
-
-        <InputComponent
-          id="laboratory"
-          placeholder="Digite o nome do laboratório"
-          type="text"
-          label="Laboratório"
-          value={laboratory}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-        {laboratoryError && <div>{laboratoryError}</div>}
-
-        <InputComponent
-          id="results"
-          placeholder="Escreva os resultados"
-          type="textarea"
-          label="Resultados"
-          value={results}
-          onInput={handleInput}
-          readOnly={readMode}
-        />
-        {resultsError && <div>{resultsError}</div>}
-      </form>
+            
+            <div className="row mt-5 mb-1 text-black d-flex">
+              <div class="col-8 text-center">
+                <InputComponent
+                  id="examName"
+                  type="text"
+                  placeholder="Digite o nome do Exame"
+                  label="Nome do Exame"
+                  value={examName}
+                  onInput={handleInput}
+                  error={examNameError}
+                  readOnly={readMode}
+                />
+                {examNameError && <div>{examNameError}</div>}
+              </div>
+              <div class="col-2 text-center">
+                <InputComponent
+                  id="examDate"
+                  type="date"
+                  label="Data do Exame"
+                  value={examDate}
+                  onInput={handleInput}
+                  error={examDate}
+                  readOnly={readMode}
+                />
+                {examDateError && <div>{examDateError}</div>}
+              </div>
+              <div class="col-2 text-center">
+                <InputComponent
+                  id="examTime"
+                  type="time"
+                  label="Horário do Exame"
+                  value={examTime}
+                  onInput={handleInput}
+                  error={examTimeError}
+                  readOnly={readMode}
+                />
+                {examTimeError && <div>{examTimeError}</div>}
+              </div>
+              <div class="col-6 text-center">
+                <InputComponent
+                  id="examType"
+                  type="text"
+                  placeholder="Digite o tipo de Exame"
+                  label="Tipo de Exame"
+                  value={examType}
+                  onInput={handleInput}
+                  readOnly={readMode}
+                />
+                {examTypeError && <div>{examTypeError}</div>}
+              </div>
+              <div class="col-6 text-center">
+              <InputComponent
+                  id="laboratory"
+                  placeholder="Digite o nome do laboratório"
+                  type="text"
+                  label="Laboratório"
+                  value={laboratory}
+                  onInput={handleInput}
+                  readOnly={readMode}
+                />
+                {laboratoryError && <div>{laboratoryError}</div>}
+              </div>
+              <div class="col-12 text-center">
+              <InputComponent
+                  id="urlDoc"
+                  placeholder="Digite a URL da documentação"
+                  type="text"
+                  label="URL da documentação"
+                  value={urlDoc}
+                  onInput={handleInput}
+                  readOnly={readMode}
+                />
+                {urlDocError && <div>{urlDocError}</div>}
+             
+              </div>
+              <div class="col-12 text-center">
+                <InputComponent
+                  id="results"
+                  placeholder="Escreva os resultados"
+                  type="textarea"
+                  label="Resultados"
+                  value={results}
+                  onInput={handleInput}
+                  readOnly={readMode}
+                />
+                {resultsError && <div>{resultsError}</div>}
+              </div>{" "}
+            </div>
+          </form>
+        </div>
+      </section>
     </>
   );
 };

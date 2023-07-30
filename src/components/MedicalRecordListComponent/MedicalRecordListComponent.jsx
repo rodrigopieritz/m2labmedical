@@ -59,6 +59,11 @@ export const MedicalRecordListComponent = () => {
 
   return (
     <>
+    <Styled.MedicalRecordList style={{ maxWidth: "1300px"}}>
+         <div className="d-flex align-items-center mx-2 mb-2">
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
+      </div>
+      
       <div>
         <InputComponent
           id="searchPatientInp"
@@ -117,6 +122,7 @@ export const MedicalRecordListComponent = () => {
         </div>
       )}
       {foundPatientError && <div>{foundPatientError}</div>}
+      </Styled.MedicalRecordList>
     </>
   );
 };

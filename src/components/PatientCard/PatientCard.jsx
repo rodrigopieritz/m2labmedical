@@ -28,11 +28,12 @@ const PatientCard = ({ id, name, birthdate, insurance, phone, emergencyContact, 
   const idade = calculateAge(birthdate);
 
   return (
-    <div>
-      <div>
+    <div >
+      <div >
+      <div className="col-1">
         <FaUser />
       </div>
-      <div>
+      <div className="col-5">
         {id && <p>ID: {id}</p>}
         {name && <p>Nome do Paciente: {name}</p>}
         {birthdate && <p>Idade: {idade}</p>}
@@ -41,6 +42,7 @@ const PatientCard = ({ id, name, birthdate, insurance, phone, emergencyContact, 
         {emergencyContact && <p>Contato de Emergência: {emergencyContact}</p>}
         {allergies && <p>Lista de Alergias: {allergies}</p>}
         {specialCare && <p>Cudidados Especiais: {specialCare}</p>}
+      </div>
       </div>
     </div>
   );

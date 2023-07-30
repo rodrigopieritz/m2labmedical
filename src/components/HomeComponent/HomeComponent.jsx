@@ -92,8 +92,12 @@ export const HomeComponent = () => {
 
   return (
     <>
-      <div className="row">
-        <div className="col-12">
+         <div className="d-flex align-items-center mx-2 mb-2" style={{ maxWidth: "500px"}} >
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
+      </div>
+
+      <div className="row ">
+        <div className="col-12 ">
           <h5>Estatísticas do Sistema</h5>
         </div>
       </div>
@@ -112,8 +116,8 @@ export const HomeComponent = () => {
         </div>
         <div className="row">
           <div className="d-flex flex-row">
-            <div className="col-6">
-              <InputComponent
+            <div className ="col-8">
+            <InputComponent
                 id="searchPatientInp"
                 type="text"
                 placeholder="Digite o nome ou ID do paciente"
@@ -121,7 +125,11 @@ export const HomeComponent = () => {
                 onInput={(event) => setSearchQuery(event.target.value)}
               />
             </div>
-            <div className="row" >
+            <div className ="col-8">
+            <div className= "col-2 " >
+
+            </div>
+            <div className= "col-2 " >
               <ButtonComponent
                 id="searchPatientBtn"
                 type="button"
@@ -130,13 +138,14 @@ export const HomeComponent = () => {
               />
             </div>
             </div>
+            </div>
           </div>
           <div className="row"></div>
           {!foundPatient ? (
             <div>
-              <div>
+              <div className="d-flex flex-row">
                 {patientsListRender.map((patient) => (
-                  <div key={patient.id}>
+                  <div key={patient.id} className="card m-1 ">
                     <PatientCard
                       id={patient.id}
                       name={patient.name}
@@ -155,6 +164,7 @@ export const HomeComponent = () => {
                 ))}
               </div>
             </div>
+            
           ) : (
             <div>
               Paciente Selecionado: {foundPatient.name}

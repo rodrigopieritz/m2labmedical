@@ -18,7 +18,7 @@ export const MedicalRecordList = () => {
             <SidebarMenu />
             <Styled.MainContent>
               <Toolbar
-                pageTitle="Listar Prontuários"
+                pageTitle="Listagem de Prontuários"
                 userName={userName}
                 userPhoto="/../../userPhoto.png"
               />

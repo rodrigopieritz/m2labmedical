@@ -331,28 +331,46 @@ export const MedicalRegisterComponent = ({ id }) => {
 
   return (
     <>
-     <p> {formMode} </p>
+         <div className="d-flex align-items-center mx-2 mb-2">
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
+      </div>
 
-{formMode === "register" ? (
-  <div>
-    <InputComponent
-      id="searchPatientInp"
-      type="text"
-      placeholder="Digite o nome do paciente"
-      label="Buscar Paciente"
-      value={searchQuery}
-      onInput={(event) => setSearchQuery(event.target.value)}
-    />
-    <ButtonComponent
-      id="searchPatientBtn"
-      type="button"
-      label="Buscar Paciente"
-      onClick={handleSearchPatient}
-    />
-  </div>
-) : (
+      {formMode === "register" ? (
+        <>
+          <div className="row"></div>
+          <h5>Busca de Pacientes</h5>
+          <div className="row">
+            <div className="row"></div>
+            <div className="d-flex flex-row">
+              <div className="col-8">
+                <InputComponent
+                  id="searchPatientInp"
+                  type="text"
+                  placeholder="Digite o nome do paciente"
+                  value={searchQuery}
+                  onInput={(event) => setSearchQuery(event.target.value)}
+                />
+              </div>
+              <div className="col-8">
+                <div className="col-2 "></div>
+                <div className="col-2 ">
+                  <ButtonComponent
+                    id="searchPatientBtn"
+                    type="button"
+                    label="Buscar Paciente"
+                    onClick={handleSearchPatient}
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
   <></>
 )}
+ <section className="vh-100 my-1 mx-1">
+ <div className="container-fluid">
+ <div className="row mt-1 mb-3 text-black d-flex align-items-center justify-content-center text-center"></div>
 {!foundPatientData ? (
   <h5>Para começar, escolha um paciente</h5>
 ) : (
@@ -364,36 +382,49 @@ export const MedicalRegisterComponent = ({ id }) => {
 
      
 <form onSubmit={handleFormSubmission} noValidate>
-        <ButtonComponent
-          id="editButton"
-          type="button"
-          label="Editar"
-          disabled={editButtonDisabled}
-          onClick={() => {
-            setFormMode("edit");
-          }}
-        />
-        <ButtonComponent
-          id="deletButton"
-          type="button"
-          label="Apagar"
-          disabled={deleteButtonDisabled}
-          onClick={() => deletMedicalAppointmentToLocalStorage()}
-        />
-        <ButtonComponent
-          id="save"
-          type="submit"
-          label="Salvar"
-          onClick={handleFormSubmission}
-          disabled={saveButtonDisabled}
-        />
-        {saveAnimationRender && (
-          <div>
-            <Spinner animation="border" role="status">
-              <span className="visually-hidden">Carregando...</span>
-            </Spinner>
-          </div>
-)}
+            <div className="row mt-5">
+              <div class="col-6"></div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="editButton"
+                  type="button"
+                  label="Editar"
+                  disabled={editButtonDisabled}
+                  onClick={() => {
+                    setFormMode("edit");
+                  }}
+                />
+              </div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="deletButton"
+                  type="button"
+                  label="Apagar"
+                  disabled={deleteButtonDisabled}
+                  onClick={() => deletMedicalAppointmentToLocalStorage()}
+                />
+              </div>
+              <div class="col-2">
+                <ButtonComponent
+                  id="save"
+                  type="submit"
+                  label="Salvar"
+                  onClick={handleFormSubmission}
+                  disabled={saveButtonDisabled}
+                />
+              </div>
+            </div>
+            <div className="row">
+              {saveAnimationRender && (
+                <div>
+                  <Spinner animation="border" role="status">
+                    <span className="visually-hidden">Carregando...</span>
+                  </Spinner>
+                </div>
+              )}
+            </div>
+            <div className="row mt-5 mb-1 text-black d-flex">
+              <div class="col-8 text-center">  
           <InputComponent
             id="appointReason"
             type="text"
@@ -405,7 +436,8 @@ export const MedicalRegisterComponent = ({ id }) => {
             readOnly={readMode}
           />
           {appointReasonError && <div>{appointReasonError}</div>}
-
+          </div>
+          <div class="col-2 text-center">  
           <InputComponent
             id="appointDate"
             type="date"
@@ -416,6 +448,8 @@ export const MedicalRegisterComponent = ({ id }) => {
             readOnly={readMode}
           />
           {appointDatError && <div>{appointDatError}</div>}
+          </div>
+          <div class="col-2 text-center">  
           <InputComponent
             id="appointTime"
             type="time"
@@ -426,7 +460,8 @@ export const MedicalRegisterComponent = ({ id }) => {
             readOnly={readMode}
           />
           {appointTimeError && <div>{appointTimeError}</div>}
-
+          </div>
+          <div class="col-12 text-center">  
           <InputComponent
             id="problemDescription"
             type="textarea"
@@ -437,7 +472,8 @@ export const MedicalRegisterComponent = ({ id }) => {
             readOnly={readMode}
           />
           {problemDescriptionError && <div>{problemDescriptionError}</div>}
-
+          </div>
+          <div class="col-6 text-center">  
           <InputComponent
             id="medicationPrescribed"
             placeholder="Digite a prescrição médica"
@@ -447,7 +483,8 @@ export const MedicalRegisterComponent = ({ id }) => {
             onInput={handleInput}
             readOnly={readMode}
           />
-
+  </div>
+          <div class="col-6 text-center">  
           <InputComponent
             id="dosageAndPrecautions"
             placeholder="Digite as dosagens e prescrição"
@@ -458,8 +495,11 @@ export const MedicalRegisterComponent = ({ id }) => {
             readOnly={readMode}
           />
           {dosageAndPrecautionsError && <div>{dosageAndPrecautionsError}</div>}
+          </div>{" "}
+          </div>
         </form>
-      
+        </div>
+        </section>
     </>
   );
 };

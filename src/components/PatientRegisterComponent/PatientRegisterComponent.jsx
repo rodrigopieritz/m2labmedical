@@ -589,7 +589,10 @@ export const PatientRegisterComponent = ({ id }) => {
 
   return (
     <>
-    <Styled.PatientRegister>
+    <Styled.PatientRegister style={{ maxWidth: "1300px"}}>
+    <div className="d-flex align-items-center mx-2 mb-2">
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
+      </div>
       <section className="vh-100 my-1 mx-1">
         <div className="container-fluid">
           <div className="row mt-1 mb-3 text-black d-flex align-items-center justify-content-center text-center">
@@ -821,7 +824,7 @@ export const PatientRegisterComponent = ({ id }) => {
   <div className="col-6 text-center">
   <InputComponent
     id="allergies"
-    type="text"
+    type="textarea"
     placeholder="Digite as alergias"
     label="Alergias"
     value={allergies}
@@ -832,7 +835,7 @@ export const PatientRegisterComponent = ({ id }) => {
 <div className="col-6 text-center"> 
  <InputComponent
     id="specialCare"
-    type="text"
+    type="textarea"
     placeholder="Digite os cuidados especiais"
     label="Cuidados Específicos"
     value={specialCare}
@@ -959,7 +962,7 @@ export const PatientRegisterComponent = ({ id }) => {
   <InputComponent
     id="houseNumber"
     type="text"
-    placeholder="Digite o número da casa"
+    placeholder="nº"
     label="Número"
     value={houseNumber}
     onInput={handleInput}
