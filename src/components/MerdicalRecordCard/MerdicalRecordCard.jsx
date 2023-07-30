@@ -21,52 +21,169 @@ export const MedicalRecordCard = ({
   examType,
   results,
 }) => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
 
-    const handleRedirect = (path) => {
-      navigate(path);
-    };
+  const handleRedirect = (path) => {
+    navigate(path);
+  };
   return (
-    <div>
-      <h5>{label}</h5>
+    <div className="mt-4" style={{ maxWidth: "1300px" }}>
+      <h6>{label}</h6>
       {isAppoint && (
-        <div>
-          <div>
-             <label><h6>Data da Consulta:</h6></label>
-            <div>{appointDate}</div>
-            <label><h6>Hora da Consulta:</h6></label>
-            <div>{appointTime}</div>
-            <label><h6>Motivo da Consulta:</h6></label>
-            <div>{appointReason}</div>
-            <label>Descrição do Problema:</label>
-            <div>{problemDescription}</div>
-            <label>Medicação Prescrita:</label>
-            <div>{medicationPrescribed}</div>
-            <label>Descrição do Problema:</label>
-            <div>{problemDescription}</div>
-            <label>Dosagem e Precauções:</label>
-            <div>{dosageAndPrecautions}</div>
+        <div className="container-fluid">
+          <div className="row text-black d-flex align-items-center justify-content-center">
+            <div>
+              <div className="row  text-black">
+                <div class="col-6 mb-2 mt-4">
+                  <label>
+                    <h6>Motivo da Consulta:</h6>
+                  </label>
+                  <div>{appointReason}</div>
+                </div>
+                <div class="col-3 mb-2 mt-4">
+                  <label>
+                    <h6>Data da Consulta:</h6>
+                  </label>
+                  <div>{appointDate}</div>
+                </div>
+                <div class="col-3 mb-2 mt-4">
+                  <label>
+                    <h6>Hora da Consulta:</h6>
+                  </label>
+                  <div>{appointTime}</div>
+                </div>
+
+                <div class="col-12 mb-2 mt-2">
+                  <label>
+                    <h6>Descrição do Problema:</h6>
+                  </label>
+                  <div>{problemDescription}</div>
+                </div>
+                <div class="col-6 mb-2 mt-2">
+                  <label>
+                    <h6>Medicação Prescrita:</h6>
+                  </label>
+                  <div>{medicationPrescribed}</div>
+                </div>
+
+                <div class="col-6 mb-2 mt-2">
+                  <label>
+                    <h6>Dosagem e Precauções:</h6>
+                  </label>
+                  <div>{dosageAndPrecautions}</div>
+                </div>
+              </div>
+            </div>
+            <div className="row  text-black mt-4 ">
+              <div className="col-8"></div>
+              <div className="col-3">
+                <ButtonComponent
+                  id={`editBtn${appointDate}${appointTime}`}
+                  onClick={() => handleRedirect(`/medical-register/${id}`)}
+                  label="Editar Consulta"
+                />
+              </div>
+            </div>
           </div>
-          <ButtonComponent
-              id={`editBtn${appointDate}${appointTime}`}
-              onClick={() => handleRedirect(`/medical-register/${id}`)}
-              label="Editar Consulta"
-            />
-          <div>-----</div>
         </div>
       )}
-      {!isAppoint && (
+       {!isAppoint && (
+        <div className="container-fluid">
+          <div className="row text-black d-flex align-items-center justify-content-center">
+            <div>
+              <div className="row  text-black">
+              <div class="col-4 mb-2 mt-2">
+                  <label>
+                    <h6>Tipo de Exame:</h6>
+                  </label>
+                  <div>{examType}</div>
+                </div>
+
+           
+                 <div class="col-1 mb-2 mt-4">
+                  <label>
+                    <h6>ID:</h6>
+                  </label>
+                  <div>{id}</div>
+                </div>
+
+                <div class="col-3 mb-2 mt-4">
+                  <label>
+                    <h6>Data do Exame:</h6>
+                  </label>
+                  <div>{examDate}</div>
+                </div>
+                <div class="col-4 mb-2 mt-4">
+                  <label>
+                    <h6>Hora do Exame:</h6>
+                  </label>
+                  <div>{examTime}</div>
+                </div>
+
+                <div class="col-6 mb-2 mt-2">
+                  <label>
+                    <h6>Nome do Exame:</h6>
+                  </label>
+                  <div>{examName}</div>
+                </div>
+                
+           
+
+           
+        
+                <div class="col-4 mb-2 mt-2">
+                  <label>
+                    <h6>Laboratório:</h6>
+                  </label>
+                  <div>{laboratory}</div>
+                </div>
+                <div class="col-12 mb-2 mt-2">
+                  <label>
+                    <h6>Link para Anexo:</h6>
+                  </label>
+                  <div>{urlDoc}</div>
+                </div>
+                <div class="col-12 mb-2 mt-2">
+                  <label>
+                    <h6>Resultados:</h6>
+                  </label>
+                  <div>{results}</div>
+                </div>
+              </div>
+            </div>
+            <div className="row  text-black mt-4 ">
+              <div className="col-8"></div>
+              <div className="col-3">
+                <ButtonComponent
+                  id={`editBtn${appointDate}${appointTime}`}
+                  onClick={() => handleRedirect(`/medical-register/${id}`)}
+                  label="Editar Consulta"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* {!isAppoint && (
         <div>
           <div>
-          <label>ID:</label>
+            <label>ID:</label>
             <div>{id}</div>
-            <label><h6>Data do Exame:</h6></label>
+            <label>
+              <h6>Data do Exame:</h6>
+            </label>
             <div>{examDate}</div>
-            <label><h6>Hora do Exame:</h6></label>
+            <label>
+              <h6>Hora do Exame:</h6>
+            </label>
             <div>{examTime}</div>
-            <label><h6>Laboratório:</h6></label>
+            <label>
+              <h6>Laboratório:</h6>
+            </label>
             <div>{laboratory}</div>
-            <label><h6>Link para Anexo:</h6></label>
+            <label>
+              <h6>Link para Anexo:</h6>
+            </label>
             <div>{urlDoc}</div>
             <label>Nome do Exame:</label>
             <div>{examName}</div>
@@ -76,13 +193,13 @@ export const MedicalRecordCard = ({
             <div>{results}</div>
           </div>
           <ButtonComponent
-              id={`editBtn${examDate}${examTime}`}
-              onClick={() => handleRedirect(`/exam-register/${id}`)}
-              label="Editar Exame"
-            />
+            id={`editBtn${examDate}${examTime}`}
+            onClick={() => handleRedirect(`/exam-register/${id}`)}
+            label="Editar Exame"
+          />
           <div>-----</div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

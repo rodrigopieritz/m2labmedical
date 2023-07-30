@@ -58,7 +58,7 @@ const SidebarMenu = () => {
     <>
  
       
-      <Styled.Sidebar className= {isExpanded ? "mt-4 reduced-height" : "mt-4 collapsed reduced-height"}>
+      <Styled.Sidebar className= {isExpanded ? "mt-4 fixed-left" : "mt-4 collapsed fixed-left"}>
       <div>
         <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
       </div>
@@ -94,7 +94,7 @@ const SidebarMenu = () => {
         />
 
 
-      <ButtonComponent id="logouButton" onClick={handleLogout} label= {isExpanded ?"Logou":""} icon= {<FaSignOutAlt/>} />
+      <ButtonComponent id="logouButton" onClick={handleLogout} label= {isExpanded ?"Logout":""} icon= {<FaSignOutAlt/>} />
 
         <div className="mt-5 pt-5d-align-items-center justify-content-center">
       <button

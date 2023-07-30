@@ -27,6 +27,13 @@ export const getExamById = (examId) => {
   return exams.find((exam) => exam.id === idToFind);
 };
 
+export const getExamByPatient = (patientId) => {
+  const exams = getExamsList();
+  const idToFind = +patientId;
+
+  return exams.find((exam) => exam.patient === idToFind);
+};
+
 export const updateExamRegister = (examId, updatedExam) => {
   const examsList = getExamsList();
   const idToUpdate = +examId;

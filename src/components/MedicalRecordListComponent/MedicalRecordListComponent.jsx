@@ -59,53 +59,66 @@ export const MedicalRecordListComponent = () => {
 
   return (
     <>
-    <Styled.MedicalRecordList style={{ maxWidth: "1300px"}}>
+    <Styled.MedicalRecordList style={{ maxWidth: "1200px"}}>
          <div className="d-flex align-items-center mx-2 mb-2">
         <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
       </div>
-      
-      <div>
-        <InputComponent
-          id="searchPatientInp"
-          type="text"
-          placeholder="Digite o nome ou ID do paciente"
-          label="Buscar Paciente"
-          value={searchQuery}
-          onInput={(event) => setSearchQuery(event.target.value)}
-        />
-        <ButtonComponent
-          id="searchPatientBtn"
-          type="button"
-          label="Buscar Paciente"
-          onClick={handleSearchPatient}
-        />
-      </div>
-      {!foundPatient ? (
-        <div>
-          Para começar, escolha um paciente
-          <div>
-            {patientsListRender.map((patient) => (
-              <div key={patient.id}>
-                <PatientCard
-                  id={patient.id}
-                  name={patient.name}
-                  birthdate={patient.bithdate}
-                  insurance={patient.insurance}
-                  phone={patient.phone}
-                />
-                <ButtonComponent
-                  id={`seeMoreBtn${patient.id}`}
-                  onClick={() => handleRedirect(`/patient-medical-record/${patient.id}`)}
-                  label="Veja Mais"
+      <div className="row"></div>
+          <h5>Busca de Pacientes</h5>
+      <div className="row">
+            <div className="row"></div>
+            <div className="d-flex flex-row">
+              <div className="col-8">
+                <InputComponent
+                  id="searchPatientInp"
+                  type="text"
+                  placeholder="Digite o nome do paciente"
+                  value={searchQuery}
+                  onInput={(event) => setSearchQuery(event.target.value)}
                 />
               </div>
-            ))}
+              <div className="col-8">
+                <div className="col-2 "></div>
+                <div className="col-2 ">
+                  <ButtonComponent
+                    id="searchPatientBtn"
+                    type="button"
+                    label="Buscar Paciente"
+                    onClick={handleSearchPatient}
+                  />
+                </div>
+              </div>
+            </div>
           </div>
-        </div>
+      {!foundPatient ? (
+         <div>
+         <div className="row d-flex flex-row">
+           {patientsListRender.map((patient) => (
+             <div key={patient.id} className="col-6 ">
+               <PatientCard
+                 id={patient.id}
+                 name={patient.name}
+                 birthdate={patient.bithdate}
+                 insurance={patient.insurance}
+                 phone={patient.phone}
+               />
+               <ButtonComponent
+                 id={`seeMoreBtn${patient.id}`}
+                 onClick={() =>
+                  handleRedirect(`/patient-medical-record/${patient.id}`)
+                 }
+                 label="Veja Mais"
+               />
+             </div>
+           ))}
+         </div>
+       </div>
+       
       ) : (
         <div>
-          Paciente Selecionado: {foundPatient.name}
-          <div key={foundPatient.id}>
+          <h5>Paciente Selecionado: {foundPatient.name}</h5>
+          <div className="row d-flex flex-row">
+          <div key={foundPatient.id} className="col-6 ">
             <PatientCard
               id={foundPatient.id}
               name={foundPatient.name}
@@ -119,6 +132,7 @@ export const MedicalRecordListComponent = () => {
               label="Veja Mais"
             />
           </div>
+        </div>
         </div>
       )}
       {foundPatientError && <div>{foundPatientError}</div>}

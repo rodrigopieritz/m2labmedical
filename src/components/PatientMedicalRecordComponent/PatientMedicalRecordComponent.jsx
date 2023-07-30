@@ -35,24 +35,39 @@ export const PatientMedicalRecordComponent = ({ id }) => {
 
   return (
     <>
-         <div className="d-flex align-items-center mx-2 mb-2">
-        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
+      <div className="d-flex align-items-center mx-2 mb-2">
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px" />
       </div>
-      
-      <h3>Identificação do Paciente</h3>
-      <PatientCard
-        id={patientData.id}
-        name={patientData.name}
-        insurance={patientData.insurance}
-        emergencyContact={patientData.emergencyContact}
-        allergies={patientData.allergies}
-        specialCare={patientData.specialCare}
-      />
-      <h3>Consultas e Exames</h3>
+
+      <div className="row ">
+        <div className="col-12 mb-2">
+          <h5>Identificação do Paciente</h5>
+        </div>
+      </div>
+      <div>
+        <div className="row d-flex flex-row">
+          <div className="col-6 mb-2 ">
+            <PatientCard
+              id={patientData.id}
+              name={patientData.name}
+              insurance={patientData.insurance}
+              emergencyContact={patientData.emergencyContact}
+              allergies={patientData.allergies}
+              specialCare={patientData.specialCare}
+            />
+          </div>
+        </div>
+      </div>
+      <div className="row d-flex flex-row">
+        <div className="col-12 mt-4 ">
+          <h5>Consultas e Exames </h5>
+        </div>
+      </div>
 
       <div>
+      <div className="row d-flex flex-row">
         {sortedEvents.map((patientRecord, index) => (
-          <div key={index}>
+          <div key={index} className="mt-4 col-10 card">
             {patientRecord.appointDate ? (
               <MedicalRecordCard
                 label="Consulta Médica"
@@ -79,8 +94,9 @@ export const PatientMedicalRecordComponent = ({ id }) => {
                 results={patientRecord.results}
               />
             )}
+            
           </div>
-        ))}
+        ))}</div>
       </div>
     </>
   );

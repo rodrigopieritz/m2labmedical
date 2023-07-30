@@ -22,9 +22,7 @@ export const Sidebar = styled.div`
   align-items: center;
   height: 70px;
 }
-.reduced-height {
-  height: calc(100vh - 12vh);
-}
+
 button svg {
   margin-right: 10px;
 }

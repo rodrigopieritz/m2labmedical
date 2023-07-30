@@ -143,9 +143,9 @@ export const HomeComponent = () => {
           <div className="row"></div>
           {!foundPatient ? (
             <div>
-              <div className="d-flex flex-row">
+              <div className="row d-flex flex-row">
                 {patientsListRender.map((patient) => (
-                  <div key={patient.id} className="card m-1 ">
+                  <div key={patient.id} className="col-6 ">
                     <PatientCard
                       id={patient.id}
                       name={patient.name}
