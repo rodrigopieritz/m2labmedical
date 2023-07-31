@@ -91,7 +91,7 @@ export const ModalComponent = () => {
         error={emailError}
         aria-label="Email Input"
       />
-      {emailError && <div aria-label="Email Error">{emailError}</div>}
+      {emailError && <div aria-label="Email Error" style={{ color: 'red' }}>{emailError}</div>}
       <InputComponent
         id="password"
         type="password"
@@ -102,7 +102,7 @@ export const ModalComponent = () => {
         error={passwordError}
         aria-label="Password Input"
       />
-      {passwordError && <div aria-label="Password Error">{passwordError}</div>}
+      {passwordError && <div aria-label="Password Error" style={{ color: 'red' }}>{passwordError}</div>}
       <InputComponent
         id="confirmPassword"
         type="password"
@@ -114,7 +114,7 @@ export const ModalComponent = () => {
         aria-label="Confirm Password Input"
       />
       {confirmPasswordError && (
-        <div aria-label="Confirm Password Error">{confirmPasswordError}</div>
+        <div aria-label="Confirm Password Error" style={{ color: 'red' }}>{confirmPasswordError}</div>
       )}
       <div className="row">
         <div>
