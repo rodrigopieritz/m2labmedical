@@ -145,12 +145,12 @@ export const LoginComponent = () => {
                 />
     
                 {emailError && (
-                  <div className="small mb-5 pb-lg-2" aria-label="Email Error">
+                  <div className="small mb-1 pb-lg-2" aria-label="Email Error" style={{ color: 'red' }}>
                     {emailError}
                   </div>
                 )}
                 {passwordError && (
-                  <div className="small mb-5 pb-lg-2" aria-label="Password Error">
+                  <div className="small mb-1 pb-lg-2" aria-label="Password Error" style={{ color: 'red' }}>
                     {passwordError}
                   </div>
                 )}

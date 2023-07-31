@@ -552,8 +552,7 @@ export const PatientRegisterComponent = ({ id }) => {
         if (formMode === "register") {
           setTimeout(() => {
             addPatientToLocalStorage();
-            alert("Paciente cadastrado com sucesso");
-          }, 2000);
+               }, 2000);
         } else {
           setTimeout(() => {
             updatePatientRegisterToLocalStorage();
@@ -691,7 +690,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={nameError}
                     readOnly={readMode}
                   />
-                  {nameError && <div>{nameError}</div>}
+                  {nameError && <div style={{ color: 'red' }}>{nameError}</div>}
                 </div>
                 <div class="col-3 text-center">
                   <div
@@ -720,7 +719,7 @@ export const PatientRegisterComponent = ({ id }) => {
                         <option value="Feminino">Feminino</option>
                       </select>
                       {genderError && (
-                        <div className="invalid-feedback">{genderError}</div>
+                        <div className="invalid-feedback" style={{ color: 'red' }}>{genderError}</div>
                       )}
                     </div>
                   </div>
@@ -736,7 +735,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={birthdateError}
                     readOnly={readMode}
                   />
-                  {birthdateError && <div>{birthdateError}</div>}
+                  {birthdateError && <div style={{ color: 'red' }}>{birthdateError}</div>}
                 </div>
               </div>
 
@@ -752,7 +751,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={cpfError}
                     readOnly={readMode}
                   />
-                  {cpfError && <div>{cpfError}</div>}
+                  {cpfError && <div style={{ color: 'red' }}>{cpfError}</div>}
                 </div>
                 <div className="col-3 text-center">
                   <InputComponent
@@ -765,7 +764,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={rgError}
                     readOnly={readMode}
                   />
-                  {rgError && <div>{rgError}</div>}
+                  {rgError && <div style={{ color: 'red' }}>{rgError}</div>}
                 </div>
                 <div className="col-3 text-center">
                   <div
@@ -799,7 +798,7 @@ export const PatientRegisterComponent = ({ id }) => {
                         <option value="Divorciado(a)">Divorciado(a)</option>
                       </select>
                       {maritalStatusError && (
-                        <div className="invalid-feedback">
+                        <div className="invalid-feedback" style={{ color: 'red' }}>
                           {maritalStatusError}
                         </div>
                       )}
@@ -817,7 +816,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={naturalnessError}
                     readOnly={readMode}
                   />
-                  {naturalnessError && <div>{naturalnessError}</div>}
+                  {naturalnessError && <div style={{ color: 'red' }}>{naturalnessError}</div>}
                 </div>
               </div>
               <div className="row text-black d-flex">
@@ -896,7 +895,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={phoneError}
                     readOnly={readMode}
                   />
-                  {phoneError && <div>{phoneError}</div>}
+                  {phoneError && <div style={{ color: 'red' }}>{phoneError}</div>}
                 </div>
                 <div className="col-4 text-center">
                   <InputComponent
@@ -909,7 +908,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={emailError}
                     readOnly={readMode}
                   />
-                  {emailError && <div>{emailError}</div>}
+                  {emailError && <div style={{ color: 'red' }}>{emailError}</div>}
                 </div>
                 <div className="col-4 text-center">
                   <InputComponent
@@ -922,7 +921,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={emergencyContactError}
                     readOnly={readMode}
                   />
-                  {emergencyContactError && <div>{emergencyContactError}</div>}
+                  {emergencyContactError && <div style={{ color: 'red' }}>{emergencyContactError}</div>}
                 </div>
 
                 <div className="col-4 text-center">
@@ -941,7 +940,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     error={cepError}
                     readOnly={readMode}
                   />
-                  {cepError && <div>{cepError}</div>}
+                  {cepError && <div style={{ color: 'red' }}>{cepError}</div>}
                 </div>
                 <div className="col-6 text-center">
                   <InputComponent
@@ -953,7 +952,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     value={city}
                     readOnly={readMode}
                   />
-                  {cityError && <div>{cityError}</div>}
+                  {cityError && <div style={{ color: 'red' }}>{cityError}</div>}
                 </div>
                 <div className="col-2 text-center">
                   <InputComponent
@@ -965,7 +964,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     value={uf}
                     readOnly={readMode}
                   />
-                  {ufError && <div>{ufError}</div>}
+                  {ufError && <div style={{ color: 'red' }}>{ufError}</div>}
                 </div>
                 <div className="col-4 text-center">
                   <InputComponent
@@ -977,7 +976,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     value={neighborhood}
                     readOnly={readMode}
                   />
-                  {neighborhoodError && <div>{neighborhoodError}</div>}
+                  {neighborhoodError && <div style={{ color: 'red' }}>{neighborhoodError}</div>}
                 </div>
 
                 <div className="col-6 text-center">
@@ -990,7 +989,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     value={street}
                     readOnly={readMode}
                   />
-                  {streetError && <div>{streetError}</div>}
+                  {streetError && <div style={{ color: 'red' }}>{streetError}</div>}
                 </div>
 
                 <div className="col-2 text-center">
@@ -1003,7 +1002,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     onInput={handleInput}
                     readOnly={readMode}
                   />
-                  {houseNumberError && <div>{houseNumberError}</div>}
+                  {houseNumberError && <div style={{ color: 'red' }}>{houseNumberError}</div>}
                 </div>
 
                 <div className="col-6 text-center">

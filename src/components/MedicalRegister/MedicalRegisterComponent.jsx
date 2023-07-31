@@ -70,7 +70,12 @@ export const MedicalRegisterComponent = ({ id }) => {
   useEffect(() => {
     const newPatientData = getPatientById(foundPatientId);
     setFoundPatientData(newPatientData);
+    setFoundPatientIdError("")
   }, [foundPatientId]);
+  
+  useEffect(() => {
+   setFoundPatientIdError("");
+  }, [setSearchQuery]);
 
   useEffect(() => {
     if (formMode === "register") {
@@ -149,6 +154,7 @@ export const MedicalRegisterComponent = ({ id }) => {
     if (searchQuery.trim() === "") {
       setFoundPatientData(null);
       setFoundPatientId(null);
+      alert("Digite o nome do paciente")
       return;
     }
     const patientsList = getPatients();
@@ -161,9 +167,9 @@ export const MedicalRegisterComponent = ({ id }) => {
       setFoundPatientData(patient);
       setFoundPatientId(patient.id);
     } else {
+      alert("Paciente não encontrado.");
       setFoundPatientData(null);
       setFoundPatientId(patient.id);
-      alert("Paciente não encontrado.");
       navigate("medical-record-list");
     }
   };
@@ -249,16 +255,9 @@ export const MedicalRegisterComponent = ({ id }) => {
     e.preventDefault();
 
     const validationSchema = yup.object().shape({
-      foundPatientData: yup
-        .mixed()
-        .nullable("Este campo é obrigatório")
-        .test(
-          "is-patient-selected",
-          "Por favor, selecione um paciente.",
-          (value) => {
-            return value !== null;
-          }
-        ),
+      foundPatientId: yup
+      .number("O campo de paciente é obrigatório. Verifique se fez a busca corretamente.")
+      .required("O campo de paciente é obrigatório. Verifique se fez a busca corretamente."),
       appointReason: yup
         .string()
         .min(6, "Este campo deve ter pelo menos 6 caracteres")
@@ -284,7 +283,7 @@ export const MedicalRegisterComponent = ({ id }) => {
     validationSchema
       .validate(
         {
-          foundPatientData,
+          foundPatientId,
           appointReason,
           appointDate,
           appointTime,
@@ -323,8 +322,8 @@ export const MedicalRegisterComponent = ({ id }) => {
               setMedicationPrescribedError(message);
             } else if (path === "dosageAndPrecautions") {
               setDosageAndPrecautionsError(message);
-            } else if (path === "foundPatientData") {
-              setFoundPatientDataError(message);
+            } else if (path === "foundPatientId") {
+              setFoundPatientIdError(message);
             }
           });
         }
@@ -380,7 +379,7 @@ export const MedicalRegisterComponent = ({ id }) => {
     Paciente Selecionado: {foundPatientData.name}
   </h5>
 )}
-{foundPatientDataError && <div>{foundPatientDataError}</div>}
+ {foundPatientIdError && <div style={{ color: 'red' }} aria-label="Mensagem de erro do paciente inválido">O campo de paciente é obrigatório. Verifique se fez a busca corretamente.</div>}
 
      
 <form onSubmit={handleFormSubmission} noValidate>
@@ -426,7 +425,7 @@ export const MedicalRegisterComponent = ({ id }) => {
               )}
             </div>
             <div className="row mt-5 mb-1 text-black d-flex">
-              <div class="col-8 text-center">  
+              <div class="col-7 text-center">  
           <InputComponent
             id="appointReason"
             type="text"
@@ -437,9 +436,9 @@ export const MedicalRegisterComponent = ({ id }) => {
             error={appointReasonError}
             readOnly={readMode}
           />
-          {appointReasonError && <div>{appointReasonError}</div>}
+          {appointReasonError && <div style={{ color: 'red' }}>{appointReasonError}</div>}
           </div>
-          <div class="col-2 text-center">  
+          <div class="col-3 text-center">  
           <InputComponent
             id="appointDate"
             type="date"
@@ -449,7 +448,7 @@ export const MedicalRegisterComponent = ({ id }) => {
             error={appointDate}
             readOnly={readMode}
           />
-          {appointDatError && <div>{appointDatError}</div>}
+          {appointDatError && <div style={{ color: 'red' }}>{appointDatError}</div>}
           </div>
           <div class="col-2 text-center">  
           <InputComponent
@@ -461,7 +460,7 @@ export const MedicalRegisterComponent = ({ id }) => {
             error={appointTimeError}
             readOnly={readMode}
           />
-          {appointTimeError && <div>{appointTimeError}</div>}
+          {appointTimeError && <div style={{ color: 'red' }}>{appointTimeError}</div>}
           </div>
           <div class="col-12 text-center">  
           <InputComponent
@@ -473,7 +472,7 @@ export const MedicalRegisterComponent = ({ id }) => {
             onInput={handleInput}
             readOnly={readMode}
           />
-          {problemDescriptionError && <div>{problemDescriptionError}</div>}
+          {problemDescriptionError && <div style={{ color: 'red' }}>{problemDescriptionError}</div>}
           </div>
           <div class="col-6 text-center">  
           <InputComponent
@@ -496,7 +495,7 @@ export const MedicalRegisterComponent = ({ id }) => {
             onInput={handleInput}
             readOnly={readMode}
           />
-          {dosageAndPrecautionsError && <div>{dosageAndPrecautionsError}</div>}
+          {dosageAndPrecautionsError && <div style={{ color: 'red' }}>{dosageAndPrecautionsError}</div>}
           </div>{" "}
           </div>
         </form>
