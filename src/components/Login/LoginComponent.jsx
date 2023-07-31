@@ -93,23 +93,28 @@ export const LoginComponent = () => {
   };
 
     return (
-    <section className="vh-100 my-5 mx-4">
+      <section className="vh-100 my-5 mx-4" aria-label="Login Section">
       <div className="container-fluid">
         <div className="row">
           <div className="col-sm-6 text-black">
-            <div className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5">
+            <div
+              className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5"
+              aria-label="Login Form Section"
+            >
               <form
                 style={{ width: "23rem" }}
                 onSubmit={handleFormSubmit}
                 noValidate
+                aria-label="Login Form"
               >
                 <h3
                   className="fw-normal mb-3 pb-3"
                   style={{ letterSpacing: "1px" }}
+                  aria-label="Login Header"
                 >
-                  Log in
+                  Log in MedTech
                 </h3>
-
+    
                 <InputComponent
                   id="email"
                   type="email"
@@ -118,8 +123,9 @@ export const LoginComponent = () => {
                   value={email}
                   onInput={handleInput}
                   error={emailError}
+                  aria-label="Email Input"
                 />
-
+    
                 <InputComponent
                   id="password"
                   type="password"
@@ -128,48 +134,67 @@ export const LoginComponent = () => {
                   value={password}
                   onInput={handleInput}
                   error={passwordError}
+                  aria-label="Password Input"
                 />
-
-                <ButtonComponent id="loginButton" type="submit" label="Logar" />
-
+    
+                <ButtonComponent
+                  id="loginButton"
+                  type="submit"
+                  label="Logar"
+                  aria-label="Login Button"
+                />
+    
                 {emailError && (
-                  <div className="small mb-5 pb-lg-2">{emailError}</div>
+                  <div className="small mb-5 pb-lg-2" aria-label="Email Error">
+                    {emailError}
+                  </div>
                 )}
                 {passwordError && (
-                  <div className="small mb-5 pb-lg-2">{passwordError}</div>
+                  <div className="small mb-5 pb-lg-2" aria-label="Password Error">
+                    {passwordError}
+                  </div>
                 )}
-
+    
                 <p className="small mb-5 pb-lg-2">
                   <a
                     className="text-muted"
                     href="#!"
                     onClick={handleForgotPassword}
+                    aria-label="Forgot Password Link"
                   >
                     Esqueceu a senha?
                   </a>
                 </p>
                 <p>
                   Não tem conta?{" "}
-                  <a href="#!" className="link-info" onClick={handleShowModal}>
+                  <a
+                    href="#!"
+                    className="link-info"
+                    onClick={handleShowModal}
+                    aria-label="Register Link"
+                  >
                     Registre-se
                   </a>
                 </p>
-                <p>Usuário e senha expostos para facilitar os testes</p>
-                <p> usuário: usuariopermitido@email.com </p>
-                <p> senha: usuariopermitido </p>
+              
               </form>
             </div>
           </div>
-          <div className="col-sm-6 px-0 d-none d-sm-block d-flex justify-content-center align-items-center my-5">
-        <img
-          src="login-image-large.jpeg"
-          alt="Login image"
-          className="w-100 vh-60"
-          style={{ objectFit: "cover", objectPosition: "right" }}
-        />
-      </div>
+          <div
+            className="col-sm-6 px-0 d-none d-sm-block d-flex justify-content-center align-items-center my-5"
+            aria-label="Login Image Section"
+          >
+            <img
+              src="login-image-large.jpeg"
+              alt="Login image"
+              className="w-100 vh-60"
+              style={{ objectFit: "cover", objectPosition: "right" }}
+              aria-label="Login Image"
+            />
+          </div>
         </div>
       </div>
     </section>
+    
   );
 };

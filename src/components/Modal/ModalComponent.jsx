@@ -76,61 +76,69 @@ export const ModalComponent = () => {
 
   return (
     <>
-      <Styled.ModalBackdrop>
-        <Styled.ModalContainer>
-          <legend>Cadastro de novo usuário</legend>
-          <div className="mb-3"></div>
-          <form onSubmit={handleFormSubmition} noValidate>
-            <InputComponent
-              id="email"
-              type="email"
-              placeholder="Digite seu email"
-              label="E-mail"
-              value={email}
-              onInput={handleInput}
-              error={emailError}
-            />
-            {emailError && <div>{emailError}</div>}
-            <InputComponent
-              id="password"
-              type="password"
-              placeholder="Digite sua senha"
-              label="Senha"
-              value={password}
-              onInput={handleInput}
-              error={passwordError}
-            />
-            {passwordError && <div>{passwordError}</div>}
-            <InputComponent
-              id="confirmPassword"
-              type="password"
-              placeholder="Confirme sua senha"
-              label="Confirmar senha"
-              value={confirmPassword}
-              onInput={handleInput}
-              error={confirmPasswordError}
-            />
-            {confirmPasswordError && <div>{confirmPasswordError}</div>}
-            <div className="row">
-              <div>
-            <ButtonComponent
+    <Styled.ModalBackdrop aria-label="Cadastro Modal Backdrop">
+  <Styled.ModalContainer>
+    <legend>Cadastro de novo usuário</legend>
+    <div className="mb-3" aria-label="Modal Content Spacer"></div>
+    <form onSubmit={handleFormSubmition} noValidate aria-label="Registration Form">
+      <InputComponent
+        id="email"
+        type="email"
+        placeholder="Digite seu email"
+        label="E-mail"
+        value={email}
+        onInput={handleInput}
+        error={emailError}
+        aria-label="Email Input"
+      />
+      {emailError && <div aria-label="Email Error">{emailError}</div>}
+      <InputComponent
+        id="password"
+        type="password"
+        placeholder="Digite sua senha"
+        label="Senha"
+        value={password}
+        onInput={handleInput}
+        error={passwordError}
+        aria-label="Password Input"
+      />
+      {passwordError && <div aria-label="Password Error">{passwordError}</div>}
+      <InputComponent
+        id="confirmPassword"
+        type="password"
+        placeholder="Confirme sua senha"
+        label="Confirmar senha"
+        value={confirmPassword}
+        onInput={handleInput}
+        error={confirmPasswordError}
+        aria-label="Confirm Password Input"
+      />
+      {confirmPasswordError && (
+        <div aria-label="Confirm Password Error">{confirmPasswordError}</div>
+      )}
+      <div className="row">
+        <div>
+          <ButtonComponent
             id="hideModalBtn"
-              label="Cancelar"
-              type="button"
-              onClick={handleShowModal}
-            />
+            label="Cancelar"
+            type="button"
+            onClick={handleShowModal}
+            aria-label="Hide Modal Button"
+          />
 
-            <ButtonComponent
+          <ButtonComponent
             id="registerUserBtn"
-              label="Cadastrar Usuário"
-              type="submit"
-              onClick={handleFormSubmition}
-            />
-            </div>
-            </div>
-          </form>
-        </Styled.ModalContainer>
-      </Styled.ModalBackdrop>
+            label="Cadastrar Usuário"
+            type="submit"
+            onClick={handleFormSubmition}
+            aria-label="Register User Button"
+          />
+        </div>
+      </div>
+    </form>
+  </Styled.ModalContainer>
+</Styled.ModalBackdrop>
+
     </>
   );
 };

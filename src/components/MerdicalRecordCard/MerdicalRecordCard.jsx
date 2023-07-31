@@ -164,42 +164,7 @@ export const MedicalRecordCard = ({
           </div>
         </div>
       )}
-      {/* {!isAppoint && (
-        <div>
-          <div>
-            <label>ID:</label>
-            <div>{id}</div>
-            <label>
-              <h6>Data do Exame:</h6>
-            </label>
-            <div>{examDate}</div>
-            <label>
-              <h6>Hora do Exame:</h6>
-            </label>
-            <div>{examTime}</div>
-            <label>
-              <h6>Laboratório:</h6>
-            </label>
-            <div>{laboratory}</div>
-            <label>
-              <h6>Link para Anexo:</h6>
-            </label>
-            <div>{urlDoc}</div>
-            <label>Nome do Exame:</label>
-            <div>{examName}</div>
-            <label>Tipo de Exame:</label>
-            <div>{examType}</div>
-            <label>Resultados:</label>
-            <div>{results}</div>
-          </div>
-          <ButtonComponent
-            id={`editBtn${examDate}${examTime}`}
-            onClick={() => handleRedirect(`/exam-register/${id}`)}
-            label="Editar Exame"
-          />
-          <div>-----</div>
-        </div>
-      )} */}
+     
     </div>
   );
 };

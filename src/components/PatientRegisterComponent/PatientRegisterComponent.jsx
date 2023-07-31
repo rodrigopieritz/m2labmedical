@@ -612,7 +612,7 @@ export const PatientRegisterComponent = ({ id }) => {
 
   return (
     <>
-      <Styled.PatientRegister style={{ maxWidth: "1300px" }}>
+      <Styled.PatientRegister >
         <div className="d-flex align-items-center mx-2 mb-2">
           <img
             src="/../../lab-medical-logo-white.png"

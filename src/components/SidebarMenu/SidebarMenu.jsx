@@ -56,60 +56,69 @@ const SidebarMenu = () => {
 
   return (
     <>
- 
-      
-      <Styled.Sidebar className= {isExpanded ? "mt-4 fixed-left" : "mt-4 collapsed fixed-left"}>
-      <div>
-        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px"/>
+    <Styled.Sidebar className={isExpanded ? "mt-4 fixed-left" : "mt-4 collapsed fixed-left"} aria-label="Sidebar">
+      <div aria-label="Logo">
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px" />
       </div>
       <ButtonComponent
-          id="homeButton"
-          onClick={() => handleRedirect("/")}
-          label={isExpanded ?"Home":""}
-          icon={<FaHome/>}
-        />
-        <ButtonComponent
-          id="patientRegisterButton"
-          onClick={() => handleRedirect("/patient-register/newPatient")}
-          label={isExpanded ?"Cadastrar Paciente":""}
-          icon={<FaUserPlus />}
-        />
-        <ButtonComponent
-          id="medicalRecordButton"
-          onClick={() => handleRedirect("/medical-record-list")}
-          label={isExpanded ?"Listar Prontuários":""}
-          icon={<FaClipboardList/>}
-        />
-        <ButtonComponent
-          id="medicalRegisterButton"
-          onClick={() => handleRedirect("/medical-register/newMedAppoint")}
-          label={isExpanded ?"Cadastrar Consulta":""}
-          icon={<FaCalendarPlus/>}
-        />
-        <ButtonComponent
-          id="examRegisterButton"
-          onClick={() => handleRedirect("/exam-register/newExam")}
-          label={isExpanded ?"Cadastrar Exame":""}
-          icon={<FaFileAlt/>}
-        />
-
-
-      <ButtonComponent id="logouButton" onClick={handleLogout} label= {isExpanded ?"Logout":""} icon= {<FaSignOutAlt/>} />
-
-        <div className="mt-5 pt-5d-align-items-center justify-content-center">
-      <button
+        id="homeButton"
+        onClick={() => handleRedirect("/")}
+        label={isExpanded ? "Home" : ""}
+        icon={<FaHome />}
+        aria-label="Home Button"
+      />
+      <ButtonComponent
+        id="patientRegisterButton"
+        onClick={() => handleRedirect("/patient-register/newPatient")}
+        label={isExpanded ? "Cadastrar Paciente" : ""}
+        icon={<FaUserPlus />}
+        aria-label="Cadastrar Paciente Button"
+      />
+      <ButtonComponent
+        id="medicalRecordButton"
+        onClick={() => handleRedirect("/medical-record-list")}
+        label={isExpanded ? "Listar Prontuários" : ""}
+        icon={<FaClipboardList />}
+        aria-label="Listar Prontuários Button"
+      />
+      <ButtonComponent
+        id="medicalRegisterButton"
+        onClick={() => handleRedirect("/medical-register/newMedAppoint")}
+        label={isExpanded ? "Cadastrar Consulta" : ""}
+        icon={<FaCalendarPlus />}
+        aria-label="Cadastrar Consulta Button"
+      />
+      <ButtonComponent
+        id="examRegisterButton"
+        onClick={() => handleRedirect("/exam-register/newExam")}
+        label={isExpanded ? "Cadastrar Exame" : ""}
+        icon={<FaFileAlt />}
+        aria-label="Cadastrar Exame Button"
+      />
+  
+      <ButtonComponent
+        id="logouButton"
+        onClick={handleLogout}
+        label={isExpanded ? "Logout" : ""}
+        icon={<FaSignOutAlt />}
+        aria-label="Logout Button"
+      />
+  
+      <div className="mt-5 pt-5 d-align-items-center justify-content-center" aria-label="Toggle Button">
+        <button
           id="expandCollapseButton"
           className={`btn btn-toggle ${isSwitchOn ? "active" : ""}`}
           onClick={handleSwitchToggle}
+          aria-label={isExpanded ? "Hide Sidebar" : "Show Sidebar"}
         >
-          {isExpanded ?"Hide":"Show"}
+          {isExpanded ? "Hide" : "Show"}
         </button>
       </div>
-
+  
       {isLoading && <FaCircleNotch>Loading...</FaCircleNotch>}
-      
-      </Styled.Sidebar>
-    </>
+    </Styled.Sidebar>
+  </>
+  
   );
   
 

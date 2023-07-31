@@ -29,15 +29,17 @@ const PatientCard = ({ id, name, birthdate, insurance, phone, emergencyContact, 
 
   return (
 
-    <div style={{ width: "600px", backgroundColor: "whiteSmoke", marginRight: "630px"}} className="d-flex flex-row card align-items-center">
+    <div style={{backgroundColor: "whiteSmoke"}} className="d-flex flex-row align-items-center">
 
       
      
-      <div className="col-2 ">
+      <div className="col-2 align-items-center">
       <div> <FaUser size="30%" className="mb-5 m-5"/></div>
-        <div> {id && <p>ID: {id}</p>}</div>
+        <div clasName = "mb-2"> {id && <p>ID: {id}</p>}</div>
       </div>
+      <div className="col-2 align-items-center">
       
+      </div>
       <div className="col">
         
         {name && <p>Nome do Paciente: {name}</p>}

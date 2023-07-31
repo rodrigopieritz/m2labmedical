@@ -21,7 +21,7 @@ export const HomePage = () => {
             userName={userName}
             userPhoto="/../../userPhoto.png"
           />
-          <Styled.SpecificPageContent>
+          <Styled.SpecificPageContent style={{ maxWidth: "950px" }}>
           <HomeComponent/>
           </Styled.SpecificPageContent>
         </Styled.MainContent>

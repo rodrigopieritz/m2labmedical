@@ -20,6 +20,9 @@ Para executar o MedTech, siga os passos abaixo:
 - Inicie o servidor de desenvolvimento com o comando npm run dev.
 - Acesse a aplicação no seu navegador através do endereço http://localhost:5173
 
+Como acessar:
+ Você pode criar o seu usuário, clicando no registre-se, ou pode utilizar o e-mail usuariopermitido@email.com e senha usuariopermitido para acessar.
+
 Melhorias Futuras:
 O MedTech é uma solução inicial para o gerenciamento médico, e algumas melhorias podem ser aplicadas para torná-lo ainda mais completo e eficiente. Algumas sugestões de melhorias são:
 

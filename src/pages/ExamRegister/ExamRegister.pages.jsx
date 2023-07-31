@@ -23,7 +23,7 @@ export const ExamRegister = () => {
             userName={userName}
             userPhoto="/../../userPhoto.png"
           />
-          <Styled.SpecificPageContent>
+           <Styled.SpecificPageContent style={{ maxWidth: "950px" }}>
           <ExamRegisterComponent id={id}/>
           </Styled.SpecificPageContent>
         </Styled.MainContent>

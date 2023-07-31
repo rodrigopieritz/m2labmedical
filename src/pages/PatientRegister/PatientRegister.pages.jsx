@@ -22,7 +22,9 @@ export const PatientRegisterPage = () => {
             userName={userName}
             userPhoto="/../../userPhoto.png"
           />
+          <Styled.SpecificPageContent style={{ maxWidth: "950px" }}>
            <PatientRegisterComponent id={id}/>
+           </Styled.SpecificPageContent>
         </Styled.MainContent>
       </Styled.PageContainer>
     );

@@ -22,7 +22,7 @@ export const MedicalRecordList = () => {
                 userName={userName}
                 userPhoto="/../../userPhoto.png"
               />
-              <Styled.SpecificPageContent>
+               <Styled.SpecificPageContent style={{ maxWidth: "950px" }}>
                 <MedicalRecordListComponent/>
 
               </Styled.SpecificPageContent>
