@@ -36,7 +36,7 @@ export const PatientMedicalRecordComponent = ({ id }) => {
   return (
     <>
       <div className="d-flex align-items-center mx-2 mb-2">
-        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px" />
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="140px" />
       </div>
 
       <div className="row ">

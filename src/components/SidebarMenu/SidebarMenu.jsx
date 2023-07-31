@@ -26,7 +26,7 @@ const SidebarMenu = () => {
     
     const loadingTimeout = setTimeout(() => {
       setIsLoading(false);
-    }, 1500); // Defina o tempo de carregamento desejado em milissegundos
+    }, 1500); 
 
     return () => clearTimeout(loadingTimeout);
   }, []);
@@ -37,12 +37,12 @@ const SidebarMenu = () => {
   };
   
   const handleRedirect = (path) => {
-    setIsLoading(true); // Iniciar a animação de loading ao redirecionar para uma nova página
+    setIsLoading(true); 
     navigate(path);
   };
 
   const handleLogout = () => {
-    setIsLoading(true); // Iniciar a animação de loading ao fazer logout
+    setIsLoading(true); 
     setAuth({
       user: {},
       isLogged: false,
@@ -58,7 +58,7 @@ const SidebarMenu = () => {
     <>
     <Styled.Sidebar className={isExpanded ? "mt-4 fixed-left" : "mt-4 collapsed fixed-left"} aria-label="Sidebar">
       <div aria-label="Logo">
-        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="90px" />
+        <img src="/../../lab-medical-logo-white.png" alt="Logo" width="140px" />
       </div>
       <ButtonComponent
         id="homeButton"
