@@ -128,6 +128,7 @@ export const ExamRegisterComponent = ({ id }) => {
     } else {
       setExamRender(false);
       alert("Exame não encontrado.");
+      navigate("medical-record-list");
     }
   };
 
@@ -167,6 +168,7 @@ export const ExamRegisterComponent = ({ id }) => {
       setFoundPatientData(null);
       setFoundPatientId(patient.id);
       alert("Paciente não encontrado.");
+      navigate("medical-record-list");
     }
   };
 
@@ -350,7 +352,7 @@ export const ExamRegisterComponent = ({ id }) => {
         }
       });
   };
-
+ 
   return (
     <>
          <div className="d-flex align-items-center mx-2 mb-2">
@@ -442,9 +444,7 @@ export const ExamRegisterComponent = ({ id }) => {
                 </div>
               )}
             </div>
-
-
-            
+           
             <div className="row mt-5 mb-1 text-black d-flex">
               <div class="col-8 text-center">
                 <InputComponent
@@ -475,7 +475,7 @@ export const ExamRegisterComponent = ({ id }) => {
                 <InputComponent
                   id="examTime"
                   type="time"
-                  label="Horário do Exame"
+                  label="Hora"
                   value={examTime}
                   onInput={handleInput}
                   error={examTimeError}

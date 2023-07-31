@@ -87,20 +87,18 @@ export const MedicalRecordCard = ({
           </div>
         </div>
       )}
-       {!isAppoint && (
+      {!isAppoint && (
         <div className="container-fluid">
           <div className="row text-black d-flex align-items-center justify-content-center">
             <div>
               <div className="row  text-black">
-              <div class="col-4 mb-2 mt-2">
+                <div class="col-4 mb-2 mt-2">
                   <label>
                     <h6>Tipo de Exame:</h6>
                   </label>
                   <div>{examType}</div>
                 </div>
-
-           
-                 <div class="col-1 mb-2 mt-4">
+                <div class="col-1 mb-2 mt-4">
                   <label>
                     <h6>ID:</h6>
                   </label>
@@ -126,11 +124,6 @@ export const MedicalRecordCard = ({
                   </label>
                   <div>{examName}</div>
                 </div>
-                
-           
-
-           
-        
                 <div class="col-4 mb-2 mt-2">
                   <label>
                     <h6>Laboratório:</h6>
@@ -156,15 +149,14 @@ export const MedicalRecordCard = ({
               <div className="col-3">
                 <ButtonComponent
                   id={`editBtn${appointDate}${appointTime}`}
-                  onClick={() => handleRedirect(`/medical-register/${id}`)}
-                  label="Editar Consulta"
+                  onClick={() => handleRedirect(`/exam-register/${id}`)}
+                  label="Editar Exame"
                 />
               </div>
             </div>
           </div>
         </div>
       )}
-     
     </div>
   );
 };

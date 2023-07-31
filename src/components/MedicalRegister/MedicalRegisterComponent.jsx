@@ -121,7 +121,8 @@ export const MedicalRegisterComponent = ({ id }) => {
       setDosageAndPrecautions(medAppoint.dosageAndPrecautions);
     } else {
       setMedAppointRender(false);
-      alert("Exame não encontrado.");
+      alert("Consulta não encontrada.");
+      navigate("medical-record-list");
     }
   };
 
@@ -163,6 +164,7 @@ export const MedicalRegisterComponent = ({ id }) => {
       setFoundPatientData(null);
       setFoundPatientId(patient.id);
       alert("Paciente não encontrado.");
+      navigate("medical-record-list");
     }
   };
 
@@ -453,7 +455,7 @@ export const MedicalRegisterComponent = ({ id }) => {
           <InputComponent
             id="appointTime"
             type="time"
-            label="Horário da Consulta"
+            label="Hora"
             value={appointTime}
             onInput={handleInput}
             error={appointTimeError}
