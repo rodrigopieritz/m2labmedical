@@ -464,7 +464,7 @@ export const ExamRegisterComponent = ({ id }) => {
             label="Data do Exame"
             value={examDate}
             onInput={handleInput}
-            error={examDateError}
+            error={examDate}
             readOnly={readMode}
           />
           {examDateError && <div style={{ color: 'red' }} aria-label="Mensagem de erro da data do exame">{examDateError}</div>}
