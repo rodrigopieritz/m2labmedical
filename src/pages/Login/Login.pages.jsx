@@ -4,6 +4,7 @@ export const LoginPage = () => {
     return(
         <>
         <LoginComponent/>
+       
         </>
     )
 }

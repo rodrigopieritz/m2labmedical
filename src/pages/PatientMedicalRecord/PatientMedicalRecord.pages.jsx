@@ -3,11 +3,13 @@ import { AuthContext } from "../../context/auth/auth.context";
 import { Navigate } from "react-router";
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 import Toolbar from "../../components/Toolbar/ToolbarComponent";
+import { PatientMedicalRecordComponent } from "../../components/PatientMedicalRecordComponent/PatientMedicalRecordComponent";
 import * as Styled from "../../global.style";
-import { HomeComponent } from "../../components/HomeComponent/HomeComponent";
+import { useParams } from "react-router-dom";
 
-export const HomePage = () => {
+export const PatientMedicalRecord = () => {
   const { auth } = useContext(AuthContext);
+  const { id } = useParams();
 
   const render = () => {
     const userEmail = auth.user.email;
@@ -17,44 +19,51 @@ export const HomePage = () => {
         <SidebarMenu />
         <Styled.MainContent>
           <Toolbar
-            pageTitle="Home"
+            pageTitle="Prontuário do Paciente"
             userName={userName}
             userPhoto="/../../userPhoto.png"
           />
-          <Styled.SpecificPageContent style={{ maxWidth: "950px" }}>
-          <HomeComponent/>
+          <Styled.SpecificPageContent style={{ maxWidth: "1500px" }}>
+          <PatientMedicalRecordComponent id={id}/>
           </Styled.SpecificPageContent>
         </Styled.MainContent>
       </Styled.PageContainer>
     );
   };
+
   return auth.isLogged ? render() : <Navigate to={"/login"} />;
 };
 
 // Código para Manutenção (Autenticação de Usuário desabilitada)
 
 
-// import { HomeComponent } from "../../components/HomeComponent/HomeComponent";
 // import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 // import Toolbar from "../../components/Toolbar/ToolbarComponent";
 // import * as Styled from "../../global.style";
+// import { PatientMedicalRecordComponent } from "../../components/PatientMedicalRecordComponent/PatientMedicalRecordComponent";
+// import { useParams } from "react-router-dom";
 
-// export const HomePage = () => {
- 
-//     return (
+
+
+// export const PatientMedicalRecord = () => {
+  
+//   const { id } = useParams();
+  
+//   return (
+//     <>
 //       <Styled.PageContainer>
 //         <SidebarMenu />
 //         <Styled.MainContent>
 //           <Toolbar
-//             pageTitle="Home"
-//             userName="{userName}"
-//             userPhoto="userPhoto.png"
+//                pageTitle="Prontuário do Paciente"
+//                userName="{userName}"
+//                userPhoto="/../../userPhoto.png"
 //           />
 //           <Styled.SpecificPageContent>
-//             <HomeComponent/>
-            
+//           <PatientMedicalRecordComponent id={id}/>
 //           </Styled.SpecificPageContent>
 //         </Styled.MainContent>
 //       </Styled.PageContainer>
-//     );
-//   }
+//     </>
+//   );
+// };

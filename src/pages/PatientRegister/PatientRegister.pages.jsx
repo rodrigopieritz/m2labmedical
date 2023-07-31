@@ -4,11 +4,12 @@ import { Navigate } from "react-router";
 import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 import Toolbar from "../../components/Toolbar/ToolbarComponent";
 import * as Styled from "../../global.style";
-import { HomeComponent } from "../../components/HomeComponent/HomeComponent";
+import { PatientRegisterComponent } from "../../components/PatientRegisterComponent/PatientRegisterComponent";
+import { useParams } from "react-router-dom";
 
-export const HomePage = () => {
+export const PatientRegisterPage = () => {
   const { auth } = useContext(AuthContext);
-
+  const { id } = useParams();
   const render = () => {
     const userEmail = auth.user.email;
     const userName = userEmail.split("@")[0];
@@ -17,43 +18,42 @@ export const HomePage = () => {
         <SidebarMenu />
         <Styled.MainContent>
           <Toolbar
-            pageTitle="Home"
+            pageTitle="Registro de Pacientes"
             userName={userName}
             userPhoto="/../../userPhoto.png"
           />
           <Styled.SpecificPageContent style={{ maxWidth: "950px" }}>
-          <HomeComponent/>
-          </Styled.SpecificPageContent>
+           <PatientRegisterComponent id={id}/>
+           </Styled.SpecificPageContent>
         </Styled.MainContent>
       </Styled.PageContainer>
     );
   };
-  return auth.isLogged ? render() : <Navigate to={"/login"} />;
+  return auth.isLogged ? render() : <Navigate to={"/login"}/>
 };
 
 // Código para Manutenção (Autenticação de Usuário desabilitada)
 
-
-// import { HomeComponent } from "../../components/HomeComponent/HomeComponent";
 // import SidebarMenu from "../../components/SidebarMenu/SidebarMenu";
 // import Toolbar from "../../components/Toolbar/ToolbarComponent";
 // import * as Styled from "../../global.style";
+// import { PatientRegisterComponent } from "../../components/PatientRegisterComponent/PatientRegisterComponent";
+// import { useParams } from "react-router-dom";
 
-// export const HomePage = () => {
+// export const PatientRegisterPage = () => {
+
+//   const { id } = useParams();
  
 //     return (
 //       <Styled.PageContainer>
 //         <SidebarMenu />
 //         <Styled.MainContent>
 //           <Toolbar
-//             pageTitle="Home"
-//             userName="{userName}"
-//             userPhoto="userPhoto.png"
+//             pageTitle="Registro de Pacientes"
+//             userName="Página de teste"
+//             userPhoto="/../../userPhoto.png"
 //           />
-//           <Styled.SpecificPageContent>
-//             <HomeComponent/>
-            
-//           </Styled.SpecificPageContent>
+//           <PatientRegisterComponent id={id}/>
 //         </Styled.MainContent>
 //       </Styled.PageContainer>
 //     );
