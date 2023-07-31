@@ -96,13 +96,14 @@ export const LoginComponent = () => {
       <section className="vh-100 my-5 mx-4" aria-label="Login Section">
       <div className="container-fluid">
         <div className="row">
-          <div className="col-sm-6 text-black">
+          <div className="col-lg-6 col-sm-12 text-black">
             <div
               className="d-flex align-items-center h-custom-2 px-5 ms-xl-4 mt-5 pt-5 pt-xl-0 mt-xl-n5"
               aria-label="Login Form Section"
             >
               <form
-                style={{ width: "23rem" }}
+                className="w-100"
+                style={{ maxWidth: "400px" }}
                 onSubmit={handleFormSubmit}
                 noValidate
                 aria-label="Login Form"
@@ -176,25 +177,25 @@ export const LoginComponent = () => {
                     Registre-se
                   </a>
                 </p>
-              
               </form>
             </div>
           </div>
           <div
-            className="col-sm-6 px-0 d-none d-sm-block d-flex justify-content-center align-items-center my-5"
+            className="col-lg-6 col-sm-12 px-0 d-flex justify-content-center align-items-center my-5"
             aria-label="Login Image Section"
           >
             <img
               src="login-image-large.jpeg"
               alt="Login image"
-              className="w-100 vh-60"
-              style={{ objectFit: "cover", objectPosition: "right" }}
+              className="w-100"
+              style={{ maxHeight: "400px", objectFit: "cover", objectPosition: "right" }}
               aria-label="Login Image"
             />
           </div>
         </div>
       </div>
     </section>
+    
     
   );
 };
