@@ -1002,7 +1002,7 @@ export const PatientRegisterComponent = ({ id }) => {
                     onInput={handleInput}
                     readOnly={readMode}
                   />
-                  {houseNumberError && <div style={{ color: 'red' }}>{houseNumberError}</div>}
+                  {houseNumberError && <div>{houseNumberError}</div>}
                 </div>
 
                 <div className="col-6 text-center">
