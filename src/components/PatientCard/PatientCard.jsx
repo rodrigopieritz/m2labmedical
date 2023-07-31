@@ -28,12 +28,20 @@ const PatientCard = ({ id, name, birthdate, insurance, phone, emergencyContact, 
   const idade = calculateAge(birthdate);
 
   return (
-    <div>
-      <div>
-        <FaUser />
+
+    <div style={{backgroundColor: "whiteSmoke"}} className="d-flex flex-row align-items-center">
+
+      
+     
+      <div className="col-2 align-items-center">
+      <div> <FaUser size="30%" className="mb-5 m-5"/></div>
+        <div clasName = "mb-2"> {id && <p>ID: {id}</p>}</div>
       </div>
-      <div>
-        {id && <p>ID: {id}</p>}
+      <div className="col-2 align-items-center">
+      
+      </div>
+      <div className="col">
+        
         {name && <p>Nome do Paciente: {name}</p>}
         {birthdate && <p>Idade: {idade}</p>}
         {insurance && <p>Convênio: {insurance} </p>}
@@ -42,6 +50,7 @@ const PatientCard = ({ id, name, birthdate, insurance, phone, emergencyContact, 
         {allergies && <p>Lista de Alergias: {allergies}</p>}
         {specialCare && <p>Cudidados Especiais: {specialCare}</p>}
       </div>
+     
     </div>
   );
 };

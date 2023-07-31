@@ -12,28 +12,39 @@ export const StatsCardComponent = ({
   totalMedicalAppointments,
 }) => {
   return (
+<div className="d-flex flex-row">
+  <div className="card m-4 d-flex align-items-center justify-content-center">
+    <FaHospitalUser size="30%" className="mb-5 m-5" />
     <div>
-      <div>
-        <h6>Pacientes Cadastrados</h6>
-        <FaHospitalUser size="5%" />
-        {totalPatients}
-      </div>
-      <div>
-        <h6>Exames Cadastrados</h6>
-        <FaStethoscope size="5%" />
-        {totalExams}
-      </div>
-      <div>
-        <h6>Consultas Cadastradas</h6>
-        <FaUserDoctor size="5%" />
-        {totalMedicalAppointments}
-      </div>
+      <h5>Pacientes Cadastrados: {totalPatients}</h5>
+      
     </div>
+  </div>
+
+  <div className="card m-4 d-flex align-items-center justify-content-center">
+    <FaStethoscope size="30%" className="mb-5 m-5" />
+    <div>
+      <h5>Exames Cadastrados: {totalExams}</h5>
+      
+    </div>
+  </div>
+
+  <div className="card m-4 d-flex align-items-center justify-content-center">
+    <FaUserDoctor size="30%" className="mb-5 m-5" />
+    <div>
+      <h5>Consultas Cadastradas: {totalMedicalAppointments} </h5>
+     
+    </div>
+  </div>
+</div>
+
+   
+    
   );
 };
 
 StatsCardComponent.propTypes = {
-    totalPatients: PropTypes.string,
-    totalExams: PropTypes.string,
-    totalMedicalAppointments: PropTypes.string,
+    totalPatients: PropTypes.number,
+    totalExams: PropTypes.number,
+    totalMedicalAppointments: PropTypes.number,
 }
